@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/700.css";
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  background: #070b12;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  @apply antialiased;
+  position: relative;
+  z-index: 0;
+}
+
+/* Always visible scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(5, 10, 15, 0.9);
+}
+::-webkit-scrollbar-thumb {
+  background: #00ffff;
+  border-radius: 10px;
+}
+
+/* Neon hover utility */
+.glow-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.glow-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+}
+
+/* Subtle pulse animation */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
