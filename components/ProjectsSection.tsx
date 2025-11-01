@@ -8,7 +8,6 @@ export default function ProjectsSection() {
   const [selected, setSelected] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect mobile view on mount and resize
   useEffect(() => {
     const checkWidth = () => setIsMobile(window.innerWidth < 768);
     checkWidth();
@@ -19,9 +18,8 @@ export default function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="relative w-full overflow-hidden px-6 py-16 sm:px-10 min-h-[90vh] text-white"
+      className="relative w-full overflow-hidden px-6 py-16 sm:px-10 min-h-[90vh] text-[var(--text)]"
     >
-      {/* Section Title */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -29,13 +27,12 @@ export default function ProjectsSection() {
         viewport={{ once: true }}
         className="flex items-center justify-center gap-3 mb-12"
       >
-        <FolderOpen className="text-cyan-400 w-8 h-8" />
-        <h2 className="text-4xl sm:text-5xl font-extrabold text-cyan-400">
+        <FolderOpen className="text-[var(--accent)] w-8 h-8" />
+        <h2 className="text-4xl sm:text-5xl font-extrabold text-[var(--accent)]">
           Projects
         </h2>
       </motion.div>
 
-      {/* Projects Grid */}
       <motion.div
         className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto"
         initial="hidden"
@@ -60,19 +57,19 @@ export default function ProjectsSection() {
             }}
             whileHover={!isMobile ? { scale: 1.05 } : {}}
             onClick={() => setSelected(i)}
-            className="cursor-pointer rounded-2xl bg-white/5 border border-cyan-400/20 
-                       p-6 backdrop-blur-md text-center hover:border-cyan-400/40
-                       transition-all duration-500 shadow-[0_0_20px_rgba(0,255,255,0.05)]"
+            className="cursor-pointer rounded-2xl border border-[var(--accent)]/25 bg-[var(--bg)]/50 backdrop-blur-md 
+                       hover:border-[var(--accent)]/50 hover:shadow-[0_0_25px_var(--accent)]/20
+                       transition-all duration-500 flex flex-col justify-between p-6 text-center min-h-[220px]"
           >
-            <h3 className="text-cyan-300 font-semibold text-lg mb-3">
+            <h3 className="text-[var(--accent)] font-semibold text-lg mb-3">
               {p.title}
             </h3>
-            <p className="text-neutral-400 text-sm mb-4">{p.shortSummary}</p>
+            <p className="text-[var(--text)]/70 text-sm mb-4">{p.shortSummary}</p>
             <div className="flex flex-wrap justify-center gap-2">
               {p.tags.slice(0, 3).map((t, j) => (
                 <span
                   key={j}
-                  className="px-2 py-0.5 rounded-full text-xs border border-cyan-400/25 text-cyan-200/80"
+                  className="px-2 py-0.5 rounded-full text-xs border border-[var(--accent)]/30 text-[var(--accent)]/90"
                 >
                   {t}
                 </span>
@@ -82,18 +79,17 @@ export default function ProjectsSection() {
         ))}
       </motion.div>
 
-      {/* Expanded Project Modal */}
       <AnimatePresence>
         {selected !== null && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--bg)]/80 backdrop-blur-md px-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
               layoutId={`project-${selected}`}
-              className="relative max-w-2xl w-full bg-[#0a0f18] border border-cyan-400/30 rounded-2xl p-6 sm:p-8 shadow-[0_0_40px_rgba(0,255,255,0.2)] overflow-y-auto max-h-[85vh]"
+              className="relative max-w-2xl w-full bg-[var(--bg)] border border-[var(--accent)]/30 rounded-2xl p-6 sm:p-8 shadow-[0_0_40px_var(--accent)]/25 overflow-y-auto max-h-[85vh]"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -101,16 +97,16 @@ export default function ProjectsSection() {
             >
               <button
                 onClick={() => setSelected(null)}
-                className="absolute top-4 right-4 text-neutral-400 hover:text-cyan-300 transition"
+                className="absolute top-4 right-4 text-[var(--text)]/60 hover:text-[var(--accent)] transition"
               >
                 <X className="w-6 h-6" />
               </button>
 
-              <h3 className="text-cyan-300 font-semibold text-2xl mb-4">
+              <h3 className="text-[var(--accent)] font-semibold text-2xl mb-4">
                 {projects[selected].title}
               </h3>
 
-              <p className="text-neutral-300 text-sm sm:text-base leading-relaxed mb-6">
+              <p className="text-[var(--text)]/80 text-sm sm:text-base leading-relaxed mb-6">
                 {projects[selected].longDescription}
               </p>
 
@@ -118,21 +114,20 @@ export default function ProjectsSection() {
                 {projects[selected].tags.map((t, j) => (
                   <span
                     key={j}
-                    className="px-3 py-1 rounded-full text-xs border border-cyan-400/25 text-cyan-200/90 bg-cyan-400/5"
+                    className="px-3 py-1 rounded-full text-xs border border-[var(--accent)]/25 text-[var(--accent)]/90 bg-[var(--accent)]/10"
                   >
                     {t}
                   </span>
                 ))}
               </div>
 
-              {/* GitHub button shown only if github !== "no" */}
               {projects[selected].github && projects[selected].github !== "no" && (
                 <a
                   href={projects[selected].github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2 border border-cyan-400/40 rounded-md text-cyan-300 
-                             hover:bg-cyan-900/30 hover:border-cyan-400 transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-5 py-2 border border-[var(--accent)]/40 rounded-md text-[var(--accent)] 
+                             hover:bg-[var(--accent)]/10 hover:border-[var(--accent)] transition-all duration-300"
                 >
                   <Github className="w-4 h-4" />
                   View on GitHub

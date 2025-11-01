@@ -5,7 +5,7 @@ export default function Sidebar() {
   return (
     <aside className="hidden md:flex fixed bottom-0 left-0 z-50 flex-col items-center gap-6 px-6 py-8 text-neutral-500">
       <a
-        href="https://github.com/NicolasCottez"
+        href="https://github.com/Nicolas-cottez"
         target="_blank"
         rel="noopener noreferrer"
         className="hover:text-cyan-400 transition-all duration-300 hover:scale-110"
@@ -14,7 +14,7 @@ export default function Sidebar() {
         <Github className="w-5 h-5" />
       </a>
       <a
-        href="https://www.linkedin.com/in/nicolascottezabrate/"
+        href="www.linkedin.com/in/nicolas-cottez-abrate-a38838257"
         target="_blank"
         rel="noopener noreferrer"
         className="hover:text-cyan-400 transition-all duration-300 hover:scale-110"

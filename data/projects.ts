@@ -5,7 +5,7 @@ export const projects = [
     longDescription:
       "Developed an AI assistant that generates structured medical reports from raw clinical data using biomedical LLMs such as Clinical-T5 and BioGPT. Integrated a Streamlit web interface and LangChain pipeline for ontology-driven summarization.",
     tags: ["Python", "LLMs", "LangChain", "Streamlit", "BioGPT", "Data Science"],
-    github: "https://github.com/NicolasCottez/medical-summary-llm",
+    github: "no",
   },
   {
     title: "Two-Word Voice Recognition System",
@@ -21,7 +21,7 @@ export const projects = [
     longDescription:
       "Built a web platform allowing users to post and book rides. Implemented authentication, trip management, and MySQL database integration using PHP and HTML/CSS.",
     tags: ["HTML", "CSS", "PHP", "SQL", "Web Development"],
-    github: "https://github.com/NicolasCottez/blablacar-website",
+    github: "no",
   },
   {
     title: "Interactive Theme Park Simulator",
