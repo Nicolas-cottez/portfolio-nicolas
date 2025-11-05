@@ -10,12 +10,11 @@ import Sidebar from "@/components/Sidebar";
 import RightColumn from "@/components/RightColumn";
 import ScrollProgress from "@/components/ScrollProgress";
 import LoadingScreen from "@/components/LoadingScreen";
-import ComputerIntroSection from "@/components/ComputerIntroSection";
 
 export default function Page() {
   return (
     <>
-      {/* <LoadingScreen /> */}
+      <LoadingScreen />
       <main className="relative min-h-screen overflow-x-hidden text-neutral-100">
         <NeuralBackground3D />
         <Navbar />
