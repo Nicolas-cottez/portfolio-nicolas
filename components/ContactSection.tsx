@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Mail, Linkedin, Github, Download, Send, Sparkles } from "lucide-react";
 
@@ -11,6 +11,20 @@ export default function ContactSection() {
     target: containerRef,
     offset: ["start end", "end start"],
   });
+  const [dots, setDots] = useState<{ left: string; top: string; delay: number; duration: number }[]>([]);
+
+  useEffect(() => {
+    // uniquement côté client
+    setDots(
+      Array.from({ length: 8 }, () => ({
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        delay: Math.random() * 2,
+        duration: 2 + Math.random() * 2,
+      }))
+    );
+  }, []);
+
 
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
@@ -212,27 +226,25 @@ export default function ContactSection() {
         </motion.div>
 
         {/* Decorative sparkles */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(8)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-[var(--accent)] rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                scale: [0, 1, 0],
-                opacity: [0, 1, 0],
-              }}
-              transition={{
-                duration: 2 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
+        {/* Decorative sparkles (corrigé) */}
+        {dots.length > 0 && (
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            {dots.map((dot, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-[var(--accent)] rounded-full"
+                style={{ left: dot.left, top: dot.top }}
+                animate={{ scale: [0, 1, 0], opacity: [0, 1, 0] }}
+                transition={{
+                  duration: dot.duration,
+                  repeat: Infinity,
+                  delay: dot.delay,
+                }}
+              />
+            ))}
+          </div>
+        )}
+
       </div>
     </footer>
   );
