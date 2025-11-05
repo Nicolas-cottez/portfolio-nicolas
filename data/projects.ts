@@ -6,6 +6,7 @@ export const projects = [
       "Developed an AI assistant that generates structured medical reports from raw clinical data using biomedical LLMs such as Clinical-T5 and BioGPT. Integrated a Streamlit web interface and LangChain pipeline for ontology-driven summarization.",
     tags: ["Python", "LLMs", "LangChain", "Streamlit", "BioGPT", "Data Science"],
     github: "no",
+    image: "/images/blanc.png", // Placeholder - remplacer par vraie image
   },
   {
     title: "Two-Word Voice Recognition System",
@@ -13,7 +14,8 @@ export const projects = [
     longDescription:
       "Designed a compact ML system for two-word voice recognition. Implemented audio preprocessing, feature extraction (MFCC), and classifier training using Scikit-learn. Optimized for small dataset environments.",
     tags: ["Python", "Machine Learning", "Signal Processing", "Scikit-learn"],
-    github: "no", // pas de lien affiché
+    github: "no",
+    image: "/images/blanc.png",
   },
   {
     title: "BlaBlaCar-Type Website",
@@ -22,6 +24,7 @@ export const projects = [
       "Built a web platform allowing users to post and book rides. Implemented authentication, trip management, and MySQL database integration using PHP and HTML/CSS.",
     tags: ["HTML", "CSS", "PHP", "SQL", "Web Development"],
     github: "no",
+    image: "/images/blanc.png",
   },
   {
     title: "Interactive Theme Park Simulator",
@@ -30,6 +33,7 @@ export const projects = [
       "Developed a C-based game simulating amusement park management with Allegro 5. Managed rendering, events, and animation loops for interactive gameplay.",
     tags: ["C", "Allegro 5", "Game Design", "Simulation"],
     github: "no",
+    image: "/images/blanc.png",
   },
   {
     title: "Coming Soon",

@@ -1,172 +1,177 @@
 "use client";
-import { useState, useMemo, useEffect, useCallback } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { Transition } from "framer-motion";
+import { User, Code2, Languages } from "lucide-react";
 
-type Card = { id: string; title: string; content: React.ReactNode };
-
-export default function AboutSection() {
-  const [index, setIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth < 768);
-    onResize();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-
-  const cards: Card[] = useMemo(
-    () => [
-      {
-        id: "about",
-        title: "About Me",
-        content: (
-          <p className="text-neutral-200 text-base leading-relaxed text-center">
-            I’m a <span className="text-cyan-400 font-medium">4th-year engineering student</span> in{" "}
-            <span className="text-cyan-400">Data Science</span> and{" "}
-            <span className="text-cyan-400">Artificial Intelligence</span> at{" "}
-            <span className="text-cyan-400">ECE Paris</span>.  
-            I’m passionate about building practical{" "}
-            <span className="text-cyan-400">AI systems</span> that create real impact.
-          </p>
-        ),
-      },
-      {
-        id: "skills",
-        title: "Technical Skills",
-        content: (
-          <div className="flex flex-wrap justify-center items-center gap-3">
-            {[
-              "Python","C/Java/SQL/JavaScript","Git","Linux","Pandas",
-              "NumPy","Matplotlib","Scikit-learn","Power BI","VS Code","SolidWorks",
-            ].map((skill) => (
-              <span
-                key={skill}
-                className="px-4 py-2 rounded-full border border-cyan-400/30 text-cyan-300 text-sm font-mono bg-cyan-400/5 shadow-[0_0_10px_rgba(0,255,255,0.15)] hover:shadow-[0_0_20px_rgba(0,255,255,0.3)] transition-all"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        ),
-      },
-      {
-        id: "languages",
-        title: "Languages",
-        content: (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-center items-center text-center">
-            {[
-              { name: "English", level: "TOEFL 89 / TOEIC 900" },
-              { name: "Japanese", level: "A2 — Conversational" },
-              { name: "Spanish", level: "A2 — Basic understanding" },
-              { name: "Chinese", level: "A0 — Learning basics" },
-            ].map((lang, i) => (
-              <div
-                key={i}
-                className="rounded-xl border border-cyan-400/25 bg-[#0b111a]/80 p-4 text-cyan-300 w-[180px] h-[90px] flex flex-col justify-center mx-auto shadow-[0_0_18px_rgba(0,255,255,0.08)] hover:shadow-[0_0_25px_rgba(0,255,255,0.25)] transition-all"
-              >
-                <h4 className="text-cyan-400 font-semibold text-base">{lang.name}</h4>
-                <p className="text-sm text-neutral-300">{lang.level}</p>
-              </div>
-            ))}
-          </div>
-        ),
-      },
-    ],
-    []
-  );
-
-  const n = cards.length;
-  const circularOffset = useCallback((i: number, center: number) => {
-    let d = i - center;
-    d = (d + n) % n;
-    if (d > n / 2) d -= n;
-    return d;
-  }, [n]);
-
-  const next = () => setIndex((p) => (p + 1) % n);
-  const prev = () => setIndex((p) => (p - 1 + n) % n);
-
-  const CARD_W = 560;
-  const CARD_H = 320;
-  const SIDE_SCALE = 0.9;
-  const GAP_X = 360;
-  const SIDE_ROT = 12;
-  const TRANSITION: Transition = { type: "spring", stiffness: 120, damping: 18, mass: 0.6 };
-
-  if (isMobile) {
-    return (
-      <section id="about" className="relative text-white px-4 pt-4 pb-8">
-        <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 px-2">
-          {cards.map((card) => (
-            <div
-              key={card.id}
-              className="snap-center shrink-0 w-[85vw] max-w-[640px] rounded-2xl border border-cyan-400/20 bg-[#0b111a]/80 p-5 shadow-[0_0_15px_rgba(0,255,255,0.1)]"
-            >
-              <h3 className="text-2xl font-semibold text-cyan-400 mb-4 text-center">{card.title}</h3>
-              <div className="text-sm leading-relaxed text-center">{card.content}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  }
+const AboutSection = () => {
+  const sections = [
+    {
+      icon: User,
+      title: "About Me",
+      content: "I'm a 4th-year engineering student at ECE Paris specializing in Data Science & AI, following a full English curriculum. I completed an academic semester abroad at Warsaw Polytechnic School, Poland. Passionate about creating intelligent systems and leveraging data to solve complex problems.",
+    },
+    {
+      icon: Code2,
+      title: "Technical Skills",
+      skills: [
+        "Python", "JavaScript", "Java", "C", "SQL",
+        "Pandas", "NumPy", "Matplotlib", "Scikit-learn",
+        "Git", "Linux", "Power BI",
+        "VS Code", "SolidWorks"
+      ],
+    },
+    {
+      icon: Languages,
+      title: "Languages",
+      languages: [
+        { lang: "English", level: "TOEFL 89 | TOEIC 900" },
+        { lang: "Japanese", level: "A1" },
+        { lang: "Spanish", level: "A2" },
+        { lang: "Chinese", level: "A0" }
+      ],
+    }
+  ];
 
   return (
     <section
       id="about"
-      className="relative flex flex-col items-center justify-center pt-4 pb-8 overflow-hidden text-white"
+      className="relative min-h-screen flex items-center justify-center px-6 py-32 overflow-hidden"
     >
-      <button
-        onClick={prev}
-        aria-label="Previous"
-        className="absolute left-[9%] z-20 text-cyan-400 hover:text-cyan-200 transition-transform duration-300 hover:scale-125"
-      >
-        <ChevronLeft size={110} />
-      </button>
+      {/* Main Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-20"
+        >
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4">
+            About
+          </h2>
+          <div className="h-1 w-24 mx-auto bg-[var(--accent)] rounded-full" />
+        </motion.div>
 
-      <div className="relative w-full max-w-[1600px] h-[360px] flex items-center justify-center">
-        {cards.map((card, i) => {
-          const off = circularOffset(i, index);
-          const x = off === 0 ? 0 : off === -1 ? -GAP_X : GAP_X;
-          const scale = off === 0 ? 1 : SIDE_SCALE;
-          const opacity = off === 0 ? 1 : 0.5;
-          const rotateY = off === -1 ? SIDE_ROT : off === 1 ? -SIDE_ROT : 0;
-          const zIndex = off === 0 ? 30 : 20;
-          const isVisible = Math.abs(off) <= 1;
-
-          return (
+        {/* 3 Columns Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 px-4">
+          {sections.map((section, index) => (
             <motion.div
-              key={card.id}
-              className="absolute top-1/2 left-1/2 rounded-2xl border border-cyan-400/20 bg-[#0b111a]/90 backdrop-blur-md shadow-[0_0_25px_rgba(0,255,255,0.15)] flex flex-col justify-center text-center p-6"
-              style={{
-                width: CARD_W,
-                height: CARD_H,
-                x: "-50%",
-                y: "-50%",
-                zIndex,
-                pointerEvents: off === 0 ? "auto" : "none",
-                visibility: isVisible ? "visible" : "hidden",
-              }}
-              animate={{ translateX: x, translateY: off === 0 ? 0 : 20, scale, opacity, rotateY }}
-              transition={TRANSITION}
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              whileHover={{ y: -8 }}
+              className="relative group flex flex-col"
             >
-              <h3 className="text-2xl font-semibold text-cyan-400 mb-4">{card.title}</h3>
-              <div className="text-sm md:text-base leading-relaxed">{card.content}</div>
-            </motion.div>
-          );
-        })}
-      </div>
+              {/* Column Content */}
+              <div className="relative flex-1 flex flex-col min-h-[400px]">
+                {/* Giant Icon */}
+                <motion.div
+                  className="flex justify-center mb-8"
+                  whileHover={{ scale: 1.1, rotateY: 15 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-[var(--accent)]/20 blur-3xl rounded-full" />
+                    <section.icon className="w-24 h-24 text-[var(--accent)] relative z-10" strokeWidth={1.5} />
+                  </div>
+                </motion.div>
 
-      <button
-        onClick={next}
-        aria-label="Next"
-        className="absolute right-[9%] z-20 text-cyan-400 hover:text-cyan-200 transition-transform duration-300 hover:scale-125"
-      >
-        <ChevronRight size={110} />
-      </button>
+                {/* Title */}
+                <h3 className="text-2xl md:text-3xl font-bold text-white text-center mb-6">
+                  {section.title}
+                </h3>
+
+                {/* Content */}
+                {section.content && (
+                  <div className="text-[#ddd] text-center leading-relaxed px-4 space-y-3">
+                    <p className="text-base">
+                      I'm a <span className="text-white font-semibold">4th-year engineering student</span> at{" "}
+                      <span className="text-[var(--accent)] font-medium">ECE Paris</span> specializing in{" "}
+                      <span className="text-white font-semibold">Data Science & AI</span>, following a{" "}
+                      <span className="text-[var(--accent)] font-medium">full English curriculum</span>.
+                    </p>
+                    <p className="text-sm text-[#bbb]">
+                      I completed an academic semester abroad at{" "}
+                      <span className="text-white font-medium">Warsaw Polytechnic School, Poland</span>.
+                    </p>
+                    <p className="text-base">
+                      Passionate about creating <span className="text-white font-semibold">intelligent systems</span> and{" "}
+                      leveraging data to solve <span className="text-white font-semibold">complex problems</span>.
+                    </p>
+                  </div>
+                )}
+
+                {section.skills && (
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {section.skills.map((skill: string) => (
+                      <motion.span
+                        key={skill}
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        className="px-3 py-1.5 rounded-lg bg-[#15101f] border border-[var(--accent)]/20 
+                                 text-[#ddd] text-sm font-['JetBrains_Mono'] hover:border-[var(--accent)]/40 
+                                 transition-colors duration-300 cursor-default"
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                )}
+
+                {section.languages && (
+                  <div className="space-y-3 max-w-xs mx-auto">
+                    {section.languages.map((item: any, idx: number) => {
+                      const levelMap: any = {
+                        "TOEFL 89 | TOEIC 900": 95,
+                        "A2": 40,
+                        "A1": 30,
+                        "A0": 15
+                      };
+                      const percentage = levelMap[item.level] || 50;
+                      
+                      return (
+                        <motion.div
+                          key={item.lang}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: idx * 0.1 }}
+                          className="space-y-1"
+                        >
+                          <div className="flex justify-between items-center">
+                            <span className="text-white font-medium text-sm">{item.lang}</span>
+                            <span className="text-[var(--accent)] font-['JetBrains_Mono'] text-[11px] tracking-tight">
+                              {item.level}
+                            </span>
+                          </div>
+                          {/* Progress bar */}
+                          <div className="h-1.5 bg-[#15101f] rounded-full overflow-hidden">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              whileInView={{ width: `${percentage}%` }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 1, delay: idx * 0.1 + 0.2, ease: "easeOut" }}
+                              className="h-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded-full"
+                            />
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Subtle border on hover */}
+              <div className="absolute inset-0 border border-transparent group-hover:border-[var(--accent)]/20 
+                           rounded-2xl transition-colors duration-500 pointer-events-none" />
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   );
-}
+};
+
+export default AboutSection;

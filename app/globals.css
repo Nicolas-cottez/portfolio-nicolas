@@ -5,12 +5,26 @@
 @import "@fontsource/inter/400.css";
 @import "@fontsource/inter/500.css";
 @import "@fontsource/inter/700.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/600.css";
 
-/* === Thème sombre unique === */
+/* === Violet Sobre Theme === */
 :root {
-  --bg: #070b12;
+  --bg: #0A0612;
+  --bg-secondary: #0f0a15;
+  --bg-tertiary: #15101f;
   --text: #ffffff;
-  --accent: #00ffff;
+  --text-muted: #999;
+  --text-secondary: #ddd;
+  --accent: #b266ff;
+  --accent-dark: #9445e8;
+  --accent-light: #c88aff;
+  --accent-glow: rgba(178, 102, 255, 0.15);
+  --accent-glow-strong: rgba(178, 102, 255, 0.25);
+  --border: rgba(178, 102, 255, 0.2);
+  --border-strong: rgba(178, 102, 255, 0.3);
+  --glass-bg: rgba(15, 10, 21, 0.6);
+  --glass-border: rgba(178, 102, 255, 0.1);
 }
 
 /* === Base === */
@@ -43,5 +57,22 @@ body {
 }
 .glow-card:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.25);
+  box-shadow: 0 0 30px var(--accent-glow), 0 0 60px var(--accent-glow);
+}
+
+/* === Glassmorphism === */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+}
+
+/* === Neon Glow === */
+.neon-glow {
+  text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent);
+}
+
+.neon-border {
+  box-shadow: 0 0 10px var(--accent-glow), inset 0 0 10px var(--accent-glow);
 }

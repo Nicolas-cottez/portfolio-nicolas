@@ -22,14 +22,28 @@ export const experiences = [
     ],
   },
   {
-    company: "La Poste & Public Finance Center",
-    location: "France",
+    company: "",
+    location: "",
     role: "Seasonal Worker",
-    period: "Summers 2023, 2024, 2025",
-    description: [
-      "Organized, sorted, and delivered mail and parcels across assigned zones.",
-      "Reorganized and archived administrative records.",
-      "Assisted internal teams and managed logistics operations.",
+    period: "",
+    description: [],
+    subjobs: [
+      {
+        company: "La Poste",
+        period: "Summer 2024-2025",
+        description: [
+          "Organized, sorted, delivered mail.",
+          "Managed daily logistics operations.",
+        ],
+      },
+      {
+        company: "Public Finance Center",
+        period: "Summer 2023",
+        description: [
+          "Reorganized and archived administrative records.",
+          "Assisted internal teams and managed logistics operations.",
+        ],
+      },
     ],
   },
 ];
