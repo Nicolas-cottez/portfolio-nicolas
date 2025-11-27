@@ -1,54 +1,159 @@
 export const projects = [
+  /* ------------------------------------------
+   * 1. MACHINE LEARNING
+   * ------------------------------------------ */
   {
-    title: "Personalized Medical Summary Generator",
-    shortSummary: "LLM-based assistant generating structured medical summaries.",
-    longDescription:
-      "Developed an AI assistant that generates structured medical reports from raw clinical data using biomedical LLMs such as Clinical-T5 and BioGPT. Integrated a Streamlit web interface and LangChain pipeline for ontology-driven summarization.",
-    tags: ["Python", "LLMs", "LangChain", "Streamlit", "BioGPT", "Data Science"],
-    github: "no",
-    image: "/images/blanc.png", // Placeholder - remplacer par vraie image
+    title: "Machine Learning",
+    shortSummary: "Regression, classification and basic NLP projects.",
+    longDescription: `
+### Regression
+- **House prices** — Normalization, LinearRegression, MSE  
+- **Car prices** — Mixed variables, categorical encoding
+
+### Classification
+- **Titanic** — LogisticRegression, DecisionTreeClassifier, cross-validation  
+- **Diabetes** — AUC, F1, robust metrics
+
+### Multi-class & NLP
+- **Iris** — KNN, SVM, standardization  
+- **Spam** — Text cleaning, TF-IDF, Naive Bayes
+    `,
+    tags: [
+      "Python",
+      "Pandas",
+      "NumPy",
+      "Scikit-learn",
+      "Matplotlib",
+      "Seaborn",
+      "TF-IDF",
+      "NLP"
+    ],
+    github: "https://github.com/Nicolas-cottez/machine-learning",
+    image: "/images/ml_group.png"
   },
+
+  /* ------------------------------------------
+   * 2. DEEP LEARNING
+   * ------------------------------------------ */
   {
-    title: "Two-Word Voice Recognition System",
-    shortSummary: "Lightweight ML model for spoken keyword detection.",
-    longDescription:
-      "Designed a compact ML system for two-word voice recognition. Implemented audio preprocessing, feature extraction (MFCC), and classifier training using Scikit-learn. Optimized for small dataset environments.",
-    tags: ["Python", "Machine Learning", "Signal Processing", "Scikit-learn"],
-    github: "no",
-    image: "/images/blanc.png",
+    title: "Deep Learning",
+    shortSummary: "MNIST project completed + Deep Learning roadmap.",
+    longDescription: `
+### Completed project
+- **MNIST** — CNN (convolutions, ReLU, dropout, BatchNorm)
+
+### Planned projects
+- **CIFAR-10** — Deep CNN, data augmentation  
+- **MNIST Autoencoder** — Reconstruction, MSE  
+- **IMDB Sentiment** — Embeddings, LSTM  
+- **Time series forecasting** — LSTM (sliding windows)  
+- **Voice commands** — Spectrograms, 1D/2D CNN  
+- **Simple generative text** — RNN  
+- **Real-time vision** — OpenCV + CNN (webcam)  
+- **Recommendation** — Collaborative filtering
+    `,
+    tags: [
+      "Python",
+      "TensorFlow",
+      "Keras",
+      "NumPy",
+      "CNN",
+      "Deep Learning"
+    ],
+    github: "https://github.com/Nicolas-cottez/deep-learning",
+    image: "/images/dl_mnist.png"
   },
+
+  /* ------------------------------------------
+   * 3. WEB & APPLICATION DEV
+   * ------------------------------------------ */
   {
-    title: "BlaBlaCar-Type Website",
-    shortSummary: "Carpooling web app with PHP and MySQL.",
-    longDescription:
-      "Built a web platform allowing users to post and book rides. Implemented authentication, trip management, and MySQL database integration using PHP and HTML/CSS.",
-    tags: ["HTML", "CSS", "PHP", "SQL", "Web Development"],
+    title: "Web & Application Development",
+    shortSummary: "Web projects and native applications.",
+    longDescription: `
+### Web applications
+- **BlaBlaCar-like platform** — PHP, MySQL, authentication, CRUD
+
+### Native applications
+- **Amusement park simulator (C)** — Allegro 5, animation loop, 2D rendering
+    `,
+    tags: [
+      "HTML",
+      "CSS",
+      "PHP",
+      "MySQL",
+      "C",
+      "Allegro5"
+    ],
     github: "no",
-    image: "/images/blanc.png",
+    image: "/images/web_dev.png"
   },
+
+  /* ------------------------------------------
+   * 4. PROMPTCARE — MEDICAL SUMMARY GENERATOR
+   * ------------------------------------------ */
   {
-    title: "Interactive Theme Park Simulator",
-    shortSummary: "2D theme park simulator coded in C with Allegro 5.",
-    longDescription:
-      "Developed a C-based game simulating amusement park management with Allegro 5. Managed rendering, events, and animation loops for interactive gameplay.",
-    tags: ["C", "Allegro 5", "Game Design", "Simulation"],
+    title: "PromptCare — Medical Summary Generator (In progress)",
+    shortSummary: "Prompt-guided medical summarization using biomedical LLMs.",
+    longDescription: `
+### Goal
+Generate a **reliable, structured and contextualized** medical summary from a raw medical record, driven by a user prompt.
+
+### Features
+- Selection of relevant information (diagnosis, treatment, history)  
+- Strict application of the prompt (tone, format, level of detail)  
+- Verification via **medical ontologies** (MeSH, SNOMED CT)
+
+### Technologies
+- Biomedical LLMs: **Clinical-T5, BioGPT, PubMedBERT**  
+- Pipelines: **LangChain**, Transformers  
+- Interface: **Streamlit / Gradio**  
+- Data: MIMIC-III light, MedNLI, i2b2
+
+### Progress
+- Literature review and state-of-the-art analysis  
+- First intelligent prompts  
+- Ongoing integration of LLMs + ontologies
+    `,
+    tags: [
+      "Python",
+      "Streamlit",
+      "Gradio",
+      "LangChain",
+      "Transformers",
+      "Clinical-T5",
+      "BioGPT",
+      "PubMedBERT",
+      "MeSH",
+      "SNOMED CT",
+      "NLP",
+      "LLM"
+    ],
     github: "no",
-    image: "/images/blanc.png",
+    image: "/images/medical_llm.png"
   },
+
+  /* ------------------------------------------
+   * 5. COMING SOON
+   * ------------------------------------------ */
   {
     title: "Coming Soon",
-    shortSummary: "Cloud and edge AI integration prototypes.",
-    longDescription:
-      "Upcoming work on distributed AI models running seamlessly across cloud and edge computing devices using Docker containers and Azure services.",
-    tags: ["Azure", "Edge AI", "Docker"],
+    shortSummary: "Upcoming project.",
+    longDescription: "",
+    tags: [],
     github: "no",
+    image: "/images/coming_soon.png"
   },
+
+  /* ------------------------------------------
+   * 6. COMING SOON
+   * ------------------------------------------ */
   {
     title: "Coming Soon",
-    shortSummary: "Research-based projects in computer vision.",
-    longDescription:
-      "Experimental research projects on pattern recognition, 3D modeling, and object detection using MLFlow and Scikit-learn pipelines.",
-    tags: ["Vision", "MLFlow", "Scikit-learn"],
+    shortSummary: "Upcoming project.",
+    longDescription: "",
+    tags: [],
     github: "no",
-  },
+    image: "/images/coming_soon.png"
+  }
 ];

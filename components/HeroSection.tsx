@@ -24,7 +24,7 @@ export default function HeroSection() {
         className="max-w-2xl z-10 md:ml-[calc(5%+20px)]"
       >
         <p className="text-[#b266ff] text-xs sm:text-sm font-mono tracking-wider mb-3">
-          Hi, I'm
+          Hello, I'm
         </p>
 
         <h1 className="text-6xl sm:text-7xl md:text-8xl font-extrabold leading-[1.1] text-white mb-4">
@@ -69,7 +69,7 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-    
+
 
       {/* ===== Indicateur scroll ===== */}
       <AnimatePresence>

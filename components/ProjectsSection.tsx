@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Github, ExternalLink, Rocket } from "lucide-react";
 import { projects } from "@/data/projects";
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
+
 
 // Project Card with Image Thumbnail
 function ProjectCard({ project, index, onClick }: any) {
@@ -94,8 +96,10 @@ function ProjectCard({ project, index, onClick }: any) {
 
       {/* Bottom gradient for title (when not hovered) */}
       {hasImage && !isHovered && (
-        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
-          <h3 className="text-xl font-bold text-white">{project.title}</h3>
+        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/100 via-black/90 to-transparent">
+          <h3 className="text-2xl font-extrabold text-white drop-shadow-[0_0_16px_black]">
+            {project.title}
+          </h3>
         </div>
       )}
     </motion.div>
@@ -209,9 +213,15 @@ export default function ProjectsSection() {
                   {projects[selected].title}
                 </h2>
 
-                <p className="text-[#ddd] leading-relaxed mb-4 sm:mb-6 text-sm sm:text-base md:text-lg">
-                  {projects[selected].longDescription}
-                </p>
+                <div
+                  className="prose prose-invert max-w-none text-[#ddd]
+                            prose-headings:text-white prose-strong:text-white
+                            prose-li:marker:text-[var(--accent)] mb-4 sm:mb-6"
+                >
+                  <ReactMarkdown>
+                    {projects[selected].longDescription}
+                  </ReactMarkdown>
+                </div>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
