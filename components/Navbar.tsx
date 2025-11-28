@@ -4,12 +4,17 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Home, User, Briefcase, FolderOpen, Mail, Download, Menu, X } from "lucide-react";
 import useScrollSpy from "@/hooks/useScrollSpy";
+import LanguageToggle from "./LanguageToggle";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 export default function Navbar() {
   const sections = ["home", "about", "experience", "projects", "contact"];
   const activeId = useScrollSpy(sections);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { language } = useLanguage();
+  const t = translations[language].nav;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -23,21 +28,20 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { id: "home", label: "Home", icon: Home },
-    { id: "about", label: "About", icon: User },
-    { id: "experience", label: "Experience", icon: Briefcase },
-    { id: "projects", label: "Projects", icon: FolderOpen },
-    { id: "contact", label: "Contact", icon: Mail },
+    { id: "home", label: t.home, icon: Home },
+    { id: "about", label: t.about, icon: User },
+    { id: "experience", label: t.experience, icon: Briefcase },
+    { id: "projects", label: t.projects, icon: FolderOpen },
+    { id: "contact", label: t.contact, icon: Mail },
   ];
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled 
-            ? "bg-[#0A0612]/95 backdrop-blur-xl shadow-[0_4px_20px_rgba(178,102,255,0.15)]" 
-            : "bg-gradient-to-b from-[#0A0612]/80 to-transparent backdrop-blur-sm"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+          ? "bg-[#0A0612]/95 backdrop-blur-xl shadow-[0_4px_20px_rgba(178,102,255,0.15)]"
+          : "bg-gradient-to-b from-[#0A0612]/80 to-transparent backdrop-blur-sm"
+          }`}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between relative">
           {/* Logo + Nom */}
@@ -63,7 +67,8 @@ export default function Navbar() {
           </motion.div>
 
           {/* Navigation Desktop - Design Sobre et Neutre */}
-          <div className="hidden lg:flex items-center gap-2">
+          {/* Navigation Desktop - Centered */}
+          <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-2">
             {navItems.map(({ id, label, icon: Icon }) => {
               const active = activeId === id;
               return (
@@ -73,10 +78,9 @@ export default function Navbar() {
                   whileTap={{ scale: 0.96 }}
                   whileHover={{ scale: 1.02 }}
                   className={`relative px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2
-                    ${
-                      active
-                        ? "bg-[var(--accent)]/10 text-[var(--accent)] font-medium"
-                        : "text-[#999] hover:text-white hover:bg-white/5"
+                  ${active
+                      ? "bg-[var(--accent)]/10 text-[var(--accent)] font-medium"
+                      : "text-[#999] hover:text-white hover:bg-white/5"
                     }`}
                 >
                   <Icon size={19} strokeWidth={active ? 2 : 1.5} />
@@ -86,22 +90,27 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Resume Button Desktop */}
-          <motion.a
-            href="/CV_nicolascottezabrate.pdf"
-            download
-            whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(178,102,255,0.4)" }}
-            whileTap={{ scale: 0.95 }}
-            className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-xl 
+          {/* Actions Right - Language & Resume */}
+          <div className="hidden lg:flex items-center gap-4">
+            <LanguageToggle />
+
+            {/* Resume Button Desktop */}
+            <motion.a
+              href="/CV_nicolascottezabrate.pdf"
+              download
+              whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(178,102,255,0.4)" }}
+              whileTap={{ scale: 0.95 }}
+              className="hidden lg:flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl 
                      bg-gradient-to-r from-[var(--accent)]/25 to-[var(--accent-dark)]/20
                      border border-[var(--accent)]/50 text-white font-medium text-sm
                      hover:from-[var(--accent)]/35 hover:to-[var(--accent-dark)]/30
                      shadow-[0_0_15px_rgba(178,102,255,0.15)]
-                     transition-all duration-300 group"
-          >
-            <Download size={16} className="group-hover:rotate-12 transition-transform" />
-            <span>Resume</span>
-          </motion.a>
+                     transition-all duration-300 group min-w-[110px]"
+            >
+              <Download size={16} className="group-hover:rotate-12 transition-transform" />
+              <span>{t.resume}</span>
+            </motion.a>
+          </div>
 
           {/* Mobile Menu Button */}
           <motion.button
@@ -112,6 +121,10 @@ export default function Navbar() {
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </motion.button>
+
+          <div className="lg:hidden ml-2">
+            <LanguageToggle />
+          </div>
         </nav>
       </header>
 
@@ -137,7 +150,7 @@ export default function Navbar() {
               <div className="p-6">
                 <div className="flex items-center justify-between mb-8">
                   <div className="text-white font-bold text-lg">
-                    Menu
+                    {t.menu}
                   </div>
                   <motion.button
                     whileTap={{ scale: 0.9 }}
@@ -163,10 +176,9 @@ export default function Navbar() {
                         }}
                         className={`w-full flex items-center gap-3 px-5 py-4 rounded-xl 
                           transition-all duration-300 font-medium
-                          ${
-                            active
-                              ? "bg-gradient-to-r from-[var(--accent)]/30 to-[var(--accent-dark)]/20 text-white border border-[var(--accent)]/40"
-                              : "text-[#aaa] hover:text-white hover:bg-[var(--accent)]/10 border border-transparent"
+                          ${active
+                            ? "bg-gradient-to-r from-[var(--accent)]/30 to-[var(--accent-dark)]/20 text-white border border-[var(--accent)]/40"
+                            : "text-[#aaa] hover:text-white hover:bg-[var(--accent)]/10 border border-transparent"
                           }`}
                       >
                         <Icon size={20} strokeWidth={active ? 2.5 : 1.8} />
@@ -189,7 +201,7 @@ export default function Navbar() {
                            transition-all duration-300"
                 >
                   <Download size={20} />
-                  <span>Download Resume</span>
+                  <span>{t.downloadResume}</span>
                 </motion.a>
               </div>
             </motion.div>

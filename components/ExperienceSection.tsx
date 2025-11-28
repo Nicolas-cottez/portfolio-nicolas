@@ -4,7 +4,12 @@ import { motion } from "framer-motion";
 import { Briefcase, Calendar, MapPin } from "lucide-react";
 import { experiences } from "@/data/experience";
 
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
+
 export default function ExperienceSection() {
+  const { language } = useLanguage();
+  const t = translations[language].experience;
   const [isMobile, setIsMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const containerRef = useRef<HTMLElement>(null);
@@ -24,7 +29,7 @@ export default function ExperienceSection() {
   useEffect(() => {
     let boundsCache = { top: 0, height: 0, viewportHeight: 0 };
     let rafId: number;
-    
+
     const updateBounds = () => {
       if (timelineRef.current) {
         const rect = timelineRef.current.getBoundingClientRect();
@@ -36,7 +41,7 @@ export default function ExperienceSection() {
         };
       }
     };
-    
+
     const checkScroll = () => {
       if (boundsCache.height > 0) {
         const currentScrollY = document.documentElement.scrollTop || document.body.scrollTop || window.scrollY || 0;
@@ -45,7 +50,7 @@ export default function ExperienceSection() {
         const range = end - start;
         const progress = Math.max(0, Math.min(1, (currentScrollY - start) / range));
         const percentage = progress * 100;
-        
+
         // Manipuler directement le DOM
         if (spotlightMobileRef.current) {
           spotlightMobileRef.current.style.top = `${percentage}%`;
@@ -53,31 +58,31 @@ export default function ExperienceSection() {
         if (spotlightDesktopRef.current) {
           spotlightDesktopRef.current.style.top = `${percentage}%`;
         }
-        
+
         // Détecter quel dot est proche de la lumière basé sur positions réelles
         const numDots = timelineDotsRef.current.length;
         if (numDots > 0 && timelineRef.current && boundsCache.height > 0) {
           const timelineTop = boundsCache.top;
           const timelineHeight = boundsCache.height;
           const ballAbsoluteY = timelineTop + (percentage / 100) * timelineHeight;
-          
+
           let closestIndex = -1;
           let minDistance = Infinity;
-          
+
           for (let i = 0; i < numDots; i++) {
             const dot = timelineDotsRef.current[i];
             if (dot) {
               const dotRect = dot.getBoundingClientRect();
               const dotAbsoluteY = dotRect.top + currentScrollY;
               const distance = Math.abs(ballAbsoluteY - dotAbsoluteY);
-              
+
               if (distance < minDistance) {
                 minDistance = distance;
                 closestIndex = i;
               }
             }
           }
-          
+
           // Activer si distance < 80px (environ 1 card height / 3)
           if (minDistance < 80) {
             setActiveIndex(closestIndex);
@@ -88,42 +93,26 @@ export default function ExperienceSection() {
       }
       rafId = requestAnimationFrame(checkScroll);
     };
-    
+
     // Init
     setTimeout(() => {
       updateBounds();
       checkScroll();
     }, 1000);
-    
+
     // Resize
     const handleResize = () => {
       updateBounds();
     };
     window.addEventListener("resize", handleResize);
-    
+
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  const updatedExperiences = experiences.map((exp) =>
-    exp.role === "Seasonal Worker"
-      ? {
-          ...exp,
-          company: "La Poste — Summer 2024-2025",
-          location: "",
-          period: "",
-          description: [
-            "Organized, Sorted, Delivered, Mail.",
-            "──────────────",
-            "Public Finance Center — France, Summer 2023",
-            "Reorganized and archived administrative records.",
-            "Assisted internal teams and managed logistics operations.",
-          ],
-        }
-      : exp
-  );
+  const currentExperiences = experiences[language];
 
   return (
     <section
@@ -140,7 +129,7 @@ export default function ExperienceSection() {
         className="text-center mb-20 relative z-10"
       >
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 text-white">
-          Experience
+          {t.title}
         </h2>
         <div className="h-1 w-24 mx-auto bg-[var(--accent)] rounded-full" />
       </motion.div>
@@ -149,7 +138,7 @@ export default function ExperienceSection() {
       <div ref={timelineRef} className="relative w-full">
         {/* Ligne Verticale Chronologique - AVANT-PLAN z-50 */}
         <div className="absolute left-8 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[5px] bg-gradient-to-b from-[var(--accent)] via-[var(--accent)] to-[var(--accent)]/60 shadow-[0_0_15px_rgba(178,102,255,0.5)] z-50 rounded-full" />
-        
+
         {/* Faisceau lumineux électrique qui suit le scroll - Mobile */}
         <div
           ref={spotlightMobileRef}
@@ -186,7 +175,7 @@ export default function ExperienceSection() {
             />
           ))}
         </div>
-        
+
         {/* Faisceau lumineux électrique qui suit le scroll - Desktop */}
         <div
           ref={spotlightDesktopRef}
@@ -226,7 +215,7 @@ export default function ExperienceSection() {
 
         {/* Experience Cards */}
         <div className="space-y-16 md:space-y-24 relative">
-          {updatedExperiences.map((exp, index) => {
+          {currentExperiences.map((exp, index) => {
             const isLeft = index % 2 === 0;
             return (
               <motion.div
@@ -240,9 +229,8 @@ export default function ExperienceSection() {
                   type: "spring",
                   stiffness: 80,
                 }}
-                className={`flex items-center gap-0 ${
-                  !isMobile && isLeft ? "md:flex-row-reverse" : ""
-                } relative`}
+                className={`flex items-center gap-0 ${!isMobile && isLeft ? "md:flex-row-reverse" : ""
+                  } relative`}
               >
                 {/* Timeline Node + Ligne horizontale */}
                 <div className="absolute left-[calc(2rem-8px)] md:left-1/2 md:-translate-x-1/2 flex items-center justify-center z-[60]">
@@ -261,7 +249,7 @@ export default function ExperienceSection() {
                     className="relative"
                   >
                     {/* Glow autour du point - Amplifié quand activé */}
-                    <motion.div 
+                    <motion.div
                       className="absolute inset-0 bg-[var(--accent)] rounded-full blur-lg"
                       animate={{
                         opacity: activeIndex === index ? 1 : 0.7,
@@ -270,28 +258,27 @@ export default function ExperienceSection() {
                       transition={{ duration: 0.3 }}
                     />
                     {/* Node Circle */}
-                    <motion.div 
+                    <motion.div
                       className="relative w-6 h-6 rounded-full bg-[var(--accent)] border-[4px] border-[#0A0612]"
                       animate={{
-                        boxShadow: activeIndex === index 
-                          ? "0 0 40px rgba(178,102,255,1), 0 0 60px rgba(178,102,255,0.8)" 
+                        boxShadow: activeIndex === index
+                          ? "0 0 40px rgba(178,102,255,1), 0 0 60px rgba(178,102,255,0.8)"
                           : "0 0 20px rgba(178,102,255,1)",
                       }}
                       transition={{ duration: 0.3 }}
                     />
                   </motion.div>
-                  
+
                   {/* Ligne horizontale du point vers card - Desktop uniquement */}
                   <motion.div
                     initial={{ width: 0, opacity: 0 }}
                     whileInView={{ width: "60px", opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.2 + 0.5, duration: 0.6 }}
-                    className={`hidden md:block absolute h-[2px] bg-gradient-to-r ${
-                      isLeft 
-                        ? "left-3 from-[var(--accent)] to-[var(--accent)]/30" 
+                    className={`hidden md:block absolute h-[2px] bg-gradient-to-r ${isLeft
+                        ? "left-3 from-[var(--accent)] to-[var(--accent)]/30"
                         : "right-3 from-[var(--accent)]/30 to-[var(--accent)]"
-                    }`}
+                      }`}
                   />
                 </div>
 
@@ -306,7 +293,7 @@ export default function ExperienceSection() {
                   }}
                   animate={{
                     scale: activeIndex === index ? 1.03 : 1,
-                    boxShadow: activeIndex === index 
+                    boxShadow: activeIndex === index
                       ? "0 0 40px rgba(178,102,255,0.6), 0 0 80px rgba(178,102,255,0.3)"
                       : "none",
                   }}
@@ -328,7 +315,7 @@ export default function ExperienceSection() {
                       <h3 className="text-xl md:text-2xl font-bold text-white mb-4">
                         {exp.role}
                       </h3>
-                      
+
                       {/* Si subjobs existe, afficher la structure spéciale */}
                       {(exp as any).subjobs ? (
                         <div className="space-y-4">
@@ -337,7 +324,7 @@ export default function ExperienceSection() {
                               {subjobIdx > 0 && (
                                 <div className="h-px bg-gradient-to-r from-transparent via-neutral-700/30 to-transparent my-5" />
                               )}
-                              
+
                               <div className="flex items-center gap-2 text-[var(--text-muted)] text-sm mb-2">
                                 <Briefcase className="w-4 h-4 text-[var(--accent)]" />
                                 <p className="font-medium">{subjob.company}</p>

@@ -5,15 +5,19 @@ import { X, Github, ExternalLink, Rocket } from "lucide-react";
 import { projects } from "@/data/projects";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 
 // Project Card with Image Thumbnail
 function ProjectCard({ project, index, onClick }: any) {
   const [isHovered, setIsHovered] = useState(false);
-  const hasImage = project.image && !project.title.includes("Coming Soon");
+  const { language } = useLanguage();
+  const t = translations[language].projects;
+  const hasImage = project.image && !project.title.includes(t.comingSoon);
 
   return (
-    <motion.div 
+    <motion.div
       variants={{
         hidden: { opacity: 0, y: 60, scale: 0.95 },
         visible: {
@@ -108,6 +112,9 @@ function ProjectCard({ project, index, onClick }: any) {
 
 export default function ProjectsSection() {
   const [selected, setSelected] = useState<number | null>(null);
+  const { language } = useLanguage();
+  const t = translations[language].projects;
+  const currentProjects = projects[language];
 
   return (
     <section
@@ -123,11 +130,11 @@ export default function ProjectsSection() {
         className="text-center mb-20"
       >
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4">
-          Projects
+          {t.title}
         </h2>
         <div className="h-1 w-24 mx-auto bg-[var(--accent)] rounded-full mb-6" />
         <p className="text-[#999] max-w-2xl mx-auto text-sm sm:text-base">
-          A curated showcase of interactive projects and experiments
+          {t.subtitle}
         </p>
       </motion.div>
 
@@ -142,7 +149,7 @@ export default function ProjectsSection() {
         }}
         viewport={{ once: true, margin: "-100px" }}
       >
-        {projects.map((project, i) => (
+        {currentProjects.map((project: any, i: number) => (
           <ProjectCard
             key={i}
             project={project}
@@ -197,11 +204,11 @@ export default function ProjectsSection() {
                 </motion.button>
 
                 {/* Modal Image (if exists) */}
-                {projects[selected].image && !projects[selected].title.includes("Coming Soon") && (
+                {currentProjects[selected].image && !currentProjects[selected].title.includes(t.comingSoon) && (
                   <div className="relative w-full h-48 sm:h-64 rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6">
                     <Image
-                      src={projects[selected].image}
-                      alt={projects[selected].title}
+                      src={currentProjects[selected].image}
+                      alt={currentProjects[selected].title}
                       fill
                       className="object-cover"
                     />
@@ -210,7 +217,7 @@ export default function ProjectsSection() {
 
                 {/* Content */}
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4">
-                  {projects[selected].title}
+                  {currentProjects[selected].title}
                 </h2>
 
                 <div
@@ -219,13 +226,13 @@ export default function ProjectsSection() {
                             prose-li:marker:text-[var(--accent)] mb-4 sm:mb-6"
                 >
                   <ReactMarkdown>
-                    {projects[selected].longDescription}
+                    {currentProjects[selected].longDescription}
                   </ReactMarkdown>
                 </div>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-6">
-                  {projects[selected].tags.map((tag: string) => (
+                  {currentProjects[selected].tags.map((tag: string) => (
                     <span
                       key={tag}
                       className="px-2 py-1 sm:px-3 sm:py-1.5 rounded-md sm:rounded-lg 
@@ -238,10 +245,10 @@ export default function ProjectsSection() {
                 </div>
 
                 {/* Links */}
-                {projects[selected].github !== "no" && (
+                {currentProjects[selected].github !== "no" && (
                   <div className="flex gap-4">
                     <motion.a
-                      href={projects[selected].github}
+                      href={currentProjects[selected].github}
                       target="_blank"
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.05 }}
@@ -251,7 +258,7 @@ export default function ProjectsSection() {
                                transition-all duration-300"
                     >
                       <Github size={20} />
-                      View on GitHub
+                      {t.viewOnGithub}
                     </motion.a>
                   </div>
                 )}

@@ -1,4 +1,5 @@
 import "./globals.css";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata = {
   title: "Nicolas Cottez-Abrate — Data & AI Engineer",
@@ -13,7 +14,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-[#070b12] text-white overflow-x-hidden">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

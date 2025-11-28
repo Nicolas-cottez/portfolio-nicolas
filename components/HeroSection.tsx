@@ -2,11 +2,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FolderOpen, Mail, ChevronDown } from "lucide-react";
 import useScrollSpy from "@/hooks/useScrollSpy";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 export default function HeroSection() {
   const sections = ["home", "about", "experience", "projects", "contact"];
   const activeId = useScrollSpy(sections);
   const showScroll = activeId === "home";
+  const { language } = useLanguage();
+  const t = translations[language].hero;
 
   return (
     <section
@@ -24,7 +28,7 @@ export default function HeroSection() {
         className="max-w-2xl z-10 md:ml-[calc(5%+20px)]"
       >
         <p className="text-[#b266ff] text-xs sm:text-sm font-mono tracking-wider mb-3">
-          Hello, I'm
+          {t.greeting}
         </p>
 
         <h1 className="text-6xl sm:text-7xl md:text-8xl font-extrabold leading-[1.1] text-white mb-4">
@@ -32,14 +36,11 @@ export default function HeroSection() {
         </h1>
 
         <h2 className="text-lg sm:text-2xl md:text-3xl font-semibold text-[#c8a3ff]/90 mt-2">
-          A 4th-year Data & AI Engineering student.
+          {t.role}
         </h2>
 
         <p className="text-[#ddd]/70 text-sm sm:text-lg max-w-xl mt-6 leading-relaxed">
-          I’m searching for a{" "}
-          <span className="text-[#b266ff]">four-month internship</span> starting in{" "}
-          <span className="text-[#b266ff]">April 2026</span>. I’m looking forward to meet and discuss my{" "}
-          <span className="text-[#b266ff]">motivation</span> with you.
+          {t.description}
         </p>
 
         <div className="flex flex-wrap gap-4 mt-10">
@@ -52,7 +53,7 @@ export default function HeroSection() {
                        transition-all duration-300"
           >
             <FolderOpen className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            View Projects
+            {t.viewProjects}
           </motion.a>
 
           <motion.a
@@ -64,7 +65,7 @@ export default function HeroSection() {
                        transition-all duration-300"
           >
             <Mail className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            Contact
+            {t.contact}
           </motion.a>
         </div>
       </motion.div>
@@ -83,7 +84,7 @@ export default function HeroSection() {
             className="absolute bottom-4 md:bottom-6 left-0 right-0 flex flex-col items-center text-[#b266ff]/70 pointer-events-none"
           >
             <span className="block text-[10px] sm:text-xs uppercase tracking-[0.25em] text-[#b266ff]/60 mb-1 text-center">
-              Scroll Down
+              {t.scrollDown}
             </span>
             <motion.div
               animate={{ y: [0, 10, 0] }}

@@ -2,11 +2,15 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Mail, Linkedin, Github, Download, Send, Sparkles } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 export default function ContactSection() {
+  const { language } = useLanguage();
+  const t = translations[language].contact;
   const containerRef = useRef<HTMLElement>(null);
   const [copied, setCopied] = useState(false);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
@@ -39,26 +43,26 @@ export default function ContactSection() {
     {
       icon: Mail,
       href: "mailto:nicolascottezabrate@gmail.com",
-      label: "Email",
+      label: t.email,
       color: "#b366ff",
       isEmail: true,
     },
     {
       icon: Linkedin,
       href: "https://www.linkedin.com/in/nicolas-cottez-abrate-a38838257",
-      label: "LinkedIn",
+      label: t.linkedin,
       color: "#d4a5ff",
     },
     {
       icon: Github,
       href: "https://github.com/Nicolas-cottez",
-      label: "GitHub",
+      label: t.github,
       color: "#b366ff",
     },
     {
       icon: Download,
       href: "/CV_nicolascottezabrate.pdf",
-      label: "Resume",
+      label: t.resume,
       color: "#d4a5ff",
     },
   ];
@@ -114,7 +118,7 @@ export default function ContactSection() {
               <Send className="text-[var(--accent)] w-7 h-7 sm:w-8 sm:h-8" />
             </motion.div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white">
-              Contact
+              {t.title}
             </h2>
           </motion.div>
 
@@ -127,7 +131,7 @@ export default function ContactSection() {
           >
             <Sparkles className="w-4 h-4 text-[var(--accent)]" />
             <p className="text-[var(--text-muted)] text-sm sm:text-base md:text-lg max-w-2xl">
-              Open to new opportunities and collaborations
+              {t.subtitle}
             </p>
             <Sparkles className="w-4 h-4 text-[var(--accent)]" />
           </motion.div>
@@ -179,8 +183,8 @@ export default function ContactSection() {
                 style={{ transformStyle: "preserve-3d" }}
               >
                 {/* Icon */}
-                <link.icon 
-                  className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white transition-colors duration-300 relative z-10" 
+                <link.icon
+                  className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white transition-colors duration-300 relative z-10"
                   style={{ transform: "translateZ(10px)" }}
                 />
 
@@ -197,11 +201,11 @@ export default function ContactSection() {
               <span className="hidden sm:block absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-medium text-[var(--text-muted)] whitespace-nowrap">
                 {link.label}
               </span>
-              
+
               {/* Copied feedback for email */}
               {(link as any).isEmail && copied && (
                 <span className="absolute -top-10 left-1/2 -translate-x-1/2 text-xs bg-[var(--accent)] text-white px-3 py-1.5 rounded whitespace-nowrap z-50">
-                  Copied!
+                  {t.copied}
                 </span>
               )}
             </motion.a>
@@ -218,10 +222,10 @@ export default function ContactSection() {
           className="space-y-2"
         >
           <p className="text-sm text-[var(--text-muted)]">
-            Crafted with passion and precision
+            {t.crafted}
           </p>
           <p className="text-xs text-[var(--text-muted)]/70">
-            © {new Date().getFullYear()} Nicolas Cottez-Abrate — All Rights Reserved.
+            © {new Date().getFullYear()} Nicolas Cottez-Abrate — {t.rights}
           </p>
         </motion.div>
 

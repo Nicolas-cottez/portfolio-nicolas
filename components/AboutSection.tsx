@@ -2,17 +2,22 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { User, Code2, Languages } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { translations } from "@/data/translations";
 
 const AboutSection = () => {
+  const { language } = useLanguage();
+  const t = translations[language].about;
+
   const sections = [
     {
       icon: User,
-      title: "About Me",
-      content: "I'm a 4th-year engineering student at ECE Paris specializing in Data Science & AI, following a full English curriculum. I completed an academic semester abroad at Warsaw Polytechnic School, Poland. Passionate about creating intelligent systems and leveraging data to solve complex problems.",
+      title: t.aboutMe,
+      content: t.content,
     },
     {
       icon: Code2,
-      title: "Technical Skills",
+      title: t.technicalSkills,
       skills: [
         "Python", "JavaScript", "Java", "C", "SQL",
         "Pandas", "NumPy", "Matplotlib", "Scikit-learn",
@@ -22,12 +27,12 @@ const AboutSection = () => {
     },
     {
       icon: Languages,
-      title: "Languages",
+      title: t.languages,
       languages: [
-        { lang: "English", level: "TOEFL 89 | TOEIC 900" },
-        { lang: "Japanese", level: "A1" },
-        { lang: "Spanish", level: "A2" },
-        { lang: "Chinese", level: "A0" }
+        { lang: t.langNames.English, level: "TOEFL 89 | TOEIC 900" },
+        { lang: t.langNames.Japanese, level: "A1" },
+        { lang: t.langNames.Spanish, level: "A2" },
+        { lang: t.langNames.Chinese, level: "A0" }
       ],
     }
   ];
@@ -48,7 +53,7 @@ const AboutSection = () => {
           className="text-center mb-20"
         >
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4">
-            About
+            {t.title}
           </h2>
           <div className="h-1 w-24 mx-auto bg-[var(--accent)] rounded-full" />
         </motion.div>
@@ -87,20 +92,7 @@ const AboutSection = () => {
                 {/* Content */}
                 {section.content && (
                   <div className="text-[#ddd] text-center leading-relaxed px-4 space-y-3">
-                    <p className="text-base">
-                      I'm a <span className="text-white font-semibold">4th-year engineering student</span> at{" "}
-                      <span className="text-[var(--accent)] font-medium">ECE Paris</span> specializing in{" "}
-                      <span className="text-white font-semibold">Data Science & AI</span>, following a{" "}
-                      <span className="text-[var(--accent)] font-medium">full English curriculum</span>.
-                    </p>
-                    <p className="text-sm text-[#bbb]">
-                      I completed an academic semester abroad at{" "}
-                      <span className="text-white font-medium">Warsaw Polytechnic School, Poland</span>.
-                    </p>
-                    <p className="text-base">
-                      Passionate about creating <span className="text-white font-semibold">intelligent systems</span> and{" "}
-                      leveraging data to solve <span className="text-white font-semibold">complex problems</span>.
-                    </p>
+                    {section.content}
                   </div>
                 )}
 
@@ -130,7 +122,7 @@ const AboutSection = () => {
                         "A0": 15
                       };
                       const percentage = levelMap[item.level] || 50;
-                      
+
                       return (
                         <motion.div
                           key={item.lang}
