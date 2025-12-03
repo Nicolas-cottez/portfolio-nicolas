@@ -22,7 +22,7 @@ const AboutSection = () => {
         "Python", "JavaScript", "Java", "C", "SQL",
         "Pandas", "NumPy", "Matplotlib", "Scikit-learn",
         "Git", "Linux", "Power BI",
-        "VS Code", "SolidWorks"
+        "VS Code", "SolidWorks", "TensorFlow"
       ],
     },
     {
