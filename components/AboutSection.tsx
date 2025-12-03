@@ -21,8 +21,8 @@ const AboutSection = () => {
       skills: [
         "Python", "JavaScript", "Java", "C", "SQL",
         "Pandas", "NumPy", "Matplotlib", "Scikit-learn",
-        "Git", "Linux", "Power BI",
-        "VS Code", "SolidWorks", "TensorFlow"
+        "Git", "Linux", "Power BI", "PyTorch",
+        "VS Code", "SolidWorks", "TensorFlow", "Docker", "Jupyter", "Streamlit"
       ],
     },
     {
