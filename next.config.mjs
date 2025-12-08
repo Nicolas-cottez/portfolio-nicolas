@@ -6,7 +6,6 @@ const withMDX = createMDX({
 
 const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'mdx'],
-  experimental: { mdxRs: true },
 }
 
 export default withMDX(nextConfig)
