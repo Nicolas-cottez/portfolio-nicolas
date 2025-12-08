@@ -138,12 +138,40 @@ Generate a **reliable, structured and contextualized** medical summary from a ra
      * 5. COMING SOON
      * ------------------------------------------ */
     {
-      title: "Coming Soon",
-      shortSummary: "Upcoming project.",
-      longDescription: "",
-      tags: [],
-      github: "no",
-      image: "/images/coming_soon.png"
+      title: "AI Text Corrector — Windows Desktop App",
+      shortSummary: "Local grammar and spelling corrector using Ollama and a custom C# system-tray application.",
+      longDescription: `
+    ### Goal  
+    Create a **fast, offline and privacy-friendly** text corrector that works anywhere on Windows (Word, browser, email, etc.) with *one click*.
+
+    ### Features  
+    - Native **Windows system-tray application** (.NET 8)  
+    - **Click-to-correct**: instantly fixes the clipboard text  
+    - Auto-copy of corrected version + optional auto-paste  
+    - **No cloud** — works fully offline through Ollama local server  
+    - Custom **tray menu**: Correct, Restart Ollama, Open folder, Quit  
+    - Custom application icon + standalone portable EXE  
+
+    ### Technologies  
+    - **C# / .NET 8**  
+    - **Windows Forms (NotifyIcon)**  
+    - **Ollama** (local LLM server)  
+    - **Mistral** (grammar correction prompt)  
+
+    ### Status  
+    Stable version completed and used daily.
+      `,
+      tags: [
+        "C#",
+        ".NET 8",
+        "Windows",
+        "Ollama",
+        "Mistral",
+        "LLM",
+        "Desktop App"
+      ],
+      github: "https://github.com/Nicolas-cottez/correcteur-ia",
+      image: "/images/correcteur_app.png"
     },
 
     /* ------------------------------------------
@@ -297,12 +325,40 @@ Générer un résumé médical **fiable, structuré et contextualisé** à parti
      * 5. COMING SOON
      * ------------------------------------------ */
     {
-      title: "Bientôt",
-      shortSummary: "Projet à venir.",
-      longDescription: "",
-      tags: [],
-      github: "no",
-      image: "/images/coming_soon.png"
+      title: "Correcteur IA — Application Windows",
+      shortSummary: "Correcteur hors-ligne avec Ollama et application C# intégrée à la barre système.",
+      longDescription: `
+    ### Objectif  
+    Fournir un correcteur **rapide, local et privé**, utilisable dans n’importe quelle application Windows d’un seul clic.
+
+    ### Fonctionnalités  
+    - Application native **Windows** basée sur .NET 8  
+    - Correction instantanée du texte dans le presse-papier  
+    - Copie automatique du texte corrigé (+ option coller automatique)  
+    - Fonctionne **100% hors-ligne** grâce à Ollama  
+    - Menu complet : Corriger, Redémarrer Ollama, Ouvrir le dossier, Quitter  
+    - Icône personnalisée + exécutable portable  
+
+    ### Technologies  
+    - **C# / .NET 8**  
+    - **Windows Forms (NotifyIcon)**  
+    - **Ollama** (serveur LLM local)  
+    - **Mistral** (prompt de correction)  
+
+    ### Statut  
+    Version stable terminée et utilisée quotidiennement.
+      `,
+      tags: [
+        "C#",
+        ".NET 8",
+        "Windows",
+        "Ollama",
+        "Mistral",
+        "LLM",
+        "Application Desktop"
+      ],
+      github: "https://github.com/Nicolas-cottez/correcteur-ia",
+      image: "/images/correcteur_app.png"
     },
 
     /* ------------------------------------------
