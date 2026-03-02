@@ -8,11 +8,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 /* === Violet Sobre Theme === */
 :root {
-  --bg: #0A0612;
+  --bg: #0a0612;
   --bg-secondary: #0f0a15;
   --bg-tertiary: #15101f;
   --text: #ffffff;
@@ -30,7 +28,8 @@
 }
 
 /* === Base === */
-html, body {
+html,
+body {
   height: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -48,18 +47,42 @@ body {
 ::-webkit-scrollbar {
   width: 8px;
 }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 ::-webkit-scrollbar-thumb {
   background: var(--accent);
   border-radius: 10px;
 }
 
+/* Modal custom scrollbar */
+.modal-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  margin-block: 16px;
+}
+.modal-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent) / 60;
+  border-radius: 10px;
+}
+.modal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
 /* === Hover lumineux === */
 .glow-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 .glow-card:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 30px var(--accent-glow), 0 0 60px var(--accent-glow);
+  box-shadow:
+    0 0 30px var(--accent-glow),
+    0 0 60px var(--accent-glow);
 }
 
 /* === Glassmorphism === */
@@ -72,9 +95,14 @@ body {
 
 /* === Neon Glow === */
 .neon-glow {
-  text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent);
+  text-shadow:
+    0 0 10px var(--accent),
+    0 0 20px var(--accent),
+    0 0 30px var(--accent);
 }
 
 .neon-border {
-  box-shadow: 0 0 10px var(--accent-glow), inset 0 0 10px var(--accent-glow);
+  box-shadow:
+    0 0 10px var(--accent-glow),
+    inset 0 0 10px var(--accent-glow);
 }

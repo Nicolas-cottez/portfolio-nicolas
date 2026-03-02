@@ -12,6 +12,7 @@ export default function ExperienceSection() {
   const t = translations[language].experience;
   const [isMobile, setIsMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
+  const activeIndexRef = useRef<number>(-1);
   const containerRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const spotlightMobileRef = useRef<HTMLDivElement>(null);
@@ -27,18 +28,27 @@ export default function ExperienceSection() {
 
   // Manipulation directe du DOM pour éviter les re-renders
   useEffect(() => {
-    let boundsCache = { top: 0, height: 0, viewportHeight: 0 };
     let rafId: number;
+    let boundsCache = { top: 0, height: 0, viewportHeight: 0 };
+    let dotPositionsCache: number[] = [];
 
     const updateBounds = () => {
-      if (timelineRef.current) {
-        const rect = timelineRef.current.getBoundingClientRect();
-        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.scrollY || 0;
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const scrollY = window.scrollY;
         boundsCache = {
-          top: rect.top + scrollTop,
+          top: rect.top + scrollY,
           height: rect.height,
           viewportHeight: window.innerHeight,
         };
+        // Cache dot positions during bounds update (not during scroll)
+        dotPositionsCache = timelineDotsRef.current.map((dot) => {
+          if (dot) {
+            const dotRect = dot.getBoundingClientRect();
+            return dotRect.top + scrollY;
+          }
+          return 0;
+        });
       }
     };
 
@@ -51,7 +61,7 @@ export default function ExperienceSection() {
         const progress = Math.max(0, Math.min(1, (currentScrollY - start) / range));
         const percentage = progress * 100;
 
-        // Manipuler directement le DOM
+        // Direct DOM manipulation — no React re-render
         if (spotlightMobileRef.current) {
           spotlightMobileRef.current.style.top = `${percentage}%`;
         }
@@ -59,23 +69,18 @@ export default function ExperienceSection() {
           spotlightDesktopRef.current.style.top = `${percentage}%`;
         }
 
-        // Détecter quel dot est proche de la lumière basé sur positions réelles
-        const numDots = timelineDotsRef.current.length;
-        if (numDots > 0 && timelineRef.current && boundsCache.height > 0) {
-          const timelineTop = boundsCache.top;
-          const timelineHeight = boundsCache.height;
-          const ballAbsoluteY = timelineTop + (percentage / 100) * timelineHeight;
+        // Use cached dot positions — no getBoundingClientRect() during scroll
+        const numDots = dotPositionsCache.length;
+        if (numDots > 0 && boundsCache.height > 0) {
+          const ballAbsoluteY = boundsCache.top + (percentage / 100) * boundsCache.height;
 
           let closestIndex = -1;
           let minDistance = Infinity;
 
           for (let i = 0; i < numDots; i++) {
-            const dot = timelineDotsRef.current[i];
-            if (dot) {
-              const dotRect = dot.getBoundingClientRect();
-              const dotAbsoluteY = dotRect.top + currentScrollY;
-              const distance = Math.abs(ballAbsoluteY - dotAbsoluteY);
-
+            const dotY = dotPositionsCache[i];
+            if (dotY > 0) {
+              const distance = Math.abs(ballAbsoluteY - dotY);
               if (distance < minDistance) {
                 minDistance = distance;
                 closestIndex = i;
@@ -83,11 +88,17 @@ export default function ExperienceSection() {
             }
           }
 
-          // Activer si distance < 80px (environ 1 card height / 3)
+          // Only update state if the value actually changed
           if (minDistance < 80) {
-            setActiveIndex(closestIndex);
+            if (activeIndexRef.current !== closestIndex) {
+              activeIndexRef.current = closestIndex;
+              setActiveIndex(closestIndex);
+            }
           } else {
-            setActiveIndex(-1);
+            if (activeIndexRef.current !== -1) {
+              activeIndexRef.current = -1;
+              setActiveIndex(-1);
+            }
           }
         }
       }
@@ -100,15 +111,25 @@ export default function ExperienceSection() {
       checkScroll();
     }, 1000);
 
-    // Resize
+    // Resize — recalculate bounds + dot positions
     const handleResize = () => {
       updateBounds();
     };
     window.addEventListener("resize", handleResize);
 
+    // Also recache dot positions on scroll settle (debounced)
+    let scrollTimer: ReturnType<typeof setTimeout>;
+    const handleScrollSettle = () => {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(updateBounds, 500);
+    };
+    window.addEventListener("scroll", handleScrollSettle, { passive: true });
+
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScrollSettle);
+      clearTimeout(scrollTimer);
     };
   }, []);
 

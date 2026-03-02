@@ -19,17 +19,20 @@ const AboutSection = () => {
       icon: Code2,
       title: t.technicalSkills,
       skills: [
-        "Python", "JavaScript", "Java", "C", "SQL",
+        "Python", "TypeScript", "Java", "C", "R", "SQL",
+        "Web (HTML/CSS/JS)",
         "Pandas", "NumPy", "Matplotlib", "Scikit-learn",
-        "Git", "Linux", "Power BI", "PyTorch",
-        "VS Code", "SolidWorks", "TensorFlow", "Docker", "Jupyter", "Streamlit"
+        "TensorFlow", "PyTorch", "LangChain",
+        "Docker", "Git", "Linux", "n8n",
+        "PostgreSQL", "Power BI", "Streamlit", "Jupyter",
+        "SolidWorks"
       ],
     },
     {
       icon: Languages,
       title: t.languages,
       languages: [
-        { lang: t.langNames.English, level: "TOEFL 89 | TOEIC 900" },
+        { lang: t.langNames.English, level: "C1", certifications: "TOEFL 89 · TOEIC 900" },
         { lang: t.langNames.Japanese, level: "A1" },
         { lang: t.langNames.Spanish, level: "A2" },
         { lang: t.langNames.Chinese, level: "A0" }
@@ -113,10 +116,10 @@ const AboutSection = () => {
                 )}
 
                 {section.languages && (
-                  <div className="space-y-3 max-w-xs mx-auto">
+                  <div className="space-y-4 max-w-xs mx-auto">
                     {section.languages.map((item: any, idx: number) => {
                       const levelMap: any = {
-                        "TOEFL 89 | TOEIC 900": 95,
+                        "C1": 95,
                         "A2": 40,
                         "A1": 30,
                         "A0": 15
@@ -130,11 +133,11 @@ const AboutSection = () => {
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
                           transition={{ delay: idx * 0.1 }}
-                          className="space-y-1"
+                          className="space-y-1.5"
                         >
                           <div className="flex justify-between items-center">
                             <span className="text-white font-medium text-sm">{item.lang}</span>
-                            <span className="text-[var(--accent)] font-['JetBrains_Mono'] text-[11px] tracking-tight">
+                            <span className="text-[var(--accent)] font-['JetBrains_Mono'] text-xs font-semibold">
                               {item.level}
                             </span>
                           </div>
@@ -148,6 +151,12 @@ const AboutSection = () => {
                               className="h-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded-full"
                             />
                           </div>
+                          {/* Certifications */}
+                          {item.certifications && (
+                            <p className="text-[#888] text-[10px] font-['JetBrains_Mono'] tracking-wide">
+                              {item.certifications}
+                            </p>
+                          )}
                         </motion.div>
                       );
                     })}
