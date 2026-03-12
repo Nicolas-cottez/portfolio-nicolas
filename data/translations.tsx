@@ -16,7 +16,7 @@ export const translations = {
             description: (
                 <>
                     I’m searching for a{" "}
-                    <span className="text-[#b266ff]">four-month internship</span> starting in{" "}
+                    <span className="text-[#b266ff]">minimum four-month internship</span> starting in{" "}
                     <span className="text-[#b266ff]">April 2026</span>. I’m looking forward to meet and discuss my{" "}
                     <span className="text-[#b266ff]">motivation</span> with you.
                 </>
@@ -103,7 +103,7 @@ export const translations = {
             description: (
                 <>
                     Je recherche un{" "}
-                    <span className="text-[#b266ff]">stage de 4 mois</span> débutant en{" "}
+                    <span className="text-[#b266ff]">stage de 4 mois minimum</span> débutant en{" "}
                     <span className="text-[#b266ff]">Avril 2026</span>. J'ai hâte de vous rencontrer pour discuter de ma{" "}
                     <span className="text-[#b266ff]">motivation</span>.
                 </>

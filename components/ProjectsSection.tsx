@@ -159,10 +159,18 @@ function SecondarySection({
           >
             <div className="px-5 sm:px-6 pb-6 pt-0 border-t border-[var(--border)]">
               {/* Description */}
-              <div className="prose prose-invert max-w-none text-[#ccc] text-sm mt-5
-                            prose-headings:text-white prose-headings:text-base prose-headings:mt-4 prose-headings:mb-2
-                            prose-strong:text-white prose-li:marker:text-[var(--accent)]
-                            prose-li:text-sm prose-li:leading-relaxed">
+              <div className="project-description prose prose-invert max-w-none text-[#ccc] text-sm mt-5
+                            prose-headings:text-white prose-headings:font-bold
+                            prose-h3:text-base prose-h3:mt-6 prose-h3:mb-3
+                            prose-h3:pl-3 prose-h3:border-l-2 prose-h3:border-[var(--accent)]
+                            prose-strong:text-[var(--accent-light)]
+                            prose-li:marker:text-[var(--accent)]
+                            prose-li:text-sm prose-li:leading-relaxed prose-li:my-0.5
+                            prose-p:my-2 prose-p:leading-relaxed
+                            prose-code:bg-[var(--accent)]/10 prose-code:text-[var(--accent)]
+                            prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-xs
+                            prose-pre:bg-[#0a0612] prose-pre:border prose-pre:border-[var(--accent)]/20 prose-pre:rounded-xl
+                            prose-pre:text-xs prose-pre:font-['JetBrains_Mono']">
                 <ReactMarkdown>{project.longDescription}</ReactMarkdown>
               </div>
 
@@ -422,16 +430,19 @@ export default function ProjectsSection() {
 
                   {/* Markdown content — improved readability */}
                   <div
-                    className="prose prose-invert prose-sm sm:prose-base max-w-none text-[#ddd]
+                    className="project-description prose prose-invert prose-sm sm:prose-base max-w-none text-[#ddd]
                               prose-headings:text-white prose-headings:font-bold
-                              prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3
-                              prose-h3:border-b prose-h3:border-[var(--accent)]/20 prose-h3:pb-2
-                              prose-strong:text-white
+                              prose-h3:text-lg sm:prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+                              prose-h3:pl-4 prose-h3:border-l-[3px] prose-h3:border-[var(--accent)]
+                              prose-strong:text-[var(--accent-light)]
                               prose-li:marker:text-[var(--accent)]
-                              prose-li:my-1 prose-p:my-2
+                              prose-li:my-1 prose-li:leading-relaxed
+                              prose-p:my-2.5 prose-p:leading-relaxed prose-p:text-[#ccc]
                               prose-code:bg-[var(--accent)]/10 prose-code:text-[var(--accent)]
                               prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-xs
-                              prose-pre:bg-[#0a0612] prose-pre:border prose-pre:border-[var(--accent)]/20 prose-pre:rounded-xl
+                              prose-pre:bg-[#0a0612] prose-pre:border prose-pre:border-[var(--accent)]/20
+                              prose-pre:rounded-xl prose-pre:text-xs prose-pre:font-['JetBrains_Mono']
+                              prose-ul:my-2 prose-ol:my-2
                               mb-6"
                   >
                     <ReactMarkdown>{mainProjects[selected]?.longDescription || ""}</ReactMarkdown>

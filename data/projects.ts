@@ -18,9 +18,9 @@ export const projects: Record<string, Project[]> = {
      *  MAIN PROJECTS (6)
      * ========================================== */
 
-    /* 1. AI Financial Statement Analyzer */
+    /* 1. Bank Statement PDF Processor */
     {
-      title: "AI Financial Statement Analyzer",
+      title: "Bank Statement PDF Processor",
       positioning: "End-to-end data pipeline from raw PDF to intelligent financial dashboard.",
       shortSummary: "Automated bank statement analysis: PDF extraction, transaction structuring, AI categorization & interactive Streamlit dashboard.",
       longDescription: `
@@ -308,13 +308,8 @@ City Selection → POI Database Query
 - Sequence modeling with RNNs / LSTMs
 - Generative models (VAE, GAN)
 - Transformer architectures from scratch
-
-### Optimization & Evaluation
-- Hyperparameter tuning strategies
-- Cross-validation frameworks
-- Metric selection & comparison (AUC, F1, precision, recall)
       `,
-      tags: ["Python", "Scikit-learn", "TensorFlow", "Keras", "Pandas", "NumPy", "CNN", "NLP"],
+      tags: ["Python", "Scikit-learn", "TensorFlow", "PyTorch", "XGBoost", "Keras", "Pandas", "NumPy", "CNN", "NLP"],
       github: "https://github.com/Nicolas-cottez/machine-learning",
       image: "/images/ml_group.png",
       type: "secondary",
@@ -381,9 +376,9 @@ A **fast, offline and privacy-friendly** text corrector that works anywhere on W
      *  PROJETS PRINCIPAUX (6)
      * ========================================== */
 
-    /* 1. AI Financial Statement Analyzer */
+    /* 1. Process de Relevés Bancaires PDF */
     {
-      title: "Analyseur Financier IA",
+      title: "Process de Relevés Bancaires PDF",
       positioning: "Pipeline de données complet : du PDF brut au dashboard financier intelligent.",
       shortSummary: "Analyse automatisée de relevés bancaires : extraction PDF, structuration des transactions, catégorisation IA & dashboard Streamlit interactif.",
       longDescription: `
@@ -671,13 +666,8 @@ Sélection de Ville → Requête Base de Données POI
 - Modélisation de séquences avec RNNs / LSTMs
 - Modèles génératifs (VAE, GAN)
 - Architectures Transformer from scratch
-
-### Optimisation & Évaluation
-- Stratégies de tuning d'hyperparamètres
-- Frameworks de validation croisée
-- Sélection & comparaison de métriques (AUC, F1, précision, rappel)
       `,
-      tags: ["Python", "Scikit-learn", "TensorFlow", "Keras", "Pandas", "NumPy", "CNN", "NLP"],
+      tags: ["Python", "Scikit-learn", "TensorFlow", "PyTorch", "XGBoost", "Keras", "Pandas", "NumPy", "CNN", "NLP"],
       github: "https://github.com/Nicolas-cottez/machine-learning",
       image: "/images/ml_group.png",
       type: "secondary",
