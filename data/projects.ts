@@ -19,47 +19,73 @@ export const projects: Record<string, Project[]> = {
      *  MAIN PROJECTS (6)
      * ========================================== */
 
-    /* 1. Bank Statement PDF Processor */
+    /* 1. BankLens — Bank Statement PDF Processor */
     {
-      title: "Bank Statement PDF Processor",
-      positioning: "End-to-end data pipeline from raw PDF to intelligent financial dashboard.",
-      shortSummary: "Automated bank statement analysis: PDF extraction, transaction structuring, AI categorization & interactive Streamlit dashboard.",
+      title: "BankLens — Bank Statement PDF Processor",
+      positioning: "End-to-end data pipeline from raw PDF to intelligent financial dashboard, with dual extraction engines (rules + local LLM).",
+      shortSummary: "Automated bank statement analysis: PDF ingestion, dual extraction (code rules or Ollama LLM), AI classification with confidence scoring, and interactive dashboards (PySide6 + Streamlit).",
       longDescription: `
 ### Problem
 Bank statements in PDF format contain unstructured text that is extremely difficult to process programmatically. Manual categorization is time-consuming and error-prone.
 
 ### Solution
-A complete data pipeline that ingests raw PDFs, extracts words with coordinates, reconstructs transactions, classifies them using AI, and presents actionable insights through an interactive dashboard.
+A complete data pipeline — **BankLens** — that ingests raw PDFs, extracts transactions via two interchangeable engines (geometric rules or local LLM), classifies them with confidence scoring, and presents actionable insights through interactive dashboards.
 
-### Architecture
+### Pipeline Overview
 \`\`\`
-PDF Ingestion → Word Extraction (PyMuPDF)
-  → Transaction Reconstruction → JSON Structuring
-    → AI Classification → Pattern Detection
-      → Streamlit Dashboard (charts, tables, KPIs)
+1. PDF Ingestion (PyMuPDF) → raw text extraction
+2. Transaction Extraction (choice of engine)
+   ├── Option A: Rule-based (coordinate geometry)
+   └── Option B: LLM-based (Ollama / qwen3.5:4b)
+3. Classification & Enrichment (keywords, merchant, payment method, confidence %)
+4. Persistence → %LOCALAPPDATA%\\ReleveDash\\json\\final\\
+5. Visualization
+   ├── PySide6 desktop app (Pandas + built-in charts)
+   └── Streamlit web dashboard (Plotly)
 \`\`\`
+
+### 1 — PDF Ingestion
+PDF text is extracted page-by-page with **PyMuPDF** (\`src/extract.py\`). No OCR — the file must contain selectable text.
+
+### 2 — Transaction Extraction
+- **Option A — Code (Rules)**: \`src/extract_transactions.py\` detects the table header (Date / Operation / Debit / Credit) and uses geometric column positions to parse rows underneath. Fast and deterministic.
+- **Option B — LLM (Ollama)**: \`src/llm/\` chunks the page text (~1 500 words), sends each chunk to a local **qwen3.5:4b** model with a structured prompt, and collects JSON transactions. Recommended for complex or irregular layouts.
+
+### 3 — Classification & Enrichment
+\`src/classify.py\` normalizes text (uppercase, strip accents, mask card numbers), matches against keyword rules (\`src/rules.py\`), detects payment method and merchant, and assigns a **confidence score (0–100 %)**.
+
+### 4 — Persistence
+Structured JSON files are saved to \`%LOCALAPPDATA%\\ReleveDash\\json\\final\\\` — the single source of truth for both UIs.
+
+### 5 — Visualization
+- **PySide6** desktop app: data processed with Pandas (\`src/app/analytics.py\`), rendered with the built-in chart engine (\`src/app/charts.py\`).
+- **Streamlit** web dashboard (\`dashboard.py\`): reads the same JSON files, uses **Plotly** for interactive charts.
 
 ### Technical Stack
 - **Extraction**: Python, PyMuPDF (fitz)
-- **Processing**: Pandas, NumPy, custom parsing engine
-- **Classification**: Scikit-learn, rule-based + ML hybrid
-- **Visualization**: Streamlit, Plotly, Matplotlib
+- **Rule Engine**: Custom geometric column parser
+- **LLM Engine**: Ollama, qwen3.5:4b, chunked prompting
+- **Classification**: Keyword rules, confidence scoring
+- **Desktop UI**: PySide6, Pandas, built-in charts
+- **Web UI**: Streamlit, Plotly
 - **Data**: JSON schema, structured pipelines
 
 ### Key Features
-- Coordinate-based word extraction from PDF pages
-- Intelligent transaction boundary detection
-- Hybrid AI categorization (rules + ML models)
-- Interactive dashboard: pie charts, histograms, budget vs actual, KPIs
-- Recurring expense detection & subscription tracking
+- Dual extraction modes: fast rules vs. smart LLM
+- Confidence-scored AI categorization
+- Keyword-based merchant & payment method detection
+- Interactive dashboards: pie charts, histograms, KPIs
+- Local-first — no cloud dependency, Ollama runs on your machine
+- Persistent JSON store readable by both UIs
 
 ### What It Demonstrates
 - Data Engineering pipeline design
 - Document parsing & NLP preprocessing
-- ML model integration in production context
-- Full-stack data product delivery
+- Local LLM integration (Ollama)
+- Dual-engine architecture (rules vs. AI)
+- Full-stack data product delivery (desktop + web)
       `,
-      tags: ["Python", "PyMuPDF", "Pandas", "Scikit-learn", "Streamlit", "Plotly", "NLP", "Data Pipeline"],
+      tags: ["Python", "PyMuPDF", "Pandas", "Ollama", "PySide6", "Streamlit", "Plotly", "NLP", "Data Pipeline"],
       github: "https://github.com/Nicolas-cottez/releverToJson",
       image: "/images/financial_analyzer.png",
       type: "main",
@@ -109,7 +135,7 @@ Document Upload → Text Extraction → Chunking (recursive)
 - Production-grade modular design
       `,
       tags: ["Python", "LangChain", "FAISS", "Transformers", "Streamlit", "RAG", "LLM", "NLP"],
-      github: "https://github.com/Nicolas-cottez/rag-system",
+      github: "https://github.com/Nicolas-cottez/RAG",
       image: "/images/rag_system.png",
       type: "main",
       status: "completed",
@@ -381,47 +407,73 @@ A **fast, offline and privacy-friendly** text corrector that works anywhere on W
      *  PROJETS PRINCIPAUX (6)
      * ========================================== */
 
-    /* 1. Process de Relevés Bancaires PDF */
+    /* 1. BankLens — Process de Relevés Bancaires PDF */
     {
-      title: "Process de Relevés Bancaires PDF",
-      positioning: "Pipeline de données complet : du PDF brut au dashboard financier intelligent.",
-      shortSummary: "Analyse automatisée de relevés bancaires : extraction PDF, structuration des transactions, catégorisation IA & dashboard Streamlit interactif.",
+      title: "BankLens — Process de Relevés Bancaires PDF",
+      positioning: "Pipeline de données complet : du PDF brut au dashboard financier intelligent, avec double moteur d'extraction (règles + LLM local).",
+      shortSummary: "Analyse automatisée de relevés bancaires : ingestion PDF, double extraction (règles code ou LLM Ollama), classification IA avec score de confiance, et dashboards interactifs (PySide6 + Streamlit).",
       longDescription: `
 ### Problème
 Les relevés bancaires en PDF contiennent du texte non structuré, extrêmement difficile à traiter. La catégorisation manuelle est chronophage et source d'erreurs.
 
 ### Solution
-Un pipeline complet qui ingère les PDF bruts, extrait les mots avec leurs coordonnées, reconstruit les transactions, les classifie par IA et présente des insights via un dashboard interactif.
+Un pipeline complet — **BankLens** — qui ingère les PDF bruts, extrait les transactions via deux moteurs interchangeables (règles géométriques ou LLM local), les classifie avec un score de confiance, et présente des insights via des dashboards interactifs.
 
-### Architecture
+### Vue d'Ensemble du Pipeline
 \`\`\`
-Ingestion PDF → Extraction de mots (PyMuPDF)
-  → Reconstruction des transactions → Structuration JSON
-    → Classification IA → Détection de patterns
-      → Dashboard Streamlit (graphiques, tableaux, KPIs)
+1. Ingestion PDF (PyMuPDF) → extraction de texte brut
+2. Extraction des Transactions (choix du moteur)
+   ├── Option A : Règles (géométrie des colonnes)
+   └── Option B : LLM (Ollama / qwen3.5:4b)
+3. Classification & Enrichissement (mots-clés, commerçant, moyen de paiement, confiance %)
+4. Persistance → %LOCALAPPDATA%\\ReleveDash\\json\\final\\
+5. Visualisation
+   ├── Application desktop PySide6 (Pandas + graphiques intégrés)
+   └── Dashboard web Streamlit (Plotly)
 \`\`\`
+
+### 1 — Ingestion du Relevé
+Le texte du PDF est extrait page par page avec **PyMuPDF** (\`src/extract.py\`). Pas d'OCR — le fichier doit contenir du texte sélectionnable.
+
+### 2 — Extraction des Transactions
+- **Option A — Code (Règles)** : \`src/extract_transactions.py\` détecte l'en-tête du tableau (Date / Opération / Débit / Crédit) et utilise les positions géométriques des colonnes pour découper les lignes. Rapide et déterministe.
+- **Option B — IA (Ollama)** : \`src/llm/\` découpe le texte en chunks (~1 500 mots), envoie chaque chunk au modèle local **qwen3.5:4b** avec un prompt structuré et collecte les transactions en JSON. Recommandé pour les mises en page complexes.
+
+### 3 — Classification & Enrichissement
+\`src/classify.py\` normalise le texte (majuscules, suppression des accents, masquage des numéros de carte), compare aux règles de mots-clés (\`src/rules.py\`), détecte le moyen de paiement et le commerçant, et attribue un **score de confiance (0–100 %)**.
+
+### 4 — Persistance
+Les fichiers JSON structurés sont sauvegardés dans \`%LOCALAPPDATA%\\ReleveDash\\json\\final\\\` — la source unique de vérité pour les deux interfaces.
+
+### 5 — Visualisation
+- **PySide6** (application desktop) : données traitées avec Pandas (\`src/app/analytics.py\`), rendues avec le moteur de graphiques intégré (\`src/app/charts.py\`).
+- **Streamlit** (dashboard web, \`dashboard.py\`) : lit les mêmes fichiers JSON, utilise **Plotly** pour les graphiques interactifs.
 
 ### Stack Technique
 - **Extraction** : Python, PyMuPDF (fitz)
-- **Traitement** : Pandas, NumPy, moteur de parsing custom
-- **Classification** : Scikit-learn, hybride règles + ML
-- **Visualisation** : Streamlit, Plotly, Matplotlib
+- **Moteur Règles** : Parser géométrique de colonnes custom
+- **Moteur LLM** : Ollama, qwen3.5:4b, prompting par chunks
+- **Classification** : Règles par mots-clés, scoring de confiance
+- **UI Desktop** : PySide6, Pandas, graphiques intégrés
+- **UI Web** : Streamlit, Plotly
 - **Données** : Schéma JSON, pipelines structurés
 
 ### Fonctionnalités Clés
-- Extraction de mots basée sur les coordonnées des pages PDF
-- Détection intelligente des limites de transactions
-- Catégorisation IA hybride (règles + modèles ML)
-- Dashboard interactif : camemberts, histogrammes, budget vs réel, KPIs
-- Détection des dépenses récurrentes & suivi d'abonnements
+- Double mode d'extraction : règles rapides vs. LLM intelligent
+- Catégorisation IA avec score de confiance
+- Détection de commerçant et moyen de paiement par mots-clés
+- Dashboards interactifs : camemberts, histogrammes, KPIs
+- 100% local — aucune dépendance cloud, Ollama tourne sur ta machine
+- Store JSON persistant lisible par les deux interfaces
 
 ### Ce Que Ça Démontre
 - Conception de pipelines Data Engineering
 - Parsing de documents & prétraitement NLP
-- Intégration de modèles ML en contexte de production
-- Livraison d'un produit data complet
+- Intégration de LLM local (Ollama)
+- Architecture double moteur (règles vs. IA)
+- Livraison d'un produit data complet (desktop + web)
       `,
-      tags: ["Python", "PyMuPDF", "Pandas", "Scikit-learn", "Streamlit", "Plotly", "NLP", "Data Pipeline"],
+      tags: ["Python", "PyMuPDF", "Pandas", "Ollama", "PySide6", "Streamlit", "Plotly", "NLP", "Data Pipeline"],
       github: "https://github.com/Nicolas-cottez/releverToJson",
       image: "/images/financial_analyzer.png",
       type: "main",
@@ -471,7 +523,7 @@ Upload Document → Extraction Texte → Chunking (récursif)
 - Conception modulaire production-grade
       `,
       tags: ["Python", "LangChain", "FAISS", "Transformers", "Streamlit", "RAG", "LLM", "NLP"],
-      github: "https://github.com/Nicolas-cottez/rag-system",
+      github: "https://github.com/Nicolas-cottez/RAG",
       image: "/images/rag_system.png",
       type: "main",
       status: "completed",
