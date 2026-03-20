@@ -139,7 +139,7 @@ export default function ExperienceSection() {
     <section
       ref={containerRef}
       id="experience"
-      className="relative flex flex-col items-center px-4 sm:px-8 md:px-12 lg:px-20 max-w-6xl mx-auto min-h-screen py-24 overflow-hidden"
+      className="relative flex flex-col items-center px-4 sm:px-8 md:px-12 lg:px-20 max-w-6xl mx-auto min-h-screen py-24"
     >
       {/* Section Header */}
       <motion.div

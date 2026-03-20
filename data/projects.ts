@@ -5,6 +5,7 @@ export type Project = {
   longDescription: string;
   tags: string[];
   github?: string;
+  githubLinks?: { label: string; url: string }[];
   image: string;
   type: "main" | "secondary";
   category?: "research" | "webdev" | "utilities";
@@ -59,7 +60,7 @@ PDF Ingestion → Word Extraction (PyMuPDF)
 - Full-stack data product delivery
       `,
       tags: ["Python", "PyMuPDF", "Pandas", "Scikit-learn", "Streamlit", "Plotly", "NLP", "Data Pipeline"],
-      github: "https://github.com/Nicolas-cottez/ai-financial-analyzer",
+      github: "https://github.com/Nicolas-cottez/releverToJson",
       image: "/images/financial_analyzer.png",
       type: "main",
       status: "completed",
@@ -310,7 +311,10 @@ City Selection → POI Database Query
 - Transformer architectures from scratch
       `,
       tags: ["Python", "Scikit-learn", "TensorFlow", "PyTorch", "XGBoost", "Keras", "Pandas", "NumPy", "CNN", "NLP"],
-      github: "https://github.com/Nicolas-cottez/machine-learning",
+      githubLinks: [
+        { label: "Machine Learning", url: "https://github.com/Nicolas-cottez/machine-learning" },
+        { label: "Deep Learning", url: "https://github.com/Nicolas-cottez/deep-learning" },
+      ],
       image: "/images/ml_group.png",
       type: "secondary",
       category: "research",
@@ -328,12 +332,13 @@ City Selection → POI Database Query
 ### Web Applications
 - **BlaBlaCar-like Platform** — PHP, MySQL, authentication, CRUD, session management
 - **Car Purchase Website** — HTML, CSS, JavaScript, responsive UI, vehicle catalog
+- **Shopping Application** — Java, CSS, product catalog, cart management, order processing
 - **Portfolio Website** — Next.js, React, TypeScript, Framer Motion, responsive design
 
 ### Native Applications
 - **Amusement Park Simulator** — C, Allegro 5, animation loop, 2D rendering engine
       `,
-      tags: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Next.js", "React", "TypeScript", "C"],
+      tags: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Java", "Next.js", "React", "TypeScript", "C"],
       image: "/images/web_dev.png",
       type: "secondary",
       category: "webdev",
@@ -417,7 +422,7 @@ Ingestion PDF → Extraction de mots (PyMuPDF)
 - Livraison d'un produit data complet
       `,
       tags: ["Python", "PyMuPDF", "Pandas", "Scikit-learn", "Streamlit", "Plotly", "NLP", "Data Pipeline"],
-      github: "https://github.com/Nicolas-cottez/ai-financial-analyzer",
+      github: "https://github.com/Nicolas-cottez/releverToJson",
       image: "/images/financial_analyzer.png",
       type: "main",
       status: "completed",
@@ -668,7 +673,10 @@ Sélection de Ville → Requête Base de Données POI
 - Architectures Transformer from scratch
       `,
       tags: ["Python", "Scikit-learn", "TensorFlow", "PyTorch", "XGBoost", "Keras", "Pandas", "NumPy", "CNN", "NLP"],
-      github: "https://github.com/Nicolas-cottez/machine-learning",
+      githubLinks: [
+        { label: "Machine Learning", url: "https://github.com/Nicolas-cottez/machine-learning" },
+        { label: "Deep Learning", url: "https://github.com/Nicolas-cottez/deep-learning" },
+      ],
       image: "/images/ml_group.png",
       type: "secondary",
       category: "research",
@@ -686,12 +694,13 @@ Sélection de Ville → Requête Base de Données POI
 ### Applications Web
 - **Plateforme type BlaBlaCar** — PHP, MySQL, authentification, CRUD, gestion de sessions
 - **Site d'Achat de Voitures** — HTML, CSS, JavaScript, UI responsive, catalogue véhicules
+- **Application Shopping** — Java, CSS, catalogue produits, gestion du panier, traitement des commandes
 - **Site Portfolio** — Next.js, React, TypeScript, Framer Motion, design responsive
 
 ### Applications Natives
 - **Simulateur de Parc d'Attractions** — C, Allegro 5, boucle d'animation, moteur de rendu 2D
       `,
-      tags: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Next.js", "React", "TypeScript", "C"],
+      tags: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Java", "Next.js", "React", "TypeScript", "C"],
       image: "/images/web_dev.png",
       type: "secondary",
       category: "webdev",

@@ -187,8 +187,27 @@ function SecondarySection({
                 ))}
               </div>
 
-              {/* GitHub link */}
-              {project.github && project.github !== "no" && (
+              {/* GitHub link(s) */}
+              {(project.githubLinks && project.githubLinks.length > 0) ? (
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {project.githubLinks.map((link) => (
+                    <motion.a
+                      key={link.url}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl
+                                 bg-[var(--accent)]/15 border border-[var(--accent)]/35
+                                 text-white text-sm hover:bg-[var(--accent)]/25 transition-all"
+                    >
+                      <Github size={16} />
+                      {link.label}
+                    </motion.a>
+                  ))}
+                </div>
+              ) : project.github && project.github !== "no" && (
                 <motion.a
                   href={project.github}
                   target="_blank"
@@ -463,7 +482,26 @@ export default function ProjectsSection() {
                   </div>
 
                   {/* GitHub — only if link exists and is valid */}
-                  {mainProjects[selected]?.github && mainProjects[selected]?.github !== "no" && (
+                  {mainProjects[selected]?.githubLinks && mainProjects[selected].githubLinks!.length > 0 ? (
+                    <div className="flex flex-wrap gap-3">
+                      {mainProjects[selected].githubLinks!.map((link) => (
+                        <motion.a
+                          key={link.url}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[var(--accent)]/20
+                                   border border-[var(--accent)]/40 text-white hover:bg-[var(--accent)]/30
+                                   transition-all duration-300"
+                        >
+                          <Github size={20} />
+                          {link.label}
+                        </motion.a>
+                      ))}
+                    </div>
+                  ) : mainProjects[selected]?.github && mainProjects[selected]?.github !== "no" && (
                     <div className="flex gap-4">
                       <motion.a
                         href={mainProjects[selected].github}
