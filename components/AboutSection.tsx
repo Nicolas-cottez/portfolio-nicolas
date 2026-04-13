@@ -32,7 +32,7 @@ const AboutSection = () => {
       icon: Languages,
       title: t.languages,
       languages: [
-        { lang: t.langNames.English, level: "C2", certifications: "TOEFL 92 · TOEIC 920" },
+        { lang: t.langNames.English, level: "C2", certifications: "TOEFL 89 · TOEIC 900" },
         { lang: t.langNames.Japanese, level: "A1" },
         { lang: t.langNames.Spanish, level: "A2" },
         { lang: t.langNames.Chinese, level: "A0" }
