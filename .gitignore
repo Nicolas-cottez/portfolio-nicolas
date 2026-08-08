@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local planning and project briefs
+/CLAUDE.md
+/tasks/
+/local_ai_trust_gateway_project_brief*.md
+/projet_stage_ia_diagnostic_immobilier.md

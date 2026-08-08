@@ -1,9 +1,10 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Mail, Linkedin, Github, Download, Send, Sparkles } from "lucide-react";
+import { Mail, Linkedin, Github, Download, Send } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
+import { resumeHref } from "@/lib/site";
 
 export default function ContactSection() {
   const { language } = useLanguage();
@@ -61,8 +62,8 @@ export default function ContactSection() {
     },
     {
       icon: Download,
-      href: "/CV_nicolascottezabrate.pdf",
-      label: t.resume,
+      href: resumeHref(language),
+      label: t.downloadResume,
       color: "#d4a5ff",
     },
   ];
@@ -123,17 +124,15 @@ export default function ContactSection() {
           </motion.div>
 
           <motion.div
-            className="flex items-center justify-center gap-2 mb-6"
+            className="flex items-center justify-center mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <Sparkles className="w-4 h-4 text-[var(--accent)]" />
             <p className="text-[var(--text-muted)] text-sm sm:text-base md:text-lg max-w-2xl">
               {t.subtitle}
             </p>
-            <Sparkles className="w-4 h-4 text-[var(--accent)]" />
           </motion.div>
         </motion.div>
 
@@ -221,9 +220,6 @@ export default function ContactSection() {
           viewport={{ once: true }}
           className="space-y-2"
         >
-          <p className="text-sm text-[var(--text-muted)]">
-            {t.crafted}
-          </p>
           <p className="text-xs text-[var(--text-muted)]/70">
             © {new Date().getFullYear()} Nicolas Cottez-Abrate — {t.rights}
           </p>

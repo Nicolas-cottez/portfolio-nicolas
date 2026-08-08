@@ -1,9 +1,10 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { FolderOpen, Mail, ChevronDown } from "lucide-react";
+import { FolderOpen, Download, ChevronDown } from "lucide-react";
 import useScrollSpy from "@/hooks/useScrollSpy";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
+import { resumeHref } from "@/lib/site";
 
 export default function HeroSection() {
   const sections = ["home", "about", "experience", "projects", "contact"];
@@ -11,6 +12,7 @@ export default function HeroSection() {
   const showScroll = activeId === "home";
   const { language } = useLanguage();
   const t = translations[language].hero;
+  const nav = translations[language].nav;
 
   return (
     <section
@@ -27,20 +29,20 @@ export default function HeroSection() {
         transition={{ duration: 1, ease: "easeOut" }}
         className="max-w-2xl z-10 md:ml-[calc(5%+20px)]"
       >
-        <p className="text-[#b266ff] text-xs sm:text-sm font-mono tracking-wider mb-3">
-          {t.greeting}
-        </p>
-
-        <h1 className="text-6xl sm:text-7xl md:text-8xl font-extrabold leading-[1.1] text-white mb-4">
-          Nicolas<span className="text-[#b266ff]">.</span>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.15] text-white mb-4">
+          Nicolas Cottez-Abrate<span className="text-[#b266ff]">.</span>
         </h1>
 
         <h2 className="text-lg sm:text-2xl md:text-3xl font-semibold text-[#c8a3ff]/90 mt-2">
           {t.role}
         </h2>
 
-        <p className="text-[#ddd]/70 text-sm sm:text-lg max-w-xl mt-6 leading-relaxed">
-          {t.description}
+        <p className="text-[#ddd]/80 text-sm sm:text-lg max-w-xl mt-6 leading-relaxed">
+          {t.seeking}
+        </p>
+
+        <p className="text-[#ddd]/60 text-sm sm:text-base max-w-xl mt-3 leading-relaxed">
+          {t.tagline}
         </p>
 
         <div className="flex flex-wrap gap-4 mt-10">
@@ -59,13 +61,14 @@ export default function HeroSection() {
           <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            href="#contact"
+            href={resumeHref(language)}
+            download
             className="group flex items-center gap-2 px-6 py-3 rounded-full border border-[#b266ff80]
-                       text-[#b266ff] hover:bg-[#b266ff20] hover:shadow-[0_0_15px_#b266ff70] 
+                       text-[#b266ff] hover:bg-[#b266ff20] hover:shadow-[0_0_15px_#b266ff70]
                        transition-all duration-300"
           >
-            <Mail className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            {t.contact}
+            <Download className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            {nav.downloadResume}
           </motion.a>
         </div>
       </motion.div>

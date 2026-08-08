@@ -7,6 +7,7 @@ import useScrollSpy from "@/hooks/useScrollSpy";
 import LanguageToggle from "./LanguageToggle";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/data/translations";
+import { resumeHref } from "@/lib/site";
 
 export default function Navbar() {
   const sections = ["home", "about", "experience", "projects", "contact"];
@@ -62,7 +63,7 @@ export default function Navbar() {
               <div className="text-white font-bold text-lg tracking-tight">
                 Nicolas <span className="text-[var(--accent-light)]">Cottez Abrate</span>
               </div>
-              <div className="text-[#888] text-[10px] font-mono tracking-wider">AI Engineer</div>
+              <div className="text-[#888] text-[10px] font-mono tracking-wider">{t.tagline}</div>
             </div>
           </motion.div>
 
@@ -96,7 +97,7 @@ export default function Navbar() {
 
             {/* Resume Button Desktop */}
             <motion.a
-              href="/CV_nicolascottezabrate.pdf"
+              href={resumeHref(language)}
               download
               whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(178,102,255,0.4)" }}
               whileTap={{ scale: 0.95 }}
@@ -189,7 +190,7 @@ export default function Navbar() {
                 </div>
 
                 <motion.a
-                  href="/CV_nicolascottezabrate.pdf"
+                  href={resumeHref(language)}
                   download
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}

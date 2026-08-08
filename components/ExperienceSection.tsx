@@ -337,87 +337,54 @@ export default function ExperienceSection() {
                         {exp.role}
                       </h3>
 
-                      {/* Si subjobs existe, afficher la structure spéciale */}
-                      {(exp as any).subjobs ? (
-                        <div className="space-y-4">
-                          {(exp as any).subjobs.map((subjob: any, subjobIdx: number) => (
-                            <div key={subjobIdx}>
-                              {subjobIdx > 0 && (
-                                <div className="h-px bg-gradient-to-r from-transparent via-neutral-700/30 to-transparent my-5" />
-                              )}
+                      <div className="flex items-center gap-2 text-[var(--text-muted)] text-sm mb-2">
+                        <Briefcase className="w-4 h-4 text-[var(--accent)]" />
+                        <p className="font-medium">{exp.company}</p>
+                      </div>
 
-                              <div className="flex items-center gap-2 text-[var(--text-muted)] text-sm mb-2">
-                                <Briefcase className="w-4 h-4 text-[var(--accent)]" />
-                                <p className="font-medium">{subjob.company}</p>
-                              </div>
+                      {exp.location && (
+                        <div className="flex items-center gap-2 text-[var(--text-muted)] text-xs mb-2">
+                          <MapPin className="w-4 h-4 text-[var(--accent)]" />
+                          <p>{exp.location}</p>
+                        </div>
+                      )}
 
-                              {subjob.location && (
-                                <div className="flex items-center gap-2 text-[var(--text-muted)] text-xs mb-2">
-                                  <MapPin className="w-4 h-4 text-[var(--accent)]" />
-                                  <p>{subjob.location}</p>
-                                </div>
-                              )}
+                      {exp.period && (
+                        <div className="flex items-center gap-2 text-[var(--text-muted)] text-xs mb-4">
+                          <Calendar className="w-4 h-4 text-[var(--accent)]" />
+                          <p>{exp.period}</p>
+                        </div>
+                      )}
 
-                              <div className="flex items-center gap-2 text-[var(--text-muted)] text-xs mb-3">
-                                <Calendar className="w-4 h-4 text-[var(--accent)]" />
-                                <p>{subjob.period}</p>
-                              </div>
+                      <div className="h-px bg-gradient-to-r from-[var(--accent)]/0 via-[var(--accent)]/50 to-[var(--accent)]/0 mb-4" />
 
-                              <ul className="space-y-2 text-[var(--text-secondary)] text-sm">
-                                {subjob.description.map((desc: string, i: number) => (
-                                  <motion.li
-                                    key={i}
-                                    initial={{ opacity: 0, x: -10 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.6 + i * 0.05 }}
-                                    className="flex items-start gap-2"
-                                  >
-                                    <span className="text-[var(--accent)] mt-1 flex-shrink-0">▸</span>
-                                    <span>{desc}</span>
-                                  </motion.li>
-                                ))}
-                              </ul>
-                            </div>
+                      <ul className="space-y-2 text-[var(--text-secondary)] text-sm">
+                        {exp.description.map((desc, i) => (
+                          <motion.li
+                            key={i}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.6 + i * 0.05 }}
+                            className="flex items-start gap-2"
+                          >
+                            <span className="text-[var(--accent)] mt-1 flex-shrink-0">▸</span>
+                            <span>{desc}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+
+                      {exp.tech && exp.tech.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-4">
+                          {exp.tech.map((tech) => (
+                            <span
+                              key={tech}
+                              className="px-2 py-1 rounded-md bg-[#15101f] border border-[var(--accent)]/20
+                                         text-[#bbb] text-[11px] font-['JetBrains_Mono']"
+                            >
+                              {tech}
+                            </span>
                           ))}
                         </div>
-                      ) : (
-                        <>
-                          <div className="flex items-center gap-2 text-[var(--text-muted)] text-sm mb-2">
-                            <Briefcase className="w-4 h-4 text-[var(--accent)]" />
-                            <p className="font-medium">{exp.company}</p>
-                          </div>
-
-                          {exp.location && (
-                            <div className="flex items-center gap-2 text-[var(--text-muted)] text-xs mb-2">
-                              <MapPin className="w-4 h-4 text-[var(--accent)]" />
-                              <p>{exp.location}</p>
-                            </div>
-                          )}
-
-                          {exp.period && (
-                            <div className="flex items-center gap-2 text-[var(--text-muted)] text-xs mb-4">
-                              <Calendar className="w-4 h-4 text-[var(--accent)]" />
-                              <p>{exp.period}</p>
-                            </div>
-                          )}
-
-                          <div className="h-px bg-gradient-to-r from-[var(--accent)]/0 via-[var(--accent)]/50 to-[var(--accent)]/0 mb-4" />
-
-                          <ul className="space-y-2 text-[var(--text-secondary)] text-sm">
-                            {exp.description.map((desc, i) => (
-                              <motion.li
-                                key={i}
-                                initial={{ opacity: 0, x: -10 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.6 + i * 0.05 }}
-                                className="flex items-start gap-2"
-                              >
-                                <span className="text-[var(--accent)] mt-1 flex-shrink-0">▸</span>
-                                <span>{desc}</span>
-                              </motion.li>
-                            ))}
-                          </ul>
-                        </>
                       )}
                     </motion.div>
                   </div>

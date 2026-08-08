@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Github, ChevronDown, Rocket, FlaskConical, Code2, Cpu } from "lucide-react";
+import { X, Github, ChevronDown, FlaskConical, Code2, Cpu, Server, Shield } from "lucide-react";
 import { projects, type Project } from "@/data/projects";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
@@ -44,8 +44,14 @@ function ProjectCard({ project, index, onClick }: { project: Project; index: num
 
       {/* Image */}
       <div className="relative w-full h-full">
-        <Image src={project.image} alt={project.title} fill className="object-cover transition-all duration-400 group-hover:scale-110" />
-        
+        {project.image ? (
+          <Image src={project.image} alt={project.title} fill className="object-cover transition-all duration-400 group-hover:scale-110" />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#1a0f2e] to-[#0f0a15]">
+            <Shield className="w-16 h-16 text-[var(--accent)]/30" strokeWidth={1.25} />
+          </div>
+        )}
+
         {/* Hover Overlay */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -242,17 +248,20 @@ export default function ProjectsSection() {
   const researchProject = currentProjects.find((p) => p.type === "secondary" && p.category === "research");
   const webdevProject = currentProjects.find((p) => p.type === "secondary" && p.category === "webdev");
   const utilitiesProject = currentProjects.find((p) => p.type === "secondary" && p.category === "utilities");
+  const automationProject = currentProjects.find((p) => p.type === "secondary" && p.category === "automation");
 
   const sectionIcons: Record<string, React.ElementType> = {
     research: FlaskConical,
     webdev: Code2,
     utilities: Cpu,
+    automation: Server,
   };
 
   const sectionTitles: Record<string, { title: string; subtitle: string }> = {
     research: { title: t.researchTitle, subtitle: t.researchSubtitle },
     webdev: { title: t.webdevTitle, subtitle: t.webdevSubtitle },
     utilities: { title: t.utilitiesTitle, subtitle: t.utilitiesSubtitle },
+    automation: { title: t.automationTitle, subtitle: t.automationSubtitle },
   };
 
   return (
@@ -271,10 +280,7 @@ export default function ProjectsSection() {
         <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4">
           {t.title}
         </h2>
-        <div className="h-1 w-24 mx-auto bg-[var(--accent)] rounded-full mb-6" />
-        <p className="text-[#999] max-w-2xl mx-auto text-sm sm:text-base">
-          {t.subtitle}
-        </p>
+        <div className="h-1 w-24 mx-auto bg-[var(--accent)] rounded-full" />
       </motion.div>
 
       {/* ─── Main Projects Grid ─────────────────────────── */}
@@ -296,37 +302,6 @@ export default function ProjectsSection() {
             onClick={() => setSelected(i)}
           />
         ))}
-
-        {/* Coming Soon Card */}
-        <motion.div
-          variants={{
-            hidden: { opacity: 0, y: 60, scale: 0.95 },
-            visible: {
-              opacity: 1, y: 0, scale: 1,
-              transition: { type: "spring", stiffness: 100, damping: 15, delay: mainProjects.length * 0.1 },
-            },
-          }}
-          className="relative rounded-2xl overflow-hidden h-[350px]
-                     border-2 border-dashed border-[var(--accent)]/30
-                     bg-gradient-to-br from-[#0f0a15] to-[#1a0f2e]
-                     flex flex-col items-center justify-center gap-4
-                     transition-all duration-400"
-        >
-          <motion.div
-            animate={{ scale: [1, 1.15, 1] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <Rocket size={48} className="text-[var(--accent)]/50" />
-          </motion.div>
-          <h3 className="text-2xl font-bold text-white/40">
-            {language === "fr" ? "Bientôt disponible" : "Coming Soon"}
-          </h3>
-          <p className="text-[#666] text-sm text-center px-6 max-w-xs">
-            {language === "fr"
-              ? "Un nouveau projet est en cours de développement..."
-              : "A new project is currently in development..."}
-          </p>
-        </motion.div>
       </motion.div>
 
       {/* ─── Secondary Sections ─────────────────────────── */}
@@ -364,6 +339,14 @@ export default function ProjectsSection() {
               icon={sectionIcons.utilities}
               sectionTitle={sectionTitles.utilities.title}
               sectionSubtitle={sectionTitles.utilities.subtitle}
+            />
+          )}
+          {automationProject && (
+            <SecondarySection
+              project={automationProject}
+              icon={sectionIcons.automation}
+              sectionTitle={sectionTitles.automation.title}
+              sectionSubtitle={sectionTitles.automation.subtitle}
             />
           )}
         </div>
@@ -428,16 +411,20 @@ export default function ProjectsSection() {
                   )}
 
                   {/* Modal Image */}
-                  {mainProjects[selected]?.image && (
-                    <div className="relative w-full h-48 sm:h-64 rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6">
+                  <div className="relative w-full h-48 sm:h-64 rounded-xl sm:rounded-2xl overflow-hidden mb-4 sm:mb-6">
+                    {mainProjects[selected]?.image ? (
                       <Image
                         src={mainProjects[selected].image}
                         alt={mainProjects[selected].title}
                         fill
                         className="object-cover"
                       />
-                    </div>
-                  )}
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#1a0f2e] to-[#0f0a15]">
+                        <Shield className="w-20 h-20 text-[var(--accent)]/30" strokeWidth={1.25} />
+                      </div>
+                    )}
+                  </div>
 
                   {/* Title */}
                   <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">

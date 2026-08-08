@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nicolas COTTEZ-ABRATE — CV (Français)</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5b6573;
+      --accent: #164d73;
+      --line: #cfd6de;
+      --paper: #ffffff;
+      --screen: #eef1f3;
+    }
+
+    * { box-sizing: border-box; }
+
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--screen);
+      color: var(--ink);
+      font-family: Arial, "Liberation Sans", "Helvetica Neue", sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      font-size: 9.2pt;
+      line-height: 1.27;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      margin: 14px auto;
+      padding: 11.5mm 13mm 10.5mm;
+      background: var(--paper);
+      box-shadow: 0 4px 16px rgba(20, 32, 45, 0.08);
+      overflow: hidden;
+    }
+
+    .header {
+      display: block;
+      padding-bottom: 2.4mm;
+      border-bottom: 1px solid #d3d9df;
+      text-align: center;
+    }
+
+    .identity { min-width: 0; }
+
+    h1 {
+      margin: 0;
+      color: var(--accent);
+      font-size: 26pt;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 0.12px;
+    }
+
+    .role {
+      margin-top: 0.8mm;
+      color: var(--accent);
+      font-size: 11pt;
+      line-height: 1.16;
+      font-weight: 600;
+    }
+
+    .target {
+      margin-top: 0.7mm;
+      color: var(--muted);
+      font-size: 9.2pt;
+      line-height: 1.2;
+      font-weight: 400;
+    }
+
+    .contact {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0 2.4mm;
+      margin-top: 1.4mm;
+      color: #455164;
+      font-size: 8.7pt;
+      line-height: 1.25;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .contact-item {
+      display: inline;
+      min-width: 0;
+    }
+
+    .contact-item + .contact-item::before {
+      content: "·";
+      margin-right: 2.4mm;
+      color: #8a95a3;
+    }
+
+    .portfolio-link {
+      color: var(--accent);
+      font-weight: 700;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .portfolio-link:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 0.75px;
+      text-underline-offset: 1.4px;
+    }
+
+    @media print {
+      .portfolio-link { text-decoration: none; }
+    }
+
+    .summary {
+      margin: 2.9mm 0 0;
+      color: #3c4757;
+      font-size: 8.75pt;
+      line-height: 1.36;
+    }
+
+    .section {
+      margin-top: 2.6mm;
+    }
+
+    .section-title {
+      margin: 0 0 1.4mm;
+      padding-bottom: 0.7mm;
+      border-bottom: 1px solid #cbd4dd;
+      color: var(--accent);
+      font-size: 11pt;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 0.55px;
+      text-transform: uppercase;
+    }
+
+    .entry {
+      margin-bottom: 1.6mm;
+      break-inside: avoid;
+    }
+
+    .entry:last-child { margin-bottom: 0; }
+
+    .entry-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 5mm;
+      align-items: baseline;
+      color: #172235;
+      font-size: 9.7pt;
+      font-weight: 700;
+    }
+
+    .date {
+      color: #334155;
+      font-size: 8.35pt;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .entry-sub {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 5mm;
+      align-items: baseline;
+      margin-top: 0.25mm;
+      color: var(--muted);
+      font-size: 8.3pt;
+    }
+
+    .entry-sub > div:first-child { font-style: italic; }
+
+    .place { white-space: nowrap; font-style: normal; }
+
+    .english-track {
+      margin-top: 0.55mm;
+      color: #334155;
+      font-size: 7.7pt;
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    ul {
+      margin: 0.8mm 0 0 4.2mm;
+      padding: 0;
+    }
+
+    li {
+      margin: 0 0 0.53mm;
+      padding-left: 0.25mm;
+    }
+
+    .compact li { margin: 0 0 0.27mm; }
+
+    .projects {
+      display: grid;
+      margin-top: 0.53mm;
+    }
+
+    .project {
+      display: block;
+      margin-bottom: 2mm;
+      break-inside: avoid;
+    }
+
+    .project:last-child { margin-bottom: 0; }
+
+    .project-title {
+      color: #172235;
+      font-size: 9.6pt;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .project-description {
+      margin-top: 0.4mm;
+      color: #3c4859;
+      line-height: 1.25;
+    }
+
+    .project-tech {
+      margin-top: 0.4mm;
+      color: #566273;
+      font-size: 8.4pt;
+      font-style: italic;
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 45fr 55fr;
+      column-gap: 9mm;
+      margin-top: 2.8mm;
+      align-items: start;
+    }
+
+    .bottom-grid .section {
+      margin-top: 0;
+      min-width: 0;
+    }
+
+    .panel {
+      padding: 0;
+      border: 0;
+    }
+
+    .info-row {
+      margin-bottom: 1.3mm;
+      font-size: 8.3pt;
+      line-height: 1.22;
+    }
+
+    .info-row:last-child { margin-bottom: 0; }
+
+    .info-label {
+      display: block;
+      margin-bottom: 0.25mm;
+      color: #173d63;
+      font-weight: 700;
+      font-size: 8.3pt;
+      line-height: 1.1;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .info-row > div:last-child {
+      color: #30394a;
+    }
+
+    @media print {
+      html,
+      body {
+        background: #ffffff;
+      }
+
+      .page {
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      body { background: #ffffff; }
+
+      .page {
+        width: 100%;
+        height: auto;
+        min-height: 297mm;
+        margin: 0;
+        padding: 24px 22px;
+        overflow: visible;
+        box-shadow: none;
+      }
+
+      .bottom-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page" lang="fr">
+    <header class="header">
+      <div class="identity">
+        <h1>Nicolas COTTEZ-ABRATE</h1>
+        <div class="role">Élève ingénieur — Data &amp; Intelligence Artificielle</div>
+        <div class="target">Stage de fin d’études · 6 mois · Janvier 2027</div>
+      </div>
+      <div class="contact">
+        <span class="contact-item">+33 6 71 88 04 35</span>
+        <span class="contact-item"><a href="mailto:nicolascottezabrate@gmail.com">nicolascottezabrate@gmail.com</a></span>
+        <span class="contact-item"><a class="portfolio-link" href="https://nicolascottez.vercel.app" target="_blank" rel="noopener noreferrer">Portfolio</a></span>
+        <span class="contact-item"><a class="portfolio-link" href="https://www.linkedin.com/in/nicolas-cottez-abrate-a38838257/" target="_blank" rel="noopener noreferrer">LinkedIn</a></span>
+        <span class="contact-item"><a class="portfolio-link" href="https://github.com/Nicolas-cottez" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+      </div>
+    </header>
+
+    <p class="summary">Élève ingénieur en 5e année à l’ECE, spécialisé en Data &amp; IA dans un cursus intégralement anglophone. Expérience en RAG local, traitement documentaire, développement d’outils internes et analyse de données.</p>
+
+    <section class="section">
+      <h2 class="section-title">Formation</h2>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>ECE — École d’ingénieurs, Paris / Lyon</div>
+          <div class="date">2022 — 2027</div>
+        </div>
+        <div class="entry-sub">
+          <div>Diplôme d’ingénieur généraliste — Majeure internationale en Data et Intelligence Artificielle · Mineure en physique quantique</div>
+          <div class="place">France</div>
+        </div>
+        <div class="english-track">Cursus intégralement enseigné en anglais</div>
+        <ul class="compact">
+          <li>5e année d’un cursus en cinq ans, après deux années préparatoires à Lyon.</li>
+          <li>Data science, machine learning, business intelligence, bases de données avancées et systèmes.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>École Polytechnique de Varsovie</div>
+          <div class="date">2024 — 2025</div>
+        </div>
+        <div class="entry-sub">
+          <div>Semestre d’échange en intelligence artificielle et informatique</div>
+          <div class="place">Pologne</div>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>Institution du Sacré-Cœur, La Ville-du-Bois</div>
+          <div class="date">2015 — 2022</div>
+        </div>
+        <div class="entry-sub">
+          <div>Baccalauréat général — spécialités mathématiques et physique</div>
+          <div class="place">France</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Expériences</h2>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>Antenic, Paris</div>
+          <div class="date">Avr. 2026 — Août 2026</div>
+        </div>
+        <div class="entry-sub">
+          <div>Stagiaire R&amp;D — Data et Intelligence Artificielle</div>
+          <div class="place">France</div>
+        </div>
+        <ul>
+          <li>Conception d’un copilote IA local pour la recherche dans les procédures internes, la structuration des notes terrain et l’aide à la rédaction de rapports.</li>
+          <li>Mise en place d’une base documentaire avec recherche sémantique, citations des sources et détection d’informations manquantes.</li>
+          <li>Participation aux évolutions de l’application interne et création d’un tableau de bord de suivi de l’activité avec Python et SQL.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>Groupe FORVIA, Brières-les-Scellés</div>
+          <div class="date">Juil. 2025 — Août 2025</div>
+        </div>
+        <div class="entry-sub">
+          <div>Stagiaire R&amp;D</div>
+          <div class="place">France</div>
+        </div>
+        <ul class="compact">
+          <li>Gestion de bibliothèques de composants électroniques, modélisation 3D et participation au routage de cartes avec Design Force (Zuken CR-8000).</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>SIMERIS, Lyon</div>
+          <div class="date">Janv. 2024 — Fév. 2024</div>
+        </div>
+        <div class="entry-sub">
+          <div>Stagiaire R&amp;D</div>
+          <div class="place">France</div>
+        </div>
+        <ul class="compact">
+          <li>Optimisation de processus industriels par la méthode 5S, conception d’outillages en 3D et maintenance de bases de données internes.</li>
+        </ul>
+      </div>
+
+      <div class="entry">
+        <div class="entry-head">
+          <div>Emplois saisonniers — La Poste, Centre des finances publiques et Carrefour</div>
+          <div class="date">2023 — 2025</div>
+        </div>
+        <div class="entry-sub">
+          <div>Employé saisonnier — 6 mois cumulés</div>
+          <div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Projets</h2>
+      <div class="projects">
+        <article class="project">
+          <div class="project-title">PromptCare — Assistant de synthèse médicale</div>
+          <div class="project-description">Conception en équipe d’un assistant de synthèse de dossiers médicaux. Prototype fonctionnel combinant recherche TF-IDF, similarité cosinus et synthèse extractive ancrée, testé sur des dossiers fictifs.</div>
+          <div class="project-tech">Python · scikit-learn · TF-IDF · NLP</div>
+        </article>
+        <article class="project">
+          <div class="project-title">BankLens — Relevés bancaires PDF</div>
+          <div class="project-description">Extraction et classification de transactions, score de confiance et tableaux de bord interactifs.</div>
+          <div class="project-tech">Python · PyMuPDF · Pandas · Streamlit</div>
+        </article>
+        <article class="project">
+          <div class="project-title">Système RAG universel</div>
+          <div class="project-description">Architecture modulaire d’ingestion, recherche sémantique et génération de réponses documentaires.</div>
+          <div class="project-tech">Python · LangChain</div>
+        </article>
+      </div>
+    </section>
+
+    <div class="bottom-grid">
+      <section class="section panel">
+        <h2 class="section-title">Compétences techniques</h2>
+        <div class="info-row"><div class="info-label">Langages</div><div>Python, SQL · notions en Java, C, JavaScript et TypeScript</div></div>
+        <div class="info-row"><div class="info-label">Data &amp; IA</div><div>Pandas, NumPy, scikit-learn, PyTorch, TensorFlow, NLP, RAG</div></div>
+        <div class="info-row"><div class="info-label">IA locale &amp; backend</div><div>Ollama, FastAPI, LangChain, ChromaDB, Streamlit</div></div>
+        <div class="info-row"><div class="info-label">Données &amp; outils</div><div>PostgreSQL, Docker, Git, Linux, Jupyter, Power BI, n8n</div></div>
+      </section>
+
+      <section class="section panel interests">
+        <h2 class="section-title">Langues, engagements &amp; intérêts</h2>
+        <div class="info-row"><div class="info-label">Langues</div><div>Anglais courant — TOEFL iBT 89, TOEIC 900 · Français natif · Espagnol A2 · Japonais A1 · Chinois (notions)</div></div>
+        <div class="info-row"><div class="info-label">Engagement associatif</div><div>Vice-président de « Les Caves » — organisation d’événements étudiants</div></div>
+        <div class="info-row"><div class="info-label">Expérience internationale</div><div>Échange universitaire en Pologne et immersions linguistiques aux États-Unis</div></div>
+        <div class="info-row"><div class="info-label">Sports</div><div>Boxe, escalade</div></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

@@ -9,6 +9,14 @@ const AboutSection = () => {
   const { language } = useLanguage();
   const t = translations[language].about;
 
+  const skillGroups = [
+    { label: t.skillGroups.core, skills: ["Python", "SQL"] },
+    { label: t.skillGroups.dataAi, skills: ["Pandas", "NumPy", "Scikit-learn", "TensorFlow", "PyTorch", "LangChain"] },
+    { label: t.skillGroups.development, skills: ["Java", "C", "JavaScript", "TypeScript", "HTML/CSS"] },
+    { label: t.skillGroups.tools, skills: ["Git", "Linux", "Docker", "PostgreSQL", "Streamlit", "Jupyter", "Power BI", "n8n"] },
+    { label: t.skillGroups.engineering, skills: ["SolidWorks", "3D Modelling"] },
+  ];
+
   const sections = [
     {
       icon: User,
@@ -18,24 +26,17 @@ const AboutSection = () => {
     {
       icon: Code2,
       title: t.technicalSkills,
-      skills: [
-        "Python", "TypeScript", "Java", "C", "R", "SQL",
-        "Web (HTML/CSS/JS)",
-        "Pandas", "NumPy", "Matplotlib", "Scikit-learn",
-        "TensorFlow", "PyTorch", "LangChain",
-        "Docker", "Git", "Linux", "n8n",
-        "PostgreSQL", "Power BI", "Streamlit", "Jupyter",
-        "SolidWorks"
-      ],
+      skillGroups,
     },
     {
       icon: Languages,
       title: t.languages,
       languages: [
-        { lang: t.langNames.English, level: "C2", certifications: "TOEFL 89 · TOEIC 900" },
-        { lang: t.langNames.Japanese, level: "A1" },
+        { lang: t.langNames.French, level: t.langLevels.native },
+        { lang: t.langNames.English, level: t.langLevels.fluent, certifications: "TOEFL iBT 89 · TOEIC 900" },
         { lang: t.langNames.Spanish, level: "A2" },
-        { lang: t.langNames.Chinese, level: "A0" }
+        { lang: t.langNames.Japanese, level: "A1" },
+        { lang: t.langNames.Chinese, level: t.langLevels.basic },
       ],
     }
   ];
@@ -99,67 +100,39 @@ const AboutSection = () => {
                   </div>
                 )}
 
-                {section.skills && (
-                  <div className="flex flex-wrap gap-2 justify-center">
-                    {section.skills.map((skill: string) => (
-                      <motion.span
-                        key={skill}
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        className="px-3 py-1.5 rounded-lg bg-[#15101f] border border-[var(--accent)]/20 
-                                 text-[#ddd] text-sm font-['JetBrains_Mono'] hover:border-[var(--accent)]/40 
-                                 transition-colors duration-300 cursor-default"
-                      >
-                        {skill}
-                      </motion.span>
+                {section.skillGroups && (
+                  <div className="space-y-2.5 max-w-xs mx-auto w-full text-left">
+                    {section.skillGroups.map((group) => (
+                      <p key={group.label} className="text-sm leading-snug">
+                        <span className="text-[var(--accent)]/80 font-semibold">{group.label}:</span>{" "}
+                        <span className="text-[#ccc]">{group.skills.join(" · ")}</span>
+                      </p>
                     ))}
                   </div>
                 )}
 
                 {section.languages && (
-                  <div className="space-y-4 max-w-xs mx-auto">
-                    {section.languages.map((item: any, idx: number) => {
-                      const levelMap: any = {
-                        "C1": 95,
-                        "A2": 40,
-                        "A1": 30,
-                        "A0": 15
-                      };
-                      const percentage = levelMap[item.level] || 50;
-
-                      return (
-                        <motion.div
-                          key={item.lang}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ delay: idx * 0.1 }}
-                          className="space-y-1.5"
-                        >
-                          <div className="flex justify-between items-center">
-                            <span className="text-white font-medium text-sm">{item.lang}</span>
-                            <span className="text-[var(--accent)] font-['JetBrains_Mono'] text-xs font-semibold">
-                              {item.level}
-                            </span>
-                          </div>
-                          {/* Progress bar */}
-                          <div className="h-1.5 bg-[#15101f] rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${percentage}%` }}
-                              viewport={{ once: true }}
-                              transition={{ duration: 1, delay: idx * 0.1 + 0.2, ease: "easeOut" }}
-                              className="h-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] rounded-full"
-                            />
-                          </div>
-                          {/* Certifications */}
+                  <div className="space-y-3 max-w-xs mx-auto">
+                    {section.languages.map((item: any, idx: number) => (
+                      <motion.div
+                        key={item.lang}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: idx * 0.1 }}
+                        className="flex justify-between items-baseline gap-3"
+                      >
+                        <span className="text-white font-medium text-sm">{item.lang}</span>
+                        <span className="text-[var(--accent)] font-['JetBrains_Mono'] text-xs font-semibold text-right">
+                          {item.level}
                           {item.certifications && (
-                            <p className="text-[#888] text-[10px] font-['JetBrains_Mono'] tracking-wide">
+                            <span className="block text-[#888] text-[10px] font-normal tracking-wide">
                               {item.certifications}
-                            </p>
+                            </span>
                           )}
-                        </motion.div>
-                      );
-                    })}
+                        </span>
+                      </motion.div>
+                    ))}
                   </div>
                 )}
               </div>

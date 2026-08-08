@@ -6,9 +6,9 @@ export type Project = {
   tags: string[];
   github?: string;
   githubLinks?: { label: string; url: string }[];
-  image: string;
+  image?: string;
   type: "main" | "secondary";
-  category?: "research" | "webdev" | "utilities";
+  category?: "research" | "webdev" | "utilities" | "automation";
   status?: "completed" | "in-development";
   featured?: boolean;
 };
@@ -16,76 +16,28 @@ export type Project = {
 export const projects: Record<string, Project[]> = {
   en: [
     /* ==========================================
-     *  MAIN PROJECTS (6)
+     *  MAIN PROJECTS (4)
      * ========================================== */
 
     /* 1. BankLens — Bank Statement PDF Processor */
     {
-      title: "BankLens — Bank Statement PDF Processor",
-      positioning: "End-to-end data pipeline from raw PDF to intelligent financial dashboard, with dual extraction engines (rules + local LLM).",
-      shortSummary: "Automated bank statement analysis: PDF ingestion, dual extraction (code rules or Ollama LLM), AI classification with confidence scoring, and interactive dashboards (PySide6 + Streamlit).",
+      title: "BankLens",
+      positioning: "Bank Statement PDF Processor",
+      shortSummary: "An end-to-end pipeline that converts raw bank statements into structured financial data and interactive dashboards, combining rule-based extraction with a local LLM engine.",
       longDescription: `
-### Problem
-Bank statements in PDF format contain unstructured text that is extremely difficult to process programmatically. Manual categorization is time-consuming and error-prone.
-
-### Solution
-A complete data pipeline — **BankLens** — that ingests raw PDFs, extracts transactions via two interchangeable engines (geometric rules or local LLM), classifies them with confidence scoring, and presents actionable insights through interactive dashboards.
-
-### Pipeline Overview
-\`\`\`
-1. PDF Ingestion (PyMuPDF) → raw text extraction
-2. Transaction Extraction (choice of engine)
-   ├── Option A: Rule-based (coordinate geometry)
-   └── Option B: LLM-based (Ollama / qwen3.5:4b)
-3. Classification & Enrichment (keywords, merchant, payment method, confidence %)
-4. Persistence → %LOCALAPPDATA%\\ReleveDash\\json\\final\\
-5. Visualization
-   ├── PySide6 desktop app (Pandas + built-in charts)
-   └── Streamlit web dashboard (Plotly)
-\`\`\`
-
-### 1 — PDF Ingestion
-PDF text is extracted page-by-page with **PyMuPDF** (\`src/extract.py\`). No OCR — the file must contain selectable text.
-
-### 2 — Transaction Extraction
-- **Option A — Code (Rules)**: \`src/extract_transactions.py\` detects the table header (Date / Operation / Debit / Credit) and uses geometric column positions to parse rows underneath. Fast and deterministic.
-- **Option B — LLM (Ollama)**: \`src/llm/\` chunks the page text (~1 500 words), sends each chunk to a local **qwen3.5:4b** model with a structured prompt, and collects JSON transactions. Recommended for complex or irregular layouts.
-
-### 3 — Classification & Enrichment
-\`src/classify.py\` normalizes text (uppercase, strip accents, mask card numbers), matches against keyword rules (\`src/rules.py\`), detects payment method and merchant, and assigns a **confidence score (0–100 %)**.
-
-### 4 — Persistence
-Structured JSON files are saved to \`%LOCALAPPDATA%\\ReleveDash\\json\\final\\\` — the single source of truth for both UIs.
-
-### 5 — Visualization
-- **PySide6** desktop app: data processed with Pandas (\`src/app/analytics.py\`), rendered with the built-in chart engine (\`src/app/charts.py\`).
-- **Streamlit** web dashboard (\`dashboard.py\`): reads the same JSON files, uses **Plotly** for interactive charts.
-
-### Technical Stack
-- **Extraction**: Python, PyMuPDF (fitz)
-- **Rule Engine**: Custom geometric column parser
-- **LLM Engine**: Ollama, qwen3.5:4b, chunked prompting
-- **Classification**: Keyword rules, confidence scoring
-- **Desktop UI**: PySide6, Pandas, built-in charts
-- **Web UI**: Streamlit, Plotly
-- **Data**: JSON schema, structured pipelines
+### Overview
+BankLens converts raw PDF bank statements into structured financial data. It combines a fast rule-based extraction engine with an optional local LLM (Ollama) for irregular layouts, then classifies each transaction and renders the result in interactive dashboards.
 
 ### Key Features
-- Dual extraction modes: fast rules vs. smart LLM
-- Confidence-scored AI categorization
-- Keyword-based merchant & payment method detection
-- Interactive dashboards: pie charts, histograms, KPIs
-- Local-first — no cloud dependency, Ollama runs on your machine
-- Persistent JSON store readable by both UIs
+- PDF ingestion and transaction extraction
+- Rule-based and AI-assisted classification
+- Confidence scoring on every transaction
+- Interactive financial dashboards (desktop + web)
 
-### What It Demonstrates
-- Data Engineering pipeline design
-- Document parsing & NLP preprocessing
-- Local LLM integration (Ollama)
-- Dual-engine architecture (rules vs. AI)
-- Full-stack data product delivery (desktop + web)
+### Tech Stack
+Python · PyMuPDF · Pandas · Ollama · Streamlit
       `,
-      tags: ["Python", "PyMuPDF", "Pandas", "Ollama", "PySide6", "Streamlit", "Plotly", "NLP", "Data Pipeline"],
+      tags: ["Python", "PyMuPDF", "Pandas", "Ollama", "Streamlit"],
       github: "https://github.com/Nicolas-cottez/releverToJson",
       image: "/images/financial_analyzer.png",
       type: "main",
@@ -93,220 +45,81 @@ Structured JSON files are saved to \`%LOCALAPPDATA%\\ReleveDash\\json\\final\\\`
       featured: true,
     },
 
-    /* 2. Universal RAG System */
+    /* 2. PromptCare — Medical Record Summarization (RAG) */
     {
-      title: "Universal RAG System",
-      positioning: "Modular retrieval-augmented generation architecture for any document corpus.",
-      shortSummary: "Document ingestion, chunking, vector embeddings, semantic retrieval and LLM-powered question answering with stateless session management.",
+      title: "PromptCare",
+      positioning: "AI Assistant for Medical Record Summaries",
+      shortSummary: "An AI assistant for medical record summarization built on a RAG architecture. It analyzes a natural-language request, retrieves the relevant information from the patient record, and generates a traceable, source-grounded synthesis.",
       longDescription: `
-### Problem
-Querying large document corpora with natural language requires combining search precision with generative AI fluency. Off-the-shelf solutions lack customization and control.
-
-### Solution
-A modular RAG pipeline that ingests documents, chunks them intelligently, builds vector indexes, and retrieves relevant context to inject into LLM prompts — with full session isolation and memory reset capabilities.
-
-### Architecture
-\`\`\`
-Document Upload → Text Extraction → Chunking (recursive)
-  → Embedding Generation (sentence-transformers)
-    → FAISS Vector Index → Semantic Retrieval
-      → Prompt Injection → LLM Response → Session Management
-\`\`\`
-
-### Technical Stack
-- **Ingestion**: Python, LangChain document loaders
-- **Embeddings**: sentence-transformers, HuggingFace
-- **Vector Store**: FAISS
-- **LLM Integration**: LangChain (LCEL), OpenAI / Ollama
-- **Interface**: Streamlit
-- **Architecture**: Stateless sessions, memory reset per query
+### Overview
+PromptCare is an experimental medical-record summarization system, developed as a year-long team project (6 students) at ECE Paris. Given a patient record and a natural-language request, it retrieves the relevant passages and generates a summary tailored to the requester — e.g. a nurse asking for treatments and alerts, or a patient asking for a plain-language explanation.
 
 ### Key Features
-- Multi-format document support (PDF, TXT, MD, HTML)
-- Recursive chunking with configurable overlap
-- Semantic similarity search with score thresholds
-- Stateless architecture — clean session isolation
-- Swappable LLM backend (cloud or local)
+- Natural-language request parsing (clinician- vs. patient-facing summaries)
+- Retrieval of relevant passages from the patient record
+- Source-grounded synthesis to limit hallucinations
+- Local execution, in line with healthcare data confidentiality constraints
 
-### What It Demonstrates
-- LLM application architecture (RAG pattern)
-- Vector database engineering
-- Prompt engineering & context management
-- Production-grade modular design
+### Target Architecture vs. Prototype
+The target architecture is a fully local RAG pipeline — CamemBERT-bio embeddings, FAISS retrieval and LLaMA3-Med generation (16 GB+ GPU). The working prototype is intentionally lighter: TF-IDF and cosine-similarity retrieval with extractive, source-grounded synthesis, tested on fictitious patient records.
+
+### Tech Stack
+Prototype: Python · scikit-learn · TF-IDF · Cosine Similarity
+Target architecture: RAG · CamemBERT-bio · FAISS · LLaMA3-Med
       `,
-      tags: ["Python", "LangChain", "FAISS", "Transformers", "Streamlit", "RAG", "LLM", "NLP"],
+      tags: ["Python", "scikit-learn", "TF-IDF", "RAG", "NLP", "Healthcare"],
+      image: "/images/medical_llm.png",
+      type: "main",
+      status: "completed",
+    },
+
+    /* 3. Local AI Trust Gateway */
+    {
+      title: "Local AI Trust Gateway",
+      positioning: "Policy-Driven LLM Gateway",
+      shortSummary: "An OpenAI-compatible gateway that screens every prompt for secrets and PII, applies declarative security policies, and routes requests to local or external models with a tamper-evident audit trail.",
+      longDescription: `
+### Overview
+An enterprise-style LLM gateway exposing an OpenAI-compatible API. Every request is scanned for secrets and PII before execution, classified by sensitivity, and routed to a local model or an external API under a declarative policy — with every decision logged in a hash-chained audit trail.
+
+### Key Features
+- Secret and PII detection before every request
+- Policy-as-data engine (YAML rules, explainable decisions)
+- Local-first routing based on data sensitivity
+- Tamper-evident, hash-chained audit log with monitoring dashboard
+
+### Tech Stack
+Python · FastAPI · Ollama · ChromaDB · SQLite · Streamlit · Docker
+      `,
+      tags: ["Python", "FastAPI", "Ollama", "Security", "LLM Gateway", "Docker"],
+      type: "main",
+      status: "in-development",
+    },
+
+    /* 4. Universal RAG System */
+    {
+      title: "Universal RAG System",
+      positioning: "Document Question-Answering Pipeline",
+      shortSummary: "A modular retrieval-augmented generation pipeline that ingests any document corpus and answers natural-language questions with cited context.",
+      longDescription: `
+### Overview
+A modular RAG pipeline that ingests documents, builds vector indexes, and retrieves relevant context to ground LLM answers — with full session isolation between queries.
+
+### Key Features
+- Multi-format document ingestion (PDF, TXT, MD, HTML)
+- Recursive chunking with semantic embeddings
+- FAISS-based semantic retrieval
+- Swappable LLM backend (local or cloud)
+
+### Tech Stack
+Python · LangChain · FAISS · Transformers · Streamlit
+      `,
+      tags: ["Python", "LangChain", "FAISS", "RAG", "LLM", "NLP"],
       github: "https://github.com/Nicolas-cottez/RAG",
       image: "/images/rag_system.png",
       type: "main",
       status: "completed",
       featured: true,
-    },
-
-    /* 3. Edge AI & Automation Server — Raspberry Pi */
-    {
-      title: "Edge AI & Automation Server — Raspberry Pi",
-      positioning: "Self-hosted AI automation hub: OpenClaw agents, gen AI pipelines and multi-platform publishing.",
-      shortSummary: "Raspberry Pi 5 running OpenClaw AI agents, n8n automation workflows, gen AI API calls for content creation, and automated TikTok/Shorts publishing — all Dockerized.",
-      longDescription: `
-### Problem
-Content creation across multiple platforms (YouTube Shorts, TikTok) requires repetitive manual work. Cloud-dependent AI workflows introduce latency, cost, and privacy concerns. A personal infrastructure layer provides full control and always-on availability.
-
-### Solution
-A Raspberry Pi 5 configured as a self-hosted edge AI server running OpenClaw and AI agents for automation. The system chains generative AI API calls, media processing, and automated publishing into fully autonomous workflows via n8n — all containerized with Docker.
-
-### Architecture
-\`\`\`
-Raspberry Pi 5 (Docker)
-  ├── OpenClaw — AI Agent Framework
-  ├── n8n — Workflow Orchestration
-  │     ├── Trigger (schedule/webhook)
-  │     ├── Gen AI API Calls (text/video generation)
-  │     ├── Media Processing (FFmpeg)
-  │     └── Platform API Upload (TikTok, YouTube Shorts)
-  ├── Nginx — Reverse Proxy + SSL
-  └── Monitoring & Logging
-\`\`\`
-
-### Technical Stack
-- **Hardware**: Raspberry Pi 5 (8GB)
-- **AI Agents**: OpenClaw, custom agent pipelines
-- **Orchestration**: n8n (self-hosted)
-- **Gen AI**: OpenAI API, generative AI API calls
-- **Media Processing**: FFmpeg, image pipelines
-- **APIs**: YouTube Data API, TikTok API, SMTP
-- **Infrastructure**: Docker, Docker Compose, Nginx, Tailscale VPN
-- **OS**: Raspberry Pi OS (Debian-based)
-
-### Key Features
-- AI agents (OpenClaw) for autonomous task execution
-- Dynamic prompt generation with variable injection
-- Multi-format content creation (shorts, posts, videos)
-- Automated TikTok & YouTube Shorts publishing
-- Always-on personal AI server accessible via VPN
-- Fully containerized — reproducible infrastructure
-- Error handling, retry logic and monitoring
-
-### What It Demonstrates
-- Edge computing & infrastructure engineering
-- AI agent orchestration (OpenClaw)
-- Workflow automation architecture
-- DevOps & self-hosted AI deployment
-- API orchestration at scale
-- LLM prompt engineering for production
-      `,
-      tags: ["Raspberry Pi", "OpenClaw", "n8n", "Docker", "OpenAI", "FFmpeg", "AI Agents", "Automation", "Edge Computing"],
-      image: "/images/raspberry_pi.png",
-      type: "main",
-      status: "completed",
-    },
-
-    /* 4. PromptCare — Medical RAG System */
-    {
-      title: "PromptCare — Medical RAG System",
-      positioning: "Domain-specific RAG architecture for medical document analysis and structured clinical summarization.",
-      shortSummary: "RAG system for medical records: document ingestion, biomedical embeddings, semantic retrieval and LLM-powered clinical summary generation.",
-      longDescription: `
-### Problem
-Raw medical records contain dense, unstructured clinical data. Extracting reliable, contextualized summaries requires domain expertise and consistent formatting — tasks poorly handled by general-purpose LLMs.
-
-### Solution
-A domain-specific RAG (Retrieval-Augmented Generation) system that ingests medical documents, builds biomedical vector indexes, retrieves relevant clinical context, and generates structured medical summaries using specialized biomedical LLMs.
-
-### Architecture
-\`\`\`
-Medical Document Upload → Text Extraction
-  → Biomedical Chunking & Embedding (PubMedBERT)
-    → Vector Index (FAISS) → Semantic Retrieval
-      → Prompt-Driven LLM Processing (Clinical-T5 / BioGPT)
-        → Ontology Verification (MeSH, SNOMED CT)
-          → Structured Summary Output
-\`\`\`
-
-### Technical Stack
-- **RAG Framework**: LangChain, FAISS
-- **LLMs**: Clinical-T5, BioGPT, PubMedBERT
-- **Embeddings**: Biomedical sentence-transformers
-- **Ontologies**: MeSH, SNOMED CT
-- **Interface**: Streamlit / Gradio
-- **Data Sources**: MIMIC-III light, MedNLI, i2b2
-
-### Key Features
-- RAG pipeline specialized for medical documents
-- Biomedical embeddings for domain-specific retrieval
-- Multi-LLM architecture (specialized biomedical models)
-- Ontology-based output verification
-- Configurable detail level, tone, and format
-- Structured output: diagnosis, treatment, history sections
-
-### Roadmap
-- **Phase 1** ✅ — Literature review, state-of-the-art analysis
-- **Phase 2** ✅ — Intelligent prompt design & template system
-- **Phase 3** 🔄 — RAG pipeline + ontology integration
-- **Phase 4** — Evaluation framework & clinical validation
-
-### What It Demonstrates
-- RAG architecture in healthcare domain
-- Biomedical NLP expertise
-- Vector database engineering for medical data
-- Ontology integration & knowledge engineering
-- Research-driven engineering methodology
-      `,
-      tags: ["Python", "RAG", "Clinical-T5", "BioGPT", "LangChain", "FAISS", "Transformers", "MeSH", "NLP", "LLM"],
-      image: "/images/medical_llm.png",
-      type: "main",
-      status: "in-development",
-    },
-
-    /* 6. Smart Tourism Map */
-    {
-      title: "Smart Tourism Map",
-      positioning: "Mobile-first intelligent city exploration with curated points of interest.",
-      shortSummary: "Minimalist alternative to Google Maps focused on monuments and tourist landmarks with intelligent filtering and streamlined UX.",
-      longDescription: `
-### Problem
-Google Maps is overloaded with information for tourists. Finding key landmarks and monuments in a new city requires sifting through restaurants, shops, and irrelevant pins.
-
-### Solution
-A mobile application focused exclusively on tourist-relevant points of interest — monuments, landmarks, museums — with intelligent filtering, clean UX, and major city coverage.
-
-### Architecture
-\`\`\`
-City Selection → POI Database Query
-  → Category Filtering (monuments, museums, landmarks)
-    → Map Rendering (interactive layer)
-      → Detail View → Navigation Integration
-\`\`\`
-
-### Technical Stack
-- **Mobile**: React Native / Expo
-- **Maps**: MapLibre / Mapbox GL
-- **Backend**: Node.js, REST API
-- **Database**: PostgreSQL + PostGIS
-- **Data**: OpenStreetMap, curated datasets
-
-### Key Features
-- Major cities coverage with curated POI data
-- Category-based intelligent filtering
-- Minimalist, distraction-free map interface
-- Offline map support for travelers
-- Multi-language landmark descriptions
-
-### Roadmap
-- **Phase 1** ✅ — Core map rendering & POI display
-- **Phase 2** 🔄 — Filtering system & UX refinement
-- **Phase 3** — Offline mode & multi-city expansion
-- **Phase 4** — User contributions & community features
-
-### What It Demonstrates
-- Mobile application engineering
-- Geospatial data processing
-- Product design & UX thinking
-- Full-stack architecture (mobile + API + database)
-      `,
-      tags: ["React Native", "MapLibre", "Node.js", "PostgreSQL", "PostGIS", "Mobile", "UX"],
-      image: "/images/tourism_map.png",
-      type: "main",
-      status: "in-development",
     },
 
     /* ==========================================
@@ -348,12 +161,12 @@ City Selection → POI Database Query
     },
 
     /* ==========================================
-     *  SECONDARY — Full-Stack Web Development
+     *  SECONDARY — Full-Stack & Mobile Development
      * ========================================== */
     {
       title: "Full-Stack Systems & Application Development",
       positioning: "Full-Stack Systems & Application Development",
-      shortSummary: "Web platforms and native applications with authentication, CRUD operations and database management.",
+      shortSummary: "Web platforms, mobile and native applications with authentication, CRUD operations and database management.",
       longDescription: `
 ### Web Applications
 - **BlaBlaCar-like Platform** — PHP, MySQL, authentication, CRUD, session management
@@ -361,10 +174,13 @@ City Selection → POI Database Query
 - **Shopping Application** — Java, CSS, product catalog, cart management, order processing
 - **Portfolio Website** — Next.js, React, TypeScript, Framer Motion, responsive design
 
+### Mobile Applications
+- **Smart Tourism Map** — React Native / Expo, MapLibre GL, minimalist points-of-interest map for travelers, PostgreSQL + PostGIS backend
+
 ### Native Applications
 - **Amusement Park Simulator** — C, Allegro 5, animation loop, 2D rendering engine
       `,
-      tags: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Java", "Next.js", "React", "TypeScript", "C"],
+      tags: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Java", "Next.js", "React", "React Native", "TypeScript", "C"],
       image: "/images/web_dev.png",
       type: "secondary",
       category: "webdev",
@@ -400,80 +216,53 @@ A **fast, offline and privacy-friendly** text corrector that works anywhere on W
       category: "utilities",
       status: "completed",
     },
+
+    /* ==========================================
+     *  SECONDARY — Edge AI & Automation
+     * ========================================== */
+    {
+      title: "Edge AI & Automation Server — Raspberry Pi",
+      positioning: "Self-hosted AI automation hub",
+      shortSummary: "Raspberry Pi 5 running AI agents and n8n workflows for automated content generation and multi-platform publishing.",
+      longDescription: `
+### Self-Hosted AI Infrastructure
+- Raspberry Pi 5 running **OpenClaw** AI agents for autonomous task execution
+- **n8n** workflows orchestrating generative AI API calls, media processing (FFmpeg) and automated publishing
+- Automated TikTok & YouTube Shorts publishing pipeline
+- Fully Dockerized, always-on, accessible via Tailscale VPN
+      `,
+      tags: ["Raspberry Pi", "OpenClaw", "n8n", "Docker", "Automation"],
+      image: "/images/raspberry_pi.png",
+      type: "secondary",
+      category: "automation",
+      status: "completed",
+    },
   ],
 
   fr: [
     /* ==========================================
-     *  PROJETS PRINCIPAUX (6)
+     *  PROJETS PRINCIPAUX (4)
      * ========================================== */
 
-    /* 1. BankLens — Process de Relevés Bancaires PDF */
+    /* 1. BankLens */
     {
-      title: "BankLens — Process de Relevés Bancaires PDF",
-      positioning: "Pipeline de données complet : du PDF brut au dashboard financier intelligent, avec double moteur d'extraction (règles + LLM local).",
-      shortSummary: "Analyse automatisée de relevés bancaires : ingestion PDF, double extraction (règles code ou LLM Ollama), classification IA avec score de confiance, et dashboards interactifs (PySide6 + Streamlit).",
+      title: "BankLens",
+      positioning: "Process de Relevés Bancaires PDF",
+      shortSummary: "Un pipeline complet qui transforme des relevés bancaires bruts en données financières structurées et dashboards interactifs, combinant extraction par règles et LLM local.",
       longDescription: `
-### Problème
-Les relevés bancaires en PDF contiennent du texte non structuré, extrêmement difficile à traiter. La catégorisation manuelle est chronophage et source d'erreurs.
-
-### Solution
-Un pipeline complet — **BankLens** — qui ingère les PDF bruts, extrait les transactions via deux moteurs interchangeables (règles géométriques ou LLM local), les classifie avec un score de confiance, et présente des insights via des dashboards interactifs.
-
-### Vue d'Ensemble du Pipeline
-\`\`\`
-1. Ingestion PDF (PyMuPDF) → extraction de texte brut
-2. Extraction des Transactions (choix du moteur)
-   ├── Option A : Règles (géométrie des colonnes)
-   └── Option B : LLM (Ollama / qwen3.5:4b)
-3. Classification & Enrichissement (mots-clés, commerçant, moyen de paiement, confiance %)
-4. Persistance → %LOCALAPPDATA%\\ReleveDash\\json\\final\\
-5. Visualisation
-   ├── Application desktop PySide6 (Pandas + graphiques intégrés)
-   └── Dashboard web Streamlit (Plotly)
-\`\`\`
-
-### 1 — Ingestion du Relevé
-Le texte du PDF est extrait page par page avec **PyMuPDF** (\`src/extract.py\`). Pas d'OCR — le fichier doit contenir du texte sélectionnable.
-
-### 2 — Extraction des Transactions
-- **Option A — Code (Règles)** : \`src/extract_transactions.py\` détecte l'en-tête du tableau (Date / Opération / Débit / Crédit) et utilise les positions géométriques des colonnes pour découper les lignes. Rapide et déterministe.
-- **Option B — IA (Ollama)** : \`src/llm/\` découpe le texte en chunks (~1 500 mots), envoie chaque chunk au modèle local **qwen3.5:4b** avec un prompt structuré et collecte les transactions en JSON. Recommandé pour les mises en page complexes.
-
-### 3 — Classification & Enrichissement
-\`src/classify.py\` normalise le texte (majuscules, suppression des accents, masquage des numéros de carte), compare aux règles de mots-clés (\`src/rules.py\`), détecte le moyen de paiement et le commerçant, et attribue un **score de confiance (0–100 %)**.
-
-### 4 — Persistance
-Les fichiers JSON structurés sont sauvegardés dans \`%LOCALAPPDATA%\\ReleveDash\\json\\final\\\` — la source unique de vérité pour les deux interfaces.
-
-### 5 — Visualisation
-- **PySide6** (application desktop) : données traitées avec Pandas (\`src/app/analytics.py\`), rendues avec le moteur de graphiques intégré (\`src/app/charts.py\`).
-- **Streamlit** (dashboard web, \`dashboard.py\`) : lit les mêmes fichiers JSON, utilise **Plotly** pour les graphiques interactifs.
-
-### Stack Technique
-- **Extraction** : Python, PyMuPDF (fitz)
-- **Moteur Règles** : Parser géométrique de colonnes custom
-- **Moteur LLM** : Ollama, qwen3.5:4b, prompting par chunks
-- **Classification** : Règles par mots-clés, scoring de confiance
-- **UI Desktop** : PySide6, Pandas, graphiques intégrés
-- **UI Web** : Streamlit, Plotly
-- **Données** : Schéma JSON, pipelines structurés
+### Vue d'ensemble
+BankLens transforme des relevés bancaires PDF en données financières structurées. Il combine un moteur d'extraction par règles rapide avec un LLM local optionnel (Ollama) pour les mises en page complexes, puis classifie chaque transaction et affiche le résultat dans des dashboards interactifs.
 
 ### Fonctionnalités Clés
-- Double mode d'extraction : règles rapides vs. LLM intelligent
-- Catégorisation IA avec score de confiance
-- Détection de commerçant et moyen de paiement par mots-clés
-- Dashboards interactifs : camemberts, histogrammes, KPIs
-- 100% local — aucune dépendance cloud, Ollama tourne sur ta machine
-- Store JSON persistant lisible par les deux interfaces
+- Ingestion PDF et extraction des transactions
+- Classification par règles et assistée par IA
+- Score de confiance sur chaque transaction
+- Dashboards financiers interactifs (desktop + web)
 
-### Ce Que Ça Démontre
-- Conception de pipelines Data Engineering
-- Parsing de documents & prétraitement NLP
-- Intégration de LLM local (Ollama)
-- Architecture double moteur (règles vs. IA)
-- Livraison d'un produit data complet (desktop + web)
+### Stack Technique
+Python · PyMuPDF · Pandas · Ollama · Streamlit
       `,
-      tags: ["Python", "PyMuPDF", "Pandas", "Ollama", "PySide6", "Streamlit", "Plotly", "NLP", "Data Pipeline"],
+      tags: ["Python", "PyMuPDF", "Pandas", "Ollama", "Streamlit"],
       github: "https://github.com/Nicolas-cottez/releverToJson",
       image: "/images/financial_analyzer.png",
       type: "main",
@@ -481,220 +270,84 @@ Les fichiers JSON structurés sont sauvegardés dans \`%LOCALAPPDATA%\\ReleveDas
       featured: true,
     },
 
-    /* 2. Universal RAG System */
+    /* 2. PromptCare — Synthèse de dossiers médicaux (RAG) */
     {
-      title: "Système RAG Universel",
-      positioning: "Architecture de génération augmentée par la recherche pour tout corpus documentaire.",
-      shortSummary: "Ingestion de documents, chunking, embeddings vectoriels, recherche sémantique et réponses LLM avec gestion de sessions stateless.",
+      title: "PromptCare",
+      positioning: "Assistant IA pour la synthèse de dossiers médicaux",
+      shortSummary: "Système expérimental qui recherche les informations pertinentes dans un dossier patient et produit une synthèse adaptée au destinataire : patient, infirmier ou médecin.",
       longDescription: `
-### Problème
-Interroger de grands corpus documentaires en langage naturel nécessite de combiner précision de recherche et fluidité générative. Les solutions prêtes à l'emploi manquent de personnalisation.
+### Vue d'ensemble
+PromptCare est un système expérimental de synthèse de dossiers médicaux développé en équipe de 6 étudiants à l'ECE Paris. À partir d'un dossier patient et d'une consigne en langage naturel, le système recherche les informations pertinentes et produit une synthèse adaptée au destinataire : patient, infirmier ou médecin.
 
-### Solution
-Un pipeline RAG modulaire qui ingère des documents, les découpe intelligemment, construit des index vectoriels et récupère le contexte pertinent pour l'injecter dans les prompts LLM — avec isolation complète des sessions.
+### Fonctionnalités clés
+- Interprétation de consignes en langage naturel
+- Recherche des passages pertinents dans le dossier patient
+- Génération d'une synthèse ancrée dans les sources
+- Traçabilité des informations utilisées
+- Traitement local pensé pour les contraintes de confidentialité des données de santé
 
-### Architecture
-\`\`\`
-Upload Document → Extraction Texte → Chunking (récursif)
-  → Génération d'Embeddings (sentence-transformers)
-    → Index Vectoriel FAISS → Recherche Sémantique
-      → Injection dans Prompt → Réponse LLM → Gestion Session
-\`\`\`
+### Architecture & prototype
+L'architecture étudiée repose sur un pipeline RAG (Retrieval-Augmented Generation) entièrement local : CamemBERT-bio pour la vectorisation, FAISS pour la recherche sémantique et LLaMA3-Med pour la génération de la synthèse.
 
-### Stack Technique
-- **Ingestion** : Python, LangChain document loaders
-- **Embeddings** : sentence-transformers, HuggingFace
-- **Vector Store** : FAISS
-- **Intégration LLM** : LangChain (LCEL), OpenAI / Ollama
-- **Interface** : Streamlit
-- **Architecture** : Sessions stateless, reset mémoire par requête
+Un prototype fonctionnel plus léger a été développé en Python, utilisant TF-IDF, scikit-learn, la similarité cosinus et une synthèse extractive ancrée. Il permet de reproduire le fonctionnement du pipeline RAG sur des dossiers patients fictifs sans nécessiter de matériel spécialisé.
+
+### Stack technique
+Prototype : Python · scikit-learn · TF-IDF · Similarité cosinus
+Architecture étudiée : RAG · CamemBERT-bio · FAISS · LLaMA3-Med
+      `,
+      tags: ["Python", "NLP", "RAG", "IA", "Santé"],
+      image: "/images/medical_llm.png",
+      type: "main",
+      status: "completed",
+    },
+
+    /* 3. Local AI Trust Gateway */
+    {
+      title: "Local AI Trust Gateway",
+      positioning: "Passerelle LLM Pilotée par des Politiques",
+      shortSummary: "Une passerelle compatible OpenAI qui analyse chaque prompt à la recherche de secrets et de données personnelles, applique des politiques de sécurité déclaratives, et route les requêtes vers un modèle local ou externe avec un journal d'audit infalsifiable.",
+      longDescription: `
+### Vue d'ensemble
+Une passerelle LLM de type entreprise exposant une API compatible OpenAI. Chaque requête est analysée à la recherche de secrets et de données personnelles avant exécution, classifiée par niveau de sensibilité, puis routée vers un modèle local ou une API externe selon une politique déclarative — chaque décision étant journalisée dans un audit trail chaîné par hash.
 
 ### Fonctionnalités Clés
-- Support multi-format (PDF, TXT, MD, HTML)
-- Chunking récursif avec chevauchement configurable
-- Recherche par similarité sémantique avec seuils de score
-- Architecture stateless — isolation propre des sessions
-- Backend LLM interchangeable (cloud ou local)
+- Détection de secrets et de données personnelles avant chaque requête
+- Moteur de politiques déclaratives (règles YAML, décisions explicables)
+- Routage local par défaut selon la sensibilité des données
+- Journal d'audit infalsifiable (chaîné par hash) avec dashboard de supervision
 
-### Ce Que Ça Démontre
-- Architecture d'application LLM (pattern RAG)
-- Ingénierie de bases vectorielles
-- Prompt engineering & gestion de contexte
-- Conception modulaire production-grade
+### Stack Technique
+Python · FastAPI · Ollama · ChromaDB · SQLite · Streamlit · Docker
       `,
-      tags: ["Python", "LangChain", "FAISS", "Transformers", "Streamlit", "RAG", "LLM", "NLP"],
+      tags: ["Python", "FastAPI", "Ollama", "Sécurité", "LLM Gateway", "Docker"],
+      type: "main",
+      status: "in-development",
+    },
+
+    /* 4. Universal RAG System */
+    {
+      title: "Système RAG Universel",
+      positioning: "Pipeline de Question-Réponse sur Documents",
+      shortSummary: "Un pipeline RAG modulaire qui ingère n'importe quel corpus documentaire et répond à des questions en langage naturel avec des sources citées.",
+      longDescription: `
+### Vue d'ensemble
+Un pipeline RAG modulaire qui ingère des documents, construit des index vectoriels et récupère le contexte pertinent pour ancrer les réponses du LLM — avec isolation complète des sessions entre chaque requête.
+
+### Fonctionnalités Clés
+- Ingestion multi-format (PDF, TXT, MD, HTML)
+- Chunking récursif avec embeddings sémantiques
+- Recherche sémantique via FAISS
+- Backend LLM interchangeable (local ou cloud)
+
+### Stack Technique
+Python · LangChain · FAISS · Transformers · Streamlit
+      `,
+      tags: ["Python", "LangChain", "FAISS", "RAG", "LLM", "NLP"],
       github: "https://github.com/Nicolas-cottez/RAG",
       image: "/images/rag_system.png",
       type: "main",
       status: "completed",
       featured: true,
-    },
-
-    /* 3. Serveur Edge AI & Automatisation — Raspberry Pi */
-    {
-      title: "Serveur Edge AI & Automatisation — Raspberry Pi",
-      positioning: "Hub d'automatisation IA auto-hébergé : agents OpenClaw, pipelines d'IA générative et publication multi-plateforme.",
-      shortSummary: "Raspberry Pi 5 exécutant des agents IA OpenClaw, workflows d'automatisation n8n, appels API d'IA générative et publication automatisée TikTok/Shorts — le tout Dockerisé.",
-      longDescription: `
-### Problème
-La création de contenu sur plusieurs plateformes (YouTube Shorts, TikTok) nécessite un travail manuel répétitif. Les workflows IA dépendants du cloud introduisent latence, coûts et problèmes de confidentialité.
-
-### Solution
-Un Raspberry Pi 5 configuré comme serveur edge IA auto-hébergé exécutant OpenClaw et des agents IA pour l'automatisation. Le système chaîne appels API d'IA générative, traitement média et publication automatique en workflows autonomes via n8n — le tout conteneurisé avec Docker.
-
-### Architecture
-\`\`\`
-Raspberry Pi 5 (Docker)
-  ├── OpenClaw — Framework d'Agents IA
-  ├── n8n — Orchestration de Workflows
-  │     ├── Déclencheur (planification/webhook)
-  │     ├── Appels API IA Générative (génération texte/vidéo)
-  │     ├── Traitement Média (FFmpeg)
-  │     └── Upload API Plateforme (TikTok, YouTube Shorts)
-  ├── Nginx — Reverse Proxy + SSL
-  └── Monitoring & Logging
-\`\`\`
-
-### Stack Technique
-- **Matériel** : Raspberry Pi 5 (8 Go)
-- **Agents IA** : OpenClaw, pipelines d'agents custom
-- **Orchestration** : n8n (auto-hébergé)
-- **IA Générative** : API OpenAI, appels API d'IA générative
-- **Traitement Média** : FFmpeg, pipelines d'images
-- **APIs** : YouTube Data API, TikTok API, SMTP
-- **Infrastructure** : Docker, Docker Compose, Nginx, Tailscale VPN
-- **OS** : Raspberry Pi OS (base Debian)
-
-### Fonctionnalités Clés
-- Agents IA (OpenClaw) pour l'exécution autonome de tâches
-- Génération dynamique de prompts avec injection de variables
-- Création de contenu multi-format (shorts, posts, vidéos)
-- Publication automatisée TikTok & YouTube Shorts
-- Serveur IA personnel toujours actif, accessible via VPN
-- Entièrement conteneurisé — infrastructure reproductible
-- Gestion des erreurs, logique de retry et monitoring
-
-### Ce Que Ça Démontre
-- Edge computing & ingénierie d'infrastructure
-- Orchestration d'agents IA (OpenClaw)
-- Architecture d'automatisation de workflows
-- DevOps & déploiement IA auto-hébergé
-- Orchestration d'APIs à grande échelle
-- Prompt engineering LLM en production
-      `,
-      tags: ["Raspberry Pi", "OpenClaw", "n8n", "Docker", "OpenAI", "FFmpeg", "AI Agents", "Automation", "Edge Computing"],
-      image: "/images/raspberry_pi.png",
-      type: "main",
-      status: "completed",
-    },
-
-    /* 4. PromptCare — Système RAG Médical */
-    {
-      title: "PromptCare — Système RAG Médical",
-      positioning: "Architecture RAG spécialisée pour l'analyse de documents médicaux et la synthèse clinique structurée.",
-      shortSummary: "Système RAG pour dossiers médicaux : ingestion de documents, embeddings biomédicaux, recherche sémantique et génération de résumés cliniques par LLM.",
-      longDescription: `
-### Problème
-Les dossiers médicaux bruts contiennent des données cliniques denses et non structurées. Extraire des résumés fiables et contextualisés nécessite une expertise médicale et un formatage cohérent — tâches mal gérées par les LLMs généralistes.
-
-### Solution
-Un système RAG (Retrieval-Augmented Generation) spécialisé qui ingère des documents médicaux, construit des index vectoriels biomédicaux, récupère le contexte clinique pertinent et génère des résumés médicaux structurés via des LLMs biomédicaux spécialisés.
-
-### Architecture
-\`\`\`
-Upload Document Médical → Extraction de Texte
-  → Chunking & Embedding Biomédical (PubMedBERT)
-    → Index Vectoriel (FAISS) → Recherche Sémantique
-      → Traitement LLM guidé par Prompt (Clinical-T5 / BioGPT)
-        → Vérification Ontologique (MeSH, SNOMED CT)
-          → Sortie de Résumé Structuré
-\`\`\`
-
-### Stack Technique
-- **Framework RAG** : LangChain, FAISS
-- **LLMs** : Clinical-T5, BioGPT, PubMedBERT
-- **Embeddings** : sentence-transformers biomédicaux
-- **Ontologies** : MeSH, SNOMED CT
-- **Interface** : Streamlit / Gradio
-- **Sources de Données** : MIMIC-III light, MedNLI, i2b2
-
-### Fonctionnalités Clés
-- Pipeline RAG spécialisé pour documents médicaux
-- Embeddings biomédicaux pour recherche spécifique au domaine
-- Architecture multi-LLM (modèles biomédicaux spécialisés)
-- Vérification des résultats par ontologies
-- Niveau de détail, ton et format configurables
-- Sortie structurée : sections diagnostic, traitement, antécédents
-
-### Feuille de Route
-- **Phase 1** ✅ — Revue de littérature, analyse de l'état de l'art
-- **Phase 2** ✅ — Design de prompts intelligents & système de templates
-- **Phase 3** 🔄 — Pipeline RAG + intégration ontologies
-- **Phase 4** — Framework d'évaluation & validation clinique
-
-### Ce Que Ça Démontre
-- Architecture RAG dans le domaine de la santé
-- Expertise en NLP biomédical
-- Ingénierie de bases vectorielles pour données médicales
-- Intégration d'ontologies & ingénierie des connaissances
-- Méthodologie d'ingénierie orientée recherche
-      `,
-      tags: ["Python", "RAG", "Clinical-T5", "BioGPT", "LangChain", "FAISS", "Transformers", "MeSH", "NLP", "LLM"],
-      image: "/images/medical_llm.png",
-      type: "main",
-      status: "in-development",
-    },
-
-    /* 6. Smart Tourism Map */
-    {
-      title: "Smart Tourism Map",
-      positioning: "Exploration urbaine mobile-first avec points d'intérêt curatés.",
-      shortSummary: "Alternative minimaliste à Google Maps axée sur les monuments et lieux touristiques avec filtrage intelligent et UX simplifiée.",
-      longDescription: `
-### Problème
-Google Maps est surchargé d'informations pour les touristes. Trouver les monuments et sites clés dans une nouvelle ville nécessite de trier restaurants, commerces et pions non pertinents.
-
-### Solution
-Une application mobile exclusivement centrée sur les points d'intérêt touristiques — monuments, sites, musées — avec filtrage intelligent, UX épurée et couverture des grandes villes.
-
-### Architecture
-\`\`\`
-Sélection de Ville → Requête Base de Données POI
-  → Filtrage par Catégorie (monuments, musées, sites)
-    → Rendu Carte (couche interactive)
-      → Vue Détaillée → Intégration Navigation
-\`\`\`
-
-### Stack Technique
-- **Mobile** : React Native / Expo
-- **Cartes** : MapLibre / Mapbox GL
-- **Backend** : Node.js, API REST
-- **Base de Données** : PostgreSQL + PostGIS
-- **Données** : OpenStreetMap, datasets curatés
-
-### Fonctionnalités Clés
-- Couverture des grandes villes avec données POI curatées
-- Filtrage intelligent par catégorie
-- Interface carte minimaliste, sans distraction
-- Support de cartes hors-ligne pour voyageurs
-- Descriptions de sites en plusieurs langues
-
-### Feuille de Route
-- **Phase 1** ✅ — Rendu carte principal & affichage POI
-- **Phase 2** 🔄 — Système de filtrage & raffinement UX
-- **Phase 3** — Mode hors-ligne & expansion multi-villes
-- **Phase 4** — Contributions utilisateurs & fonctionnalités communautaires
-
-### Ce Que Ça Démontre
-- Ingénierie d'applications mobiles
-- Traitement de données géospatiales
-- Design produit & réflexion UX
-- Architecture full-stack (mobile + API + base de données)
-      `,
-      tags: ["React Native", "MapLibre", "Node.js", "PostgreSQL", "PostGIS", "Mobile", "UX"],
-      image: "/images/tourism_map.png",
-      type: "main",
-      status: "in-development",
     },
 
     /* ==========================================
@@ -736,12 +389,12 @@ Sélection de Ville → Requête Base de Données POI
     },
 
     /* ==========================================
-     *  SECONDAIRE — Développement Web Full-Stack
+     *  SECONDAIRE — Développement Full-Stack & Mobile
      * ========================================== */
     {
       title: "Développement Full-Stack & Applications",
       positioning: "Systèmes Full-Stack & Développement d'Applications",
-      shortSummary: "Plateformes web et applications natives avec authentification, opérations CRUD et gestion de bases de données.",
+      shortSummary: "Plateformes web, applications mobiles et natives avec authentification, opérations CRUD et gestion de bases de données.",
       longDescription: `
 ### Applications Web
 - **Plateforme type BlaBlaCar** — PHP, MySQL, authentification, CRUD, gestion de sessions
@@ -749,10 +402,13 @@ Sélection de Ville → Requête Base de Données POI
 - **Application Shopping** — Java, CSS, catalogue produits, gestion du panier, traitement des commandes
 - **Site Portfolio** — Next.js, React, TypeScript, Framer Motion, design responsive
 
+### Applications Mobiles
+- **Smart Tourism Map** — React Native / Expo, MapLibre GL, carte minimaliste des points d'intérêt touristiques, backend PostgreSQL + PostGIS
+
 ### Applications Natives
 - **Simulateur de Parc d'Attractions** — C, Allegro 5, boucle d'animation, moteur de rendu 2D
       `,
-      tags: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Java", "Next.js", "React", "TypeScript", "C"],
+      tags: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Java", "Next.js", "React", "React Native", "TypeScript", "C"],
       image: "/images/web_dev.png",
       type: "secondary",
       category: "webdev",
@@ -786,6 +442,27 @@ Un correcteur **rapide, hors-ligne et respectueux de la vie privée** utilisable
       image: "/images/correcteur_app.png",
       type: "secondary",
       category: "utilities",
+      status: "completed",
+    },
+
+    /* ==========================================
+     *  SECONDAIRE — Edge AI & Automatisation
+     * ========================================== */
+    {
+      title: "Serveur Edge AI & Automatisation — Raspberry Pi",
+      positioning: "Hub d'automatisation IA auto-hébergé",
+      shortSummary: "Raspberry Pi 5 exécutant des agents IA et des workflows n8n pour la génération de contenu automatisée et la publication multi-plateforme.",
+      longDescription: `
+### Infrastructure IA Auto-Hébergée
+- Raspberry Pi 5 exécutant des agents IA **OpenClaw** pour l'exécution autonome de tâches
+- Workflows **n8n** orchestrant les appels API d'IA générative, le traitement média (FFmpeg) et la publication automatisée
+- Pipeline de publication automatisée TikTok & YouTube Shorts
+- Entièrement Dockerisé, toujours actif, accessible via VPN Tailscale
+      `,
+      tags: ["Raspberry Pi", "OpenClaw", "n8n", "Docker", "Automatisation"],
+      image: "/images/raspberry_pi.png",
+      type: "secondary",
+      category: "automation",
       status: "completed",
     },
   ],
