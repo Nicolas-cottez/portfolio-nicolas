@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Briefcase, Calendar, MapPin } from "lucide-react";
+import { Briefcase, Calendar, ChevronDown, MapPin } from "lucide-react";
 import { experiences } from "@/data/experience";
 
 import { useLanguage } from "@/context/LanguageContext";
@@ -388,18 +388,28 @@ export default function ExperienceSection() {
                       )}
 
                       {exp.detailSections && exp.detailSections.length > 0 && (
-                        <div className="mt-5 pt-5 border-t border-[var(--accent)]/20 space-y-4">
-                          {exp.detailSections.map((section) => (
-                            <div key={section.title}>
-                              <h4 className="mb-1.5 text-sm font-semibold text-white">
-                                {section.title}
-                              </h4>
-                              <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
-                                {section.content}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
+                        <details className="group mt-5 border-t border-[var(--accent)]/20 pt-4">
+                          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-[var(--accent-light)] transition-colors hover:bg-[var(--accent)]/10 [&::-webkit-details-marker]:hidden">
+                            <span>
+                              <span className="group-open:hidden">{t.showDetails}</span>
+                              <span className="hidden group-open:inline">{t.hideDetails}</span>
+                            </span>
+                            <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-300 group-open:rotate-180" />
+                          </summary>
+
+                          <div className="space-y-4 px-3 pt-4">
+                            {exp.detailSections.map((section) => (
+                              <div key={section.title}>
+                                <h4 className="mb-1.5 text-sm font-semibold text-white">
+                                  {section.title}
+                                </h4>
+                                <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                                  {section.content}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </details>
                       )}
                     </motion.div>
                   </div>

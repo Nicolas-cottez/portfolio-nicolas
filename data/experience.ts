@@ -19,9 +19,11 @@ export const experiences: { en: Experience[]; fr: Experience[] } = {
       role: "R&D Intern — Data & Artificial Intelligence",
       period: "April–August 2026",
       description: [
-        "Designed and developed a local AI copilot to support internal procedure search, field-note structuring and report-drafting workflows.",
-        "Participated in functional scoping by gathering user needs, identifying relevant use cases and translating operational requirements into product features.",
-        "Contributed to improvements of the internal application and developed an activity dashboard based on operational KPIs to support monitoring and decision-making.",
+        "Designed and developed a local AI copilot to facilitate internal procedure search, structure field notes and assist with report drafting.",
+        "Built a local document retrieval system with semantic search and source-grounded answer generation based on internal documentation.",
+        "Contributed to the evolution of the internal application based on operational needs and user feedback.",
+        "Contributed to functional scoping by analysing user needs, identifying relevant use cases and translating operational needs into product features.",
+        "Developed a Python and SQL dashboard to monitor operational KPIs, identify incomplete cases and facilitate activity tracking.",
       ],
       tech: ["Python", "FastAPI", "Streamlit", "Ollama", "ChromaDB", "SQL", "Docker"],
       detailSections: [
@@ -31,7 +33,7 @@ export const experiences: { en: Experience[]; fr: Experience[] } = {
         },
         {
           title: "Functional scoping & business needs",
-          content: "The project began with understanding how diagnostic professionals work, gathering their needs, selecting priority use cases and defining the operational KPIs used to assess solution adoption and impact.",
+          content: "Gained initial exposure to functional scoping by gathering user needs, prioritising use cases and defining a limited set of operational KPIs.",
         },
       ],
     },
@@ -76,9 +78,11 @@ export const experiences: { en: Experience[]; fr: Experience[] } = {
       role: "Stagiaire R&D — Data & Intelligence Artificielle",
       period: "Avril–août 2026",
       description: [
-        "Conception et développement d'un copilote IA local pour faciliter la recherche dans les procédures internes, la structuration des notes terrain et les processus de rédaction de rapports.",
-        "Participation au cadrage fonctionnel par le recueil des besoins utilisateurs, l'identification des cas d'usage pertinents et la traduction des exigences opérationnelles en fonctionnalités produit.",
-        "Contribution à l'amélioration de l'application interne et développement d'un tableau de bord d'activité fondé sur des KPI opérationnels afin de faciliter le suivi et la prise de décision.",
+        "Conception et développement d’un copilote IA local pour faciliter la recherche dans les procédures internes, structurer les notes terrain et assister la rédaction de rapports.",
+        "Mise en place d’un système local de recherche documentaire avec recherche sémantique et génération de réponses basées sur les sources internes.",
+        "Participation aux évolutions de l’application interne en fonction des besoins opérationnels et des retours utilisateurs.",
+        "Contribution au cadrage fonctionnel par l’analyse des besoins utilisateurs, l’identification des cas d’usage pertinents et la traduction des besoins opérationnels en fonctionnalités.",
+        "Développement d’un tableau de bord en Python et SQL permettant de suivre des KPI opérationnels, d’identifier les dossiers incomplets et de faciliter le suivi de l’activité.",
       ],
       tech: ["Python", "FastAPI", "Streamlit", "Ollama", "ChromaDB", "SQL", "Docker"],
       detailSections: [
@@ -88,7 +92,7 @@ export const experiences: { en: Experience[]; fr: Experience[] } = {
         },
         {
           title: "Cadrage fonctionnel et besoins métier",
-          content: "Le projet a commencé par la compréhension du fonctionnement des diagnostiqueurs, le recueil de leurs besoins, la sélection des cas d'usage prioritaires et la définition des KPI opérationnels permettant d'évaluer l'adoption de la solution et son impact.",
+          content: "Première exposition au cadrage fonctionnel à travers le recueil des besoins, la priorisation des cas d’usage et la définition d’un nombre limité de KPI opérationnels.",
         },
       ],
     },

@@ -73,6 +73,8 @@ export const translations = {
         },
         experience: {
             title: "Experience",
+            showDetails: "Show details",
+            hideDetails: "Hide details",
         },
         contact: {
             title: "Contact",
@@ -174,6 +176,8 @@ export const translations = {
         },
         experience: {
             title: "Expérience",
+            showDetails: "Voir les détails",
+            hideDetails: "Masquer les détails",
         },
         contact: {
             title: "Contact",
