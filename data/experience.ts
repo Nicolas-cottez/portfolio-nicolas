@@ -28,15 +28,15 @@ export const experiences: { en: Experience[]; fr: Experience[] } = {
       period: "July–August 2025 · 2 months",
       description: [
         "Managed and updated electronic component libraries.",
-        "3D modeling and PCB routing using Zuken CR-8000 (Design Force).",
-        "Collaborated with hardware teams to optimize electronic system design.",
+        "3D modelling and PCB routing using Zuken CR-8000 (Design Force).",
+        "Collaborated with hardware teams to optimise electronic system design.",
       ],
       tech: ["Zuken CR-8000", "PCB Design", "3D Modelling"],
     },
     {
       company: "SIMERIS",
       location: "Lyon, France",
-      role: "Engineering Intern – Industrial Process Optimization",
+      role: "Engineering Intern – Industrial Process Optimisation",
       period: "January 2024 – February 2024 · 2 months",
       description: [
         "Implemented 5S methodology for process improvement.",
@@ -78,7 +78,7 @@ export const experiences: { en: Experience[]; fr: Experience[] } = {
         "Modélisation 3D et routage PCB sur Zuken CR-8000 (Design Force).",
         "Collaboration avec les équipes hardware pour optimiser la conception des systèmes électroniques.",
       ],
-      tech: ["Zuken CR-8000", "PCB Design", "3D Modelling"],
+      tech: ["Zuken CR-8000", "PCB Design", "Modélisation 3D"],
     },
     {
       company: "SIMERIS",

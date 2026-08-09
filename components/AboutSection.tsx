@@ -14,7 +14,7 @@ const AboutSection = () => {
     { label: t.skillGroups.dataAi, skills: ["Pandas", "NumPy", "Scikit-learn", "TensorFlow", "PyTorch", "LangChain"] },
     { label: t.skillGroups.development, skills: ["Java", "C", "JavaScript", "TypeScript", "HTML/CSS"] },
     { label: t.skillGroups.tools, skills: ["Git", "Linux", "Docker", "PostgreSQL", "Streamlit", "Jupyter", "Power BI", "n8n"] },
-    { label: t.skillGroups.engineering, skills: ["SolidWorks", "3D Modelling"] },
+    { label: t.skillGroups.engineering, skills: ["SolidWorks", language === "fr" ? "Modélisation 3D" : "3D Modelling"] },
   ];
 
   const sections = [

@@ -45,14 +45,14 @@ Python · PyMuPDF · Pandas · Ollama · Streamlit
       featured: true,
     },
 
-    /* 2. PromptCare — Medical Record Summarization (RAG) */
+    /* 2. PromptCare — Medical Record Summarisation (RAG) */
     {
       title: "PromptCare",
       positioning: "AI Assistant for Medical Record Summaries",
-      shortSummary: "An AI assistant for medical record summarization built on a RAG architecture. It analyzes a natural-language request, retrieves the relevant information from the patient record, and generates a traceable, source-grounded synthesis.",
+      shortSummary: "An AI assistant for medical record summarisation built on a RAG architecture. It analyses a natural-language request, retrieves the relevant information from the patient record, and generates a traceable, source-grounded synthesis.",
       longDescription: `
 ### Overview
-PromptCare is an experimental medical-record summarization system, developed as a year-long team project (6 students) at ECE Paris. Given a patient record and a natural-language request, it retrieves the relevant passages and generates a summary tailored to the requester — e.g. a nurse asking for treatments and alerts, or a patient asking for a plain-language explanation.
+PromptCare is an experimental medical-record summarisation system, developed as a year-long team project (6 students) at ECE Paris. Given a patient record and a natural-language request, it retrieves the relevant passages and generates a summary tailored to the requester — e.g. a nurse asking for treatments and alerts, or a patient asking for a plain-language explanation.
 
 ### Key Features
 - Natural-language request parsing (clinician- vs. patient-facing summaries)
@@ -128,24 +128,24 @@ Python · LangChain · FAISS · Transformers · Streamlit
     {
       title: "Applied ML & Deep Learning Research",
       positioning: "Applied Machine Learning & Deep Learning Research Portfolio",
-      shortSummary: "Regression, classification, NLP, neural networks — from-scratch implementations and hyperparameter optimization.",
+      shortSummary: "Regression, classification, NLP, neural networks — from-scratch implementations and hyperparameter optimisation.",
       longDescription: `
 ### Machine Learning (Completed)
-- **House Prices** — Normalization, LinearRegression, MSE
+- **House Prices** — Normalisation, LinearRegression, MSE
 - **Car Prices** — Mixed variables, categorical encoding
 - **Titanic** — LogisticRegression, DecisionTree, cross-validation
 - **Diabetes** — AUC, F1, robust metrics
-- **Iris** — KNN, SVM, standardization
+- **Iris** — KNN, SVM, standardisation
 - **Spam Detection** — Text cleaning, TF-IDF, Naive Bayes
 
 ### Deep Learning (Completed)
 - **MNIST** — CNN (convolutions, ReLU, dropout, BatchNorm)
 - **FFNN from scratch** — Forward/backward propagation, gradient descent
-- **3D Classification** — Custom neural network, visualization
+- **3D Classification** — Custom neural network, visualisation
 
 ### Deep Learning — Future Exploration
 - Image classification with transfer learning (ResNet, EfficientNet)
-- Sequence modeling with RNNs / LSTMs
+- Sequence modelling with RNNs / LSTMs
 - Generative models (VAE, GAN)
 - Transformer architectures from scratch
       `,
@@ -170,12 +170,12 @@ Python · LangChain · FAISS · Transformers · Streamlit
       longDescription: `
 ### Web Applications
 - **BlaBlaCar-like Platform** — PHP, MySQL, authentication, CRUD, session management
-- **Car Purchase Website** — HTML, CSS, JavaScript, responsive UI, vehicle catalog
-- **Shopping Application** — Java, CSS, product catalog, cart management, order processing
+- **Car Purchase Website** — HTML, CSS, JavaScript, responsive UI, vehicle catalogue
+- **Shopping Application** — Java, CSS, product catalogue, cart management, order processing
 - **Portfolio Website** — Next.js, React, TypeScript, Framer Motion, responsive design
 
 ### Mobile Applications
-- **Smart Tourism Map** — React Native / Expo, MapLibre GL, minimalist points-of-interest map for travelers, PostgreSQL + PostGIS backend
+- **Smart Tourism Map** — React Native / Expo, MapLibre GL, minimalist points-of-interest map for travellers, PostgreSQL + PostGIS backend
 
 ### Native Applications
 - **Amusement Park Simulator** — C, Allegro 5, animation loop, 2D rendering engine
@@ -229,7 +229,7 @@ A **fast, offline and privacy-friendly** text corrector that works anywhere on W
 - Raspberry Pi 5 running **OpenClaw** AI agents for autonomous task execution
 - **n8n** workflows orchestrating generative AI API calls, media processing (FFmpeg) and automated publishing
 - Automated TikTok & YouTube Shorts publishing pipeline
-- Fully Dockerized, always-on, accessible via Tailscale VPN
+- Fully Dockerised, always-on, accessible via Tailscale VPN
       `,
       tags: ["Raspberry Pi", "OpenClaw", "n8n", "Docker", "Automation"],
       image: "/images/raspberry_pi.png",
@@ -247,17 +247,17 @@ A **fast, offline and privacy-friendly** text corrector that works anywhere on W
     /* 1. BankLens */
     {
       title: "BankLens",
-      positioning: "Process de Relevés Bancaires PDF",
-      shortSummary: "Un pipeline complet qui transforme des relevés bancaires bruts en données financières structurées et dashboards interactifs, combinant extraction par règles et LLM local.",
+      positioning: "Traitement de relevés bancaires PDF",
+      shortSummary: "Un pipeline complet qui transforme des relevés bancaires bruts en données financières structurées et tableaux de bord interactifs, combinant extraction par règles et LLM local.",
       longDescription: `
 ### Vue d'ensemble
-BankLens transforme des relevés bancaires PDF en données financières structurées. Il combine un moteur d'extraction par règles rapide avec un LLM local optionnel (Ollama) pour les mises en page complexes, puis classifie chaque transaction et affiche le résultat dans des dashboards interactifs.
+BankLens transforme des relevés bancaires PDF en données financières structurées. Il combine un moteur d'extraction par règles rapide avec un LLM local optionnel (Ollama) pour les mises en page complexes, puis classifie chaque transaction et affiche le résultat dans des tableaux de bord interactifs.
 
 ### Fonctionnalités Clés
 - Ingestion PDF et extraction des transactions
 - Classification par règles et assistée par IA
 - Score de confiance sur chaque transaction
-- Dashboards financiers interactifs (desktop + web)
+- Tableaux de bord financiers interactifs (bureau + web)
 
 ### Stack Technique
 Python · PyMuPDF · Pandas · Ollama · Streamlit
@@ -304,7 +304,7 @@ Architecture étudiée : RAG · CamemBERT-bio · FAISS · LLaMA3-Med
     /* 3. Local AI Trust Gateway */
     {
       title: "Local AI Trust Gateway",
-      positioning: "Passerelle LLM Pilotée par des Politiques",
+      positioning: "Passerelle LLM avec politiques de sécurité",
       shortSummary: "Une passerelle compatible OpenAI qui analyse chaque prompt à la recherche de secrets et de données personnelles, applique des politiques de sécurité déclaratives, et route les requêtes vers un modèle local ou externe avec un journal d'audit infalsifiable.",
       longDescription: `
 ### Vue d'ensemble
@@ -314,7 +314,7 @@ Une passerelle LLM de type entreprise exposant une API compatible OpenAI. Chaque
 - Détection de secrets et de données personnelles avant chaque requête
 - Moteur de politiques déclaratives (règles YAML, décisions explicables)
 - Routage local par défaut selon la sensibilité des données
-- Journal d'audit infalsifiable (chaîné par hash) avec dashboard de supervision
+- Journal d'audit infalsifiable (chaîné par hash) avec tableau de bord de supervision
 
 ### Stack Technique
 Python · FastAPI · Ollama · ChromaDB · SQLite · Streamlit · Docker
@@ -429,7 +429,7 @@ Un correcteur **rapide, hors-ligne et respectueux de la vie privée** utilisable
 - Application native **Windows** basée sur .NET 8
 - **Correction instantanée** du texte dans le presse-papier
 - Copie automatique du texte corrigé (+ option coller)
-- **100% hors-ligne** — propulsé par le serveur Ollama local
+- **100 % hors-ligne** — propulsé par le serveur Ollama local
 - Menu complet : Corriger, Redémarrer Ollama, Ouvrir le dossier, Quitter
 - Exécutable portable avec icône personnalisée
 

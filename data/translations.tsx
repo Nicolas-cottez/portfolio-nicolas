@@ -34,7 +34,7 @@ export const translations = {
                     <p className="text-base">
                         I am a{" "}
                         <span className="text-white font-semibold">fifth-year engineering student</span> at{" "}
-                        <span className="text-[var(--accent)] font-medium">ECE</span>, specializing in{" "}
+                        <span className="text-[var(--accent)] font-medium">ECE</span>, specialising in{" "}
                         <span className="text-white font-semibold">Data and Artificial Intelligence</span> through a{" "}
                         <span className="text-[var(--accent)] font-medium">fully English-taught curriculum</span>.
                     </p>
@@ -134,10 +134,10 @@ export const translations = {
                 <>
                     <p className="text-base">
                         Je suis{" "}
-                        <span className="text-white font-semibold">étudiant ingénieur en 5ème année</span> à{" "}
+                        <span className="text-white font-semibold">étudiant ingénieur en 5e année</span> à{" "}
                         <span className="text-[var(--accent)] font-medium">l'ECE</span>, spécialisé en{" "}
                         <span className="text-white font-semibold">Data et Intelligence Artificielle</span> dans un{" "}
-                        <span className="text-[var(--accent)] font-medium">cursus 100% anglophone</span>.
+                        <span className="text-[var(--accent)] font-medium">cursus 100 % anglophone</span>.
                     </p>
                     <p className="text-base">
                         Mon expérience porte sur{" "}
