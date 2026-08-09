@@ -33,7 +33,7 @@ const AboutSection = () => {
       title: t.languages,
       languages: [
         { lang: t.langNames.French, level: t.langLevels.native },
-        { lang: t.langNames.English, level: t.langLevels.fluent, certifications: "TOEFL iBT 89 · TOEIC 900" },
+        { lang: t.langNames.English, level: t.langLevels.fluent, certifications: "TOEIC 900" },
         { lang: t.langNames.Spanish, level: "A2" },
         { lang: t.langNames.Japanese, level: "A1" },
         { lang: t.langNames.Chinese, level: t.langLevels.basic },

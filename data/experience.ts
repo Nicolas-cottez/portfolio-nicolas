@@ -5,6 +5,10 @@ export type Experience = {
   period: string;
   description: string[];
   tech?: string[];
+  detailSections?: {
+    title: string;
+    content: string;
+  }[];
 };
 
 export const experiences: { en: Experience[]; fr: Experience[] } = {
@@ -13,13 +17,23 @@ export const experiences: { en: Experience[]; fr: Experience[] } = {
       company: "Antenic",
       location: "Paris, France",
       role: "R&D Intern — Data & Artificial Intelligence",
-      period: "April 2026 – August 2026 · 4 months",
+      period: "April–August 2026",
       description: [
-        "Designed a local AI copilot for internal procedure search, field-note structuring and report-drafting assistance.",
-        "Built a document knowledge base with semantic retrieval, source citations and missing-information detection.",
-        "Contributed to internal application improvements and developed an activity-monitoring dashboard using Python and SQL.",
+        "Designed and developed a local AI copilot to support internal procedure search, field-note structuring and report-drafting workflows.",
+        "Participated in functional scoping by gathering user needs, identifying relevant use cases and translating operational requirements into product features.",
+        "Contributed to improvements of the internal application and developed an activity dashboard based on operational KPIs to support monitoring and decision-making.",
       ],
       tech: ["Python", "FastAPI", "Streamlit", "Ollama", "ChromaDB", "SQL", "Docker"],
+      detailSections: [
+        {
+          title: "Technical implementation",
+          content: "Developed a local RAG pipeline combining a locally hosted model, semantic search and structured document retrieval. Built with Python, FastAPI, Streamlit, Ollama, ChromaDB and SQL, the solution supports procedure search, field-note structuring and report-drafting workflows.",
+        },
+        {
+          title: "Functional scoping & business needs",
+          content: "The project began with understanding how diagnostic professionals work, gathering their needs, selecting priority use cases and defining the operational KPIs used to assess solution adoption and impact.",
+        },
+      ],
     },
     {
       company: "FORVIA Group",
@@ -60,13 +74,23 @@ export const experiences: { en: Experience[]; fr: Experience[] } = {
       company: "Antenic",
       location: "Paris, France",
       role: "Stagiaire R&D — Data & Intelligence Artificielle",
-      period: "Avril 2026 – Août 2026 · 4 mois",
+      period: "Avril–août 2026",
       description: [
-        "Conception d'un copilote IA local pour la recherche dans les procédures internes, la structuration des notes terrain et l'aide à la rédaction de rapports.",
-        "Mise en place d'une base documentaire avec recherche sémantique, citation des sources et détection des informations manquantes.",
-        "Participation aux évolutions de l'application interne et développement d'un tableau de bord de suivi d'activité en Python et SQL.",
+        "Conception et développement d'un copilote IA local pour faciliter la recherche dans les procédures internes, la structuration des notes terrain et les processus de rédaction de rapports.",
+        "Participation au cadrage fonctionnel par le recueil des besoins utilisateurs, l'identification des cas d'usage pertinents et la traduction des exigences opérationnelles en fonctionnalités produit.",
+        "Contribution à l'amélioration de l'application interne et développement d'un tableau de bord d'activité fondé sur des KPI opérationnels afin de faciliter le suivi et la prise de décision.",
       ],
       tech: ["Python", "FastAPI", "Streamlit", "Ollama", "ChromaDB", "SQL", "Docker"],
+      detailSections: [
+        {
+          title: "Implémentation technique",
+          content: "Développement d'un pipeline RAG local combinant un modèle hébergé localement, la recherche sémantique et une recherche documentaire structurée. Construite avec Python, FastAPI, Streamlit, Ollama, ChromaDB et SQL, la solution facilite la recherche dans les procédures, la structuration des notes terrain et la rédaction de rapports.",
+        },
+        {
+          title: "Cadrage fonctionnel et besoins métier",
+          content: "Le projet a commencé par la compréhension du fonctionnement des diagnostiqueurs, le recueil de leurs besoins, la sélection des cas d'usage prioritaires et la définition des KPI opérationnels permettant d'évaluer l'adoption de la solution et son impact.",
+        },
+      ],
     },
     {
       company: "Groupe FORVIA",

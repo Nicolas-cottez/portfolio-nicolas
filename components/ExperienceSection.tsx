@@ -386,6 +386,21 @@ export default function ExperienceSection() {
                           ))}
                         </div>
                       )}
+
+                      {exp.detailSections && exp.detailSections.length > 0 && (
+                        <div className="mt-5 pt-5 border-t border-[var(--accent)]/20 space-y-4">
+                          {exp.detailSections.map((section) => (
+                            <div key={section.title}>
+                              <h4 className="mb-1.5 text-sm font-semibold text-white">
+                                {section.title}
+                              </h4>
+                              <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                                {section.content}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </motion.div>
                   </div>
 
