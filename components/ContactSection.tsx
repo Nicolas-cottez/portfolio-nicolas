@@ -50,7 +50,7 @@ export default function ContactSection() {
     },
     {
       icon: Linkedin,
-      href: "https://www.linkedin.com/in/nicolas-cottez-abrate-a38838257",
+      href: "https://www.linkedin.com/in/nicolas-cottez-abrate/",
       label: t.linkedin,
       color: "#d4a5ff",
     },

@@ -22,7 +22,7 @@ export default function Sidebar() {
         <Github className="w-5 h-5" />
       </a>
       <a
-        href="https://www.linkedin.com/in/nicolas-cottez-abrate-a38838257"
+        href="https://www.linkedin.com/in/nicolas-cottez-abrate/"
         target="_blank"
         rel="noopener noreferrer"
         className="hover:text-[var(--accent-light)] transition-all duration-300 hover:scale-110"
